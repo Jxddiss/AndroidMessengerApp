@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="couleur_principale">#237A32</color>
+    <color name="couleur_btn_jaune">#E9E109</color>
+    <color name="couleur_btn_typeVol">#BDBDBA</color>
+    <color name="couleurAppuyée">#502F3969</color>
+
 </resources>
