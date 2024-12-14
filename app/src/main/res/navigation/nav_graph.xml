@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/vueAccueil">
+
+    <fragment
+        android:id="@+id/vueLogin"
+        android:name="com.nicholson.nicmessenger.presentation.login.VueLogin"
+        android:label="fragment_vue_login"
+        tools:layout="@layout/fragment_vue_login" >
+        <action
+            android:id="@+id/action_vueLogin_vers_vueAccueil"
+            app:destination="@id/vueAccueil" />
+        <action
+            android:id="@+id/action_vueLogin_vers_vueNotifications"
+            app:destination="@id/vueNotifications" />
+        <action
+            android:id="@+id/action_vueLogin_vers_vueDemandes"
+            app:destination="@id/vueDemandes" />
+    </fragment>
+    <fragment
+        android:id="@+id/vueAccueil"
+        android:name="com.nicholson.nicmessenger.presentation.accueil.VueAccueil"
+        android:label="fragment_vue_accueil"
+        tools:layout="@layout/fragment_vue_accueil" >
+        <action
+            android:id="@+id/action_vueAccueil_vers_vueConversation"
+            app:destination="@id/vueConversation" />
+        <action
+            android:id="@+id/action_vueAccueil_vers_vueProfile"
+            app:destination="@id/vueProfile" />
+        <action
+            android:id="@+id/action_vueAccueil_vers_vueNotifications"
+            app:destination="@id/vueNotifications" />
+        <action
+            android:id="@+id/action_vueAccueil_vers_vueDemandes"
+            app:destination="@id/vueDemandes" />
+    </fragment>
+    <fragment
+        android:id="@+id/vueProfile"
+        android:name="com.nicholson.nicmessenger.presentation.profile.VueProfile"
+        android:label="fragment_vue_profile"
+        tools:layout="@layout/fragment_vue_profile" >
+        <action
+            android:id="@+id/action_vueProfile_vers_vueLogin"
+            app:destination="@id/vueLogin" />
+    </fragment>
+    <fragment
+        android:id="@+id/vueConversation"
+        android:name="com.nicholson.nicmessenger.presentation.conversation.VueConversation"
+        android:label="fragment_vue_conversation"
+        tools:layout="@layout/fragment_vue_conversation" >
+        <action
+            android:id="@+id/action_vueConversation_vers_vueAccueil"
+            app:destination="@id/vueAccueil" />
+        <action
+            android:id="@+id/action_vueConversation_vers_vueLogin"
+            app:destination="@id/vueLogin" />
+    </fragment>
+    <fragment
+        android:id="@+id/vueDemandes"
+        android:name="com.nicholson.nicmessenger.presentation.demande.VueDemandes"
+        android:label="fragment_vue_demandes"
+        tools:layout="@layout/fragment_vue_demandes" >
+        <action
+            android:id="@+id/action_vueDemandes_vers_vueAccueil"
+            app:destination="@id/vueAccueil" />
+        <action
+            android:id="@+id/action_vueDemandes_vers_vueLogin"
+            app:destination="@id/vueLogin" />
+    </fragment>
+    <fragment
+        android:id="@+id/vueNotifications"
+        android:name="com.nicholson.nicmessenger.presentation.notification.VueNotifications"
+        android:label="fragment_vue_notifications"
+        tools:layout="@layout/fragment_vue_notifications" >
+        <action
+            android:id="@+id/action_vueNotifications_vers_vueAccueil"
+            app:destination="@id/vueAccueil" />
+        <action
+            android:id="@+id/action_vueNotifications_vers_vueLogin"
+            app:destination="@id/vueLogin" />
+    </fragment>
+</navigation>
