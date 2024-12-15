@@ -8,7 +8,7 @@ class ObtenirUtilisateur {
     companion object{
         var sourceDeDonnées : ISourceDeDonéesUtilisateur = SourceDeDonnéesUtilisateurFictive()
 
-        suspend fun obtenirUtilisateurParId( id : Int ) : Utilisateur {
+        suspend fun obtenirUtilisateurParId( id : Long ) : Utilisateur {
             return sourceDeDonnées.obtenirUtilisateurParId( id )
         }
     }
