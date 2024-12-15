@@ -12,10 +12,12 @@ interface ContratVuePrésentateurConversation {
         fun redirigerÀLogin()
         fun montrerChargement()
         fun masquerChargement()
+        fun obtenirContenueMessage() : String
     }
 
     interface IPrésentateurConversation {
         fun traiterDémarrage()
         fun traiterObtenirConversation()
+        fun traiterEnvoieMessage()
     }
 }

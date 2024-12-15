@@ -7,7 +7,7 @@ data class Message(
     val contenu : String,
     val date : LocalDateTime,
     val nomSender : String,
-    val type : String,
-    val style : String,
-    val winkName : String
+    var type : String,
+    var style : String?,
+    val winkName : String?
 )

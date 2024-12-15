@@ -4,6 +4,7 @@ import com.nicholson.nicmessenger.domaine.modele.Conversation
 import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.domaine.service.Authentification
+import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
 import kotlinx.coroutines.flow.Flow
@@ -62,5 +63,12 @@ class Modèle private constructor() : IModèle {
 
     override suspend fun subscribeMessage( topic: String ): Flow<Message> {
         return ObtenirMessages.messageListener( topic )
+    }
+
+    override suspend fun envoyerMessage(destination: String, contenu : String) {
+        EnvoyerMessage.envoyerMessage(
+            destination = destination,
+            contenu = contenu,
+            nomSender = utilisateurConnecté?.nomComplet ?: "" )
     }
 }

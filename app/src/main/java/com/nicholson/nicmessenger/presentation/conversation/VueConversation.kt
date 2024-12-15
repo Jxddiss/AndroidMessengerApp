@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
@@ -31,6 +33,9 @@ class VueConversation : Fragment(), IVueConversation {
     private lateinit var statutTextView : TextView
     private lateinit var descriptionTextView : TextView
     private lateinit var avatarImageView : ImageView
+    private lateinit var banniereImageView : ImageView
+    private lateinit var messageEditText : EditText
+    private lateinit var btnSend : ImageButton
     private lateinit var statutCardView : CardView
     private lateinit var navController: NavController
     private lateinit var présentateur : IPrésentateurConversation
@@ -51,12 +56,18 @@ class VueConversation : Fragment(), IVueConversation {
         statutTextView = vue.findViewById( R.id.statutTextView )
         descriptionTextView = vue.findViewById( R.id.descriptionTextView )
         avatarImageView = vue.findViewById( R.id.avatarImageView )
+        banniereImageView = vue.findViewById( R.id.banniereImageView )
+        messageEditText = vue.findViewById( R.id.messageEditText )
+        btnSend = vue.findViewById( R.id.btnSend )
         statutCardView = vue.findViewById( R.id.statutCardView )
         présentateur = PrésentateurConversation( this )
         présentateur.traiterDémarrage()
     }
 
     override fun miseEnPlace() {
+        btnSend.setOnClickListener {
+            présentateur.traiterEnvoieMessage()
+        }
         présentateur.traiterObtenirConversation()
     }
 
@@ -77,6 +88,16 @@ class VueConversation : Fragment(), IVueConversation {
         statutCardView.backgroundTintList =
             ColorStateList.valueOf( ContextCompat.getColor( requireContext(),
                 getColorFromStatut( conversationOTD.statut, requireContext() ) ) )
+        val bannière = conversationOTD.bannière
+        if ( bannière.contains("default") ){
+            banniereImageView.background =
+                AppCompatResources.getDrawable( requireContext(), R.drawable.bann )
+        } else {
+            Glide.with( requireContext() )
+                .load( bannière )
+                .error( R.drawable.bann  )
+                .into( banniereImageView )
+        }
     }
 
     override fun placerMessagesPrécédents( messagesOTDS: List<MessageOTD> ) {
@@ -89,6 +110,7 @@ class VueConversation : Fragment(), IVueConversation {
     override fun ajouterMessage(messageOTD: MessageOTD) {
         adapteur.messagesOTD.add( messageOTD )
         adapteur.notifyItemInserted( adapteur.messagesOTD.size -1 )
+        recyclerMessages.scrollToPosition( adapteur.messagesOTD.size - 1 )
     }
 
     override fun redirigerÀLogin() {
@@ -101,6 +123,10 @@ class VueConversation : Fragment(), IVueConversation {
 
     override fun masquerChargement() {
         layoutBarChargement.visibility = View.GONE
+    }
+
+    override fun obtenirContenueMessage(): String {
+        return messageEditText.text.toString()
     }
 
     private fun getColorFromStatut( statut : String, context : Context) : Int {

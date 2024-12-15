@@ -133,7 +133,7 @@
         tools:listitem="@layout/message_item" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutEmailTextInput"
+        android:id="@+id/textInputLayoutMessage"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -144,13 +144,14 @@
         app:layout_constraintBottom_toTopOf="@id/guideline_bottom_input">
 
         <EditText
-            android:id="@+id/emailEditText"
+            android:id="@+id/messageEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textEmailAddress" />
+            android:inputType="textLongMessage" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
+        android:id="@+id/btnSend"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/send"

@@ -20,4 +20,5 @@ interface IModèle {
     fun cacherNav()
     suspend fun obtenirMessagesPrécédent() : List<Message>
     suspend fun subscribeMessage( topic : String ) : Flow<Message>
+    suspend fun envoyerMessage( destination : String, contenu : String )
 }

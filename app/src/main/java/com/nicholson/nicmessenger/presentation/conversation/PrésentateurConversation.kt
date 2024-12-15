@@ -56,12 +56,29 @@ class PrésentateurConversation(
                 }
                 try {
                     modèle.subscribeMessage("/topic/conversation/${it.id}").collect {
-                            CoroutineScope( Dispatchers.Main ).launch {
-                                vue.ajouterMessage( convertirMessageÀMessageOTD( it ) )
-                            }
+                        CoroutineScope( Dispatchers.Main ).launch {
+                            vue.ajouterMessage( convertirMessageÀMessageOTD( it ) )
+                        }
                     }
-                }catch ( ex : SourceDeDonnéesException ) {
+                } catch ( ex : SourceDeDonnéesException ) {
                     Log.d("Exception : ", ex.message.toString())
+                }
+            }
+        }
+    }
+
+    override fun traiterEnvoieMessage() {
+        val messageContenu = vue.obtenirContenueMessage()
+        if ( messageContenu.isNotEmpty() ){
+            job = CoroutineScope( iocontext ).launch {
+                conversation?.let {
+                    try {
+                        modèle.envoyerMessage(
+                            destination = "/chat/${it.id}",
+                            contenu = messageContenu )
+                    } catch ( ex : SourceDeDonnéesException ) {
+                        Log.d("Exception : ", ex.message.toString())
+                    }
                 }
             }
         }

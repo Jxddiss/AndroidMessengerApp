@@ -92,7 +92,7 @@ class FaussesDonnées {
             )
         )
 
-        val listMessagesJson = listOf(
+        val listMessagesJson = mutableListOf(
             "{\"id\": 1, \"contenu\": \"Salut! Comment ça va?\", \"date\": \"2024-12-15T15:40:08.840306\", \"nomSender\": \"Alice Dupont\", \"type\": \"texte\", \"style\": \"normal\", \"winkName\": \"\"}",
             "{\"id\": 2, \"contenu\": \"Ça va bien, et toi?\", \"date\": \"2024-12-15T15:50:08.840327\", \"nomSender\": \"Bob Martin\", \"type\": \"texte\", \"style\": \"bold\", \"winkName\": \"\"}",
             "{\"id\": 3, \"contenu\": \"Regarde ce gif 😂\", \"date\": \"2024-12-15T16:10:08.840334\", \"nomSender\": \"Alice Dupont\", \"type\": \"image\", \"style\": \"italic\", \"winkName\": \"funnyGif\"}",
