@@ -36,7 +36,9 @@ class PrésentateurLogin(
                 try {
                     modèle.seConnecter( email, motDePasse )
                 } catch ( ex : EmailInvalideException ){
-                    vue.montrerEmailInvalide()
+                    CoroutineScope( Dispatchers.Main ).launch {
+                        vue.montrerEmailInvalide()
+                    }
                 } catch ( ex : IdentifiantsException ) {
                     CoroutineScope( Dispatchers.Main ).launch {
                         vue.montrerErreurIdentifiants()
