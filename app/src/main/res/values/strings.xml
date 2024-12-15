@@ -12,4 +12,8 @@
     <string name="confirmer">Confirmer</string>
     <string name="annuler">Annuler</string>
     <string name="mes_conversations">Mes Conversations</string>
+    <string name="online">( En Ligne )</string>
+    <string name="disconnected">( Déconnecté )</string>
+    <string name="inactif">( Inactif )</string>
+    <string name="absent">( Absent )</string>
 </resources>

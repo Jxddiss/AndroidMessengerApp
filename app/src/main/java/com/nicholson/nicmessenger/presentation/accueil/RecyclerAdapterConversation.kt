@@ -1,4 +1,84 @@
 package com.nicholson.nicmessenger.presentation.accueil
 
-class RecyclerAdapterConversation {
+import android.content.Context
+import android.content.res.ColorStateList
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.nicholson.nicmessenger.R
+import com.nicholson.nicmessenger.presentation.otd.ConversationItemOTD
+
+class RecyclerAdapterConversation(
+    val conversationsOTD : List<ConversationItemOTD>,
+    val context : Context
+) : RecyclerView.Adapter<RecyclerAdapterConversation.MyViewHolder>(){
+
+    var itemCliquéÉvènement: ((Int) ->Unit)? = null
+    private var positionAnimés = mutableSetOf<Int>()
+    var listeInitialisé = false
+
+    class MyViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
+        val nomTextView : TextView = itemView.findViewById( R.id.nomTextView )
+        val statutTextView : TextView = itemView.findViewById( R.id.statutTextView )
+        val descriptionTextView : TextView = itemView.findViewById( R.id.descriptionTextView )
+        val avatarImageView : ImageView = itemView.findViewById( R.id.avatarImageView )
+        val statutCardView : CardView = itemView.findViewById( R.id.statutCardView )
+    }
+
+    override fun onCreateViewHolder( parent: ViewGroup, viewType: Int ): MyViewHolder {
+        val itemView : View = LayoutInflater.from( parent.context )
+            .inflate( R.layout.conversation_item, parent, false )
+
+        return MyViewHolder( itemView )
+    }
+
+    override fun getItemCount(): Int = conversationsOTD.size
+
+    override fun onBindViewHolder( holder: MyViewHolder, position: Int ) {
+        holder.nomTextView.text = conversationsOTD[position].nomComplet
+        holder.statutTextView.text =  getStatutStringFromStatut( conversationsOTD[position].statut )
+        holder.descriptionTextView.text = conversationsOTD[position].description
+        val avatar = conversationsOTD[position].avatar
+        if ( avatar.contains("buddy2") ){
+            holder.avatarImageView.background =
+                AppCompatResources.getDrawable( context, R.drawable.buddy2 )
+        } else {
+            Glide.with( context )
+                .load( avatar )
+                .into( holder.avatarImageView )
+        }
+        holder.statutCardView.backgroundTintList =
+            ColorStateList.valueOf( ContextCompat.getColor(context,
+                getColorFromStatut( conversationsOTD[position].statut ) ) )
+
+        holder.itemView.setOnClickListener{
+            itemCliquéÉvènement?.invoke(position)
+        }
+    }
+
+    private fun getColorFromStatut( statut : String ) : Int {
+        return context.resources
+            .getIdentifier(
+                statut,
+                "color",
+                context.packageName )
+    }
+
+    private fun getStatutStringFromStatut( statut: String ) : String {
+        return context.getString(
+            context.resources
+                .getIdentifier(
+                    statut,
+                    "string",
+                    context.packageName )
+        )
+    }
+
 }

@@ -10,7 +10,7 @@ class FaussesDonnées {
                 id = 1L,
                 nomComplet = "Alice Dupont",
                 email = "alice.dupont@example.com",
-                statut = "Actif",
+                statut = "online",
                 description = "Développeuse passionnée par l'IA.",
                 avatar = "https://robohash.org//alice.jpg",
                 banniere = "https://example.com/bannieres/alice.jpg"
@@ -19,7 +19,7 @@ class FaussesDonnées {
                 id = 2L,
                 nomComplet = "Bob Martin",
                 email = "bob.martin@example.com",
-                statut = "Actif",
+                statut = "online",
                 description = "Designer graphique avec 10 ans d'expérience.",
                 avatar = "https://robohash.org//bob.jpg",
                 banniere = "https://example.com/bannieres/bob.jpg"
@@ -28,9 +28,9 @@ class FaussesDonnées {
                 id = 3L,
                 nomComplet = "Charlie Leroy",
                 email = "charlie.leroy@example.com",
-                statut = "Inactif",
+                statut = "disconnected",
                 description = "Consultant en marketing numérique.",
-                avatar = "https://robohash.org//charlie.jpg",
+                avatar = "assets/images/buddy2",
                 banniere = "https://example.com/bannieres/charlie.jpg"
             )
         )

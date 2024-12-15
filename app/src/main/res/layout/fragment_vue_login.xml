@@ -84,6 +84,7 @@
                 android:backgroundTint="@color/couleur_principale"
                 android:text="@string/se_connecter"
                 app:cornerRadius="6dp"
+                app:strokeColor="#CECECE"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutPasswordTextInput" />
@@ -179,7 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.63"
+        app:layout_constraintGuide_percent="0.66"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout

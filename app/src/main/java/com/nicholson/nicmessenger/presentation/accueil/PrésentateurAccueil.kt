@@ -1,10 +1,17 @@
 package com.nicholson.nicmessenger.presentation.accueil
 
+import android.util.Log
+import com.nicholson.nicmessenger.domaine.modele.Conversation
+import com.nicholson.nicmessenger.donnees.exceptions.AuthentificationException
+import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import com.nicholson.nicmessenger.presentation.IModèle
 import com.nicholson.nicmessenger.presentation.Modèle
 import com.nicholson.nicmessenger.presentation.accueil.ContratVuePrésentateurAccueil.*
+import com.nicholson.nicmessenger.presentation.otd.ConversationItemOTD
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class PrésentateurAccueil( private val vue : IVueAccueil,
@@ -23,9 +30,42 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
             modèle.cacherNav()
             vue.redirigerÀLogin()
         } else {
+            vue.montrerChargement()
+            job = CoroutineScope( iocontext ).launch {
+                var conversations : List<Conversation> = listOf()
+                try {
+                    conversations = modèle.obtenirMesConversations()
+                } catch ( ex : AuthentificationException ) {
+                    vue.redirigerÀLogin()
+                } catch ( ex : SourceDeDonnéesException ) {
+                    Log.d( "Exception", "message : ${ex.message}" )
+                }
+                val conversationsOTDS = conversations.map {
+                    convertirConversationAConversationOTD( it )
+                }
 
+                CoroutineScope( Dispatchers.Main ).launch {
+                    vue.attacherListeConversationsRecycler( conversationsOTDS )
+                    vue.masquerChargement()
+                }
+            }
         }
     }
 
+    override fun traiterConversationCliquer( indice : Int ) {
+        modèle.indiceConversationCourrante = indice
+        vue.redirigerÀConversation()
+    }
 
+    private fun convertirConversationAConversationOTD( conversation: Conversation ) : ConversationItemOTD {
+        val autreUtilisateur = conversation
+            .utilisateurs.first { it.id != modèle.utilisateurConnecté?.id }
+
+        return ConversationItemOTD(
+            nomComplet = autreUtilisateur.nomComplet,
+            statut = autreUtilisateur.statut,
+            description = autreUtilisateur.description,
+            avatar = autreUtilisateur.avatar
+        )
+    }
 }

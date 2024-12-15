@@ -10,4 +10,10 @@ class SourceDeDonnéesConversationFictive : ISourceDeDonnéesConversation {
         }
     }
 
+    override suspend fun obtenirConversationParId( id: Long ): Conversation {
+        return FaussesDonnées.listeConversations.first {
+            it.id == id
+        }
+    }
+
 }
