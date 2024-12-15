@@ -35,6 +35,9 @@ class PrésentateurLogin(
             job = CoroutineScope( iocontext ).launch {
                 try {
                     modèle.seConnecter( email, motDePasse )
+                    CoroutineScope( Dispatchers.Main ).launch {
+                        vue.redirigerÀAccueil()
+                    }
                 } catch ( ex : EmailInvalideException ){
                     CoroutineScope( Dispatchers.Main ).launch {
                         vue.montrerEmailInvalide()
@@ -47,10 +50,6 @@ class PrésentateurLogin(
                     CoroutineScope( Dispatchers.Main ).launch {
                         vue.montrerErreurRéseau()
                     }
-                }
-
-                CoroutineScope( Dispatchers.Main ).launch {
-                    vue.redirigerÀAccueil()
                 }
             }
         }
