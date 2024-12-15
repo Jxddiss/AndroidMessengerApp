@@ -60,7 +60,7 @@ class VueAccueil : Fragment(), IVueAccueil {
     }
 
     override fun attacherListeConversationsRecycler(conversationsOTDS: List<ConversationItemOTD>) {
-        adaptateur = RecyclerAdapterConversation( conversationsOTDS, requireContext() )
+        adaptateur = RecyclerAdapterConversation( conversationsOTDS )
         adaptateur.itemCliquéÉvènement = {
             présentateur.traiterConversationCliquer( it )
         }
