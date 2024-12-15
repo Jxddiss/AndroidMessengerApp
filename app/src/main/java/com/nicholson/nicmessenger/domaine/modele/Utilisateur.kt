@@ -1,7 +1,7 @@
 package com.nicholson.nicmessenger.domaine.modele
 
 data class Utilisateur(
-    val id : Int,
+    val id : Long,
     val nomComplet : String,
     val email : String,
     val statut : String,

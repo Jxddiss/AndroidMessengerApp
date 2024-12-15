@@ -5,7 +5,7 @@ import com.nicholson.nicmessenger.donnees.ISourceDeDonéesUtilisateur
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 
 class SourceDeDonnéesUtilisateurFictive : ISourceDeDonéesUtilisateur {
-    override suspend fun obtenirUtilisateurParId( id : Int ): Utilisateur {
+    override suspend fun obtenirUtilisateurParId( id : Long ): Utilisateur {
         return FaussesDonnées.listeUtilisateur.firstOrNull{ it.id == id }
             ?: throw SourceDeDonnéesException("Utilisateur Inéxistant")
     }
