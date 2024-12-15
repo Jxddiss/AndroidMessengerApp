@@ -1,7 +1,9 @@
 package com.nicholson.nicmessenger.presentation.login
 
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -76,13 +79,13 @@ class VueLogin : Fragment(), IVueLogin {
         }
     }
 
-    override fun obtenirEmail(): String {
-        return emailEditText.text.toString()
-    }
+    override fun obtenirEmail(): String =
+        emailEditText.text.toString()
 
-    override fun obtenirMotDePasse(): String {
-        return passwordEditText.text.toString()
-    }
+
+    override fun obtenirMotDePasse(): String =
+        passwordEditText.text.toString()
+
 
     override fun montrerMotDePasseInvalide() {
         textInputLayoutPassword.error = "Mot de passe invalide"
@@ -92,9 +95,9 @@ class VueLogin : Fragment(), IVueLogin {
         textInputLayoutEmail.error = "Email invalide"
     }
 
-    override fun redirigerÀAccueil() {
+    override fun redirigerÀAccueil() =
         navController.navigate( R.id.action_vueLogin_vers_vueAccueil )
-    }
+
 
     override fun montrerErreurIdentifiants() {
         val dialogErreur = MaterialAlertDialogBuilder( requireContext() )
@@ -114,17 +117,17 @@ class VueLogin : Fragment(), IVueLogin {
         dialogErreur.show()
     }
 
-    override fun obtenirTokenEnregistré(): String? {
-        return préférences.getString( "token", null )
-    }
+    override fun obtenirTokenEnregistré(): String? =
+         préférences.getString( "token", null )
 
-    override fun retirerTokenEnregistré() {
+
+    override fun retirerTokenEnregistré() =
         préférences.edit().remove( "token" ).apply()
-    }
 
-    override fun enregistrerTokenPréférences( token : String ) {
+
+    override fun enregistrerTokenPréférences( token : String ) =
         préférences.edit().putString( "token", token ).apply()
-    }
+
 
     override fun cacherEditTextPasswordEtBtnLogin() {
         btnLogin.visibility = View.GONE
@@ -132,13 +135,21 @@ class VueLogin : Fragment(), IVueLogin {
     }
 
     override fun changerListenerMotDePasseOubliéVersConfirmerEnvEmail() {
-        btnForgotPassword.setOnClickListener { présentateur.traiterMotDePasseOublié() }
+        btnForgotPassword.text = getString( R.string.confirmer )
+        btnForgotPassword.backgroundTintList =
+            ColorStateList.valueOf( ContextCompat.getColor( requireContext(), R.color.couleur_principale ) )
+        btnForgotPassword.setOnClickListener { présentateur.traiterConfirmerMotDePasseOublié() }
     }
 
+
+
     override fun renitialiserListenerMotDePasseOublié() {
-        btnForgotPassword.setOnClickListener { présentateur.traiterMotDePasseOublié() }
+        btnForgotPassword.text = getString( R.string.mot_de_passe_oubli )
+        btnForgotPassword.backgroundTintList =
+            ColorStateList.valueOf( ContextCompat.getColor( requireContext(), R.color.grey ) )
         btnLogin.visibility = View.VISIBLE
         textInputLayoutPassword.visibility = View.VISIBLE
+        btnForgotPassword.setOnClickListener { présentateur.traiterMotDePasseOublié() }
     }
 
     override fun montrerMessageEmailMotDePasseOubliéEnvoyé() {

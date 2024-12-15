@@ -29,7 +29,12 @@ class PrésentateurLogin(
         val email = vue.obtenirEmail()
         val motDePasse = vue.obtenirMotDePasse()
 
-        if( motDePasse.isEmpty() ){
+        if( email.isEmpty() && motDePasse.isEmpty() ){
+            vue.montrerEmailInvalide()
+            vue.montrerMotDePasseInvalide()
+        } else if( email.isEmpty() ){
+            vue.montrerEmailInvalide()
+        } else if( motDePasse.isEmpty() ){
             vue.montrerMotDePasseInvalide()
         } else {
             job = CoroutineScope( iocontext ).launch {

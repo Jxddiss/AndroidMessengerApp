@@ -9,4 +9,5 @@
     <string name="email_mot_de_passe_oublie">Le courriel de rénitialisation du mot de passe à été envoyé</string>
     <string name="une_erreur_r_seau_c_est_produite">Une erreur réseau c\'est produite</string>
     <string name="identifiant_invalide">Email ou mot de passe invalide</string>
+    <string name="confirmer">Confirmer</string>
 </resources>
