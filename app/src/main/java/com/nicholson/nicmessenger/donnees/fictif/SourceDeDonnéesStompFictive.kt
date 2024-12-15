@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import com.nicholson.nicmessenger.domaine.modele.Message
+import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.donnees.ISourceDeDonnéesStomp
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import com.nicholson.nicmessenger.donnees.jsonutils.GsonInstance
@@ -32,15 +33,23 @@ class SourceDeDonnéesStompFictive : ISourceDeDonnéesStomp {
                     }
                 }
             }
+            Notification::class.java -> {
+
+            }
+            String::class.java -> {
+
+            }
             else -> {}
         }
     }
 
     override suspend fun <T> sendMessage( destination: String, message: T ) {
         when {
-            destination.contains( "chat" ) -> {
-                FaussesDonnées.listMessagesJson.add( GsonInstance.obtenirInstance().toJson( message ) )
-            }
+            destination.contains( "chat" ) -> FaussesDonnées.listMessagesJson
+                .add( GsonInstance.obtenirInstance().toJson( message ) )
+
+            destination.contains( "notification" ) -> {}
+            destination.contains( "statut" ) -> {}
         }
     }
 }

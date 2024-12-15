@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder
 import java.time.LocalDateTime
 
 
-class GsonInstance {
+class GsonInstance private constructor() {
     companion object {
         @Volatile
         private var instance : Gson? = null
