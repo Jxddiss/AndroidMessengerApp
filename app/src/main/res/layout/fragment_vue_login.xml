@@ -59,7 +59,9 @@
                     android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:autofillHints="emailAddress"/>
+
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutPasswordTextInput"
@@ -74,7 +76,9 @@
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:autofillHints="password"/>
+
             </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/btnLogin"

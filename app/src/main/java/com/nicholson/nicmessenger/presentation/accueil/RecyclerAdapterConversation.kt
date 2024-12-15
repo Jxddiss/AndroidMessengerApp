@@ -53,6 +53,7 @@ class RecyclerAdapterConversation(
         } else {
             Glide.with( holder.itemView.context )
                 .load( avatar )
+                .error( R.drawable.buddy2  )
                 .into( holder.avatarImageView )
         }
         holder.statutCardView.backgroundTintList =

@@ -1,14 +1,21 @@
 package com.nicholson.nicmessenger.donnees.fictif
 
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
 import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.donnees.ISourceDeDonnéesStomp
+import com.nicholson.nicmessenger.donnees.decodeur.DécodeurDate
+import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.LocalDateTime
 
 class SourceDeDonnéesStompFictive : ISourceDeDonnéesStomp {
-    private val gson : Gson = Gson()
+    private val gson : Gson = GsonBuilder()
+        .registerTypeAdapter(LocalDateTime::class.java, DécodeurDate())
+        .create()
 
     override suspend fun disconnect() {
     }
@@ -18,8 +25,12 @@ class SourceDeDonnéesStompFictive : ISourceDeDonnéesStomp {
             Message::class.java -> {
                 for ( messageJson in FaussesDonnées.listMessagesJson ) {
                     delay((500..2000).random().toLong())
-                    val message = gson.fromJson(messageJson, type) as T
-                    emit(message)
+                    try {
+                        val message = gson.fromJson(messageJson, type) as T
+                        emit(message)
+                    } catch ( ex : JsonSyntaxException ) {
+                        throw SourceDeDonnéesException("Exception Json : ${ex.message}")
+                    }
                 }
             }
             else -> {}

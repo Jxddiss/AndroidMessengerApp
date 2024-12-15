@@ -1,9 +1,12 @@
 package com.nicholson.nicmessenger.presentation
 
 import com.nicholson.nicmessenger.domaine.modele.Conversation
+import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
+import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
+import kotlinx.coroutines.flow.Flow
 
 class Modèle private constructor() : IModèle {
     companion object {
@@ -22,6 +25,7 @@ class Modèle private constructor() : IModèle {
     override var cacherNavUnit : (() -> Unit)? = null
     override var conversations: List<Conversation> = listOf()
     override var indiceConversationCourrante: Int = 0
+    override var conversationCourrante : Conversation? = null
 
     override suspend fun seConnecter( email: String, motDePasse: String ) {
         utilisateurConnecté = Authentification.seConnecter( email, motDePasse )
@@ -40,10 +44,23 @@ class Modèle private constructor() : IModèle {
     }
 
     override suspend fun obtenirConversationCourrante(): Conversation {
-        return ObtenirConversations.obtenirConversationParId( conversations[indiceConversationCourrante].id )
+        if( conversationCourrante != null
+            && conversations[indiceConversationCourrante].id == conversationCourrante?.id ) {
+            return conversationCourrante as Conversation
+        } else {
+            return ObtenirConversations.obtenirConversationParId( conversations[indiceConversationCourrante].id )
+        }
     }
 
     override fun cacherNav() {
         cacherNavUnit?.let { it() }
+    }
+
+    override suspend fun obtenirMessagesPrécédent(): List<Message> {
+        return ObtenirMessages.obtenirMessagesPrécédents( conversationCourrante?.id ?: 0L )
+    }
+
+    override suspend fun subscribeMessage( topic: String ): Flow<Message> {
+        return ObtenirMessages.messageListener( topic )
     }
 }

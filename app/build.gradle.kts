@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.json)
     implementation (libs.gson)
     implementation(libs.java.websocket)
-    implementation(libs.stomp.android)
+    implementation("com.github.forresthopkinsa:stompprotocolandroid:17.11.0")
     implementation(libs.androidx.security.crypto)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

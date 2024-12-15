@@ -24,7 +24,7 @@ class FaussesDonnées {
                 statut = "online",
                 description = "Designer graphique avec 10 ans d'expérience.",
                 avatar = "https://robohash.org//bob.jpg",
-                banniere = "https://example.com/bannieres/bob.jpg"
+                banniere = "https://images.unsplash.com/photo-1731518416224-f052548cf639?q=80&w=1634&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             ),
             Utilisateur(
                 id = 3L,
@@ -33,7 +33,7 @@ class FaussesDonnées {
                 statut = "disconnected",
                 description = "Consultant en marketing numérique.",
                 avatar = "assets/images/buddy2",
-                banniere = "https://example.com/bannieres/charlie.jpg"
+                banniere = "https://images.unsplash.com/photo-1730386303229-0c921f5690cd?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             )
         )
 
