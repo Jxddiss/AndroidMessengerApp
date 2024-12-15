@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_vueAccueil_vers_vueDemandes"
             app:destination="@id/vueDemandes" />
+        <action
+            android:id="@+id/action_vueAccueil_vers_vueLogin"
+            app:destination="@id/vueLogin" />
     </fragment>
     <fragment
         android:id="@+id/vueProfile"
@@ -83,4 +86,9 @@
             android:id="@+id/action_vueNotifications_vers_vueLogin"
             app:destination="@id/vueLogin" />
     </fragment>
+    <fragment
+        android:id="@+id/vueParametre"
+        android:name="com.nicholson.nicmessenger.presentation.parametre.VueParametre"
+        android:label="fragment_vue_parametre"
+        tools:layout="@layout/fragment_vue_parametre" />
 </navigation>

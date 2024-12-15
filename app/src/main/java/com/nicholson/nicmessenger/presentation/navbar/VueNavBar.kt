@@ -56,7 +56,7 @@ class VueNavBar : Fragment(), IVueNavBar {
         buttonModifier.setOnClickListener { présentateur.traiterRedirigerÀProfile() }
         floatingButtonHomeNav.setOnClickListener { présentateur.traiterRedirigerÀAccueil() }
         buttonNotification.setOnClickListener { présentateur.traiterRedirigerÀNotification() }
-        buttonParametres.setOnClickListener {  }
+        buttonParametres.setOnClickListener { présentateur.traiterRedirigerÀParametre() }
     }
 
     override fun redirigerÀDemandes() {
@@ -86,6 +86,14 @@ class VueNavBar : Fragment(), IVueNavBar {
     override fun redirigerÀNotification() {
         navController?.navigate(
             resId = R.id.vueNotifications,
+            args = null,
+            navOptions = navOptions
+        )
+    }
+
+    override fun redirigerÀParametre() {
+        navController?.navigate(
+            resId = R.id.vueParametre,
             args = null,
             navOptions = navOptions
         )

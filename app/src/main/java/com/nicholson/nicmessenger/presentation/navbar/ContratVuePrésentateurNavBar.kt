@@ -7,6 +7,7 @@ interface ContratVuePrésentateurNavBar {
         fun redirigerÀProfile()
         fun redirigerÀAccueil()
         fun redirigerÀNotification()
+        fun redirigerÀParametre()
     }
 
     interface IPrésentateurNavBar {
@@ -15,5 +16,6 @@ interface ContratVuePrésentateurNavBar {
         fun traiterRedirigerÀProfile()
         fun traiterRedirigerÀAccueil()
         fun traiterRedirigerÀNotification()
+        fun traiterRedirigerÀParametre()
     }
 }

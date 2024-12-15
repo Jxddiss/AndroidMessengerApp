@@ -27,7 +27,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="14dp"
-                android:text="Se connecter"
+                android:text="@string/se_connecter"
                 android:textSize="32sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,16 +39,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:hint="Email"
-                android:textColorHint="@color/couleur_principale"
+                android:hint="@string/email"
                 app:layout_constraintTop_toBottomOf="@id/logiTitreTextView">
 
                 <EditText
-                    android:id="@+id/EmailEditText"
+                    android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/couleur_principale" />
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutPasswordTextInput"
@@ -56,16 +54,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:hint="Password"
-                android:textColorHint="@color/couleur_principale"
+                android:hint="@string/password"
                 app:layout_constraintTop_toBottomOf="@id/layoutEmailTextInput">
 
                 <EditText
-                    android:id="@+id/PasswordEditText"
+                    android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:inputType="textPassword"
-                    android:textColor="@color/couleur_principale" />
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/btnLogin"
@@ -73,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/couleur_principale"
-                android:text="Se connecter"
+                android:text="@string/se_connecter"
                 app:cornerRadius="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/grey"
-                android:text="Mot de passe oublié?"
+                android:text="@string/mot_de_passe_oubli"
                 app:cornerRadius="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

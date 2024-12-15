@@ -21,4 +21,8 @@ class PréesentateurNavBar( val vue : IVueNavBar ) :  IPrésentateurNavBar {
     override fun traiterRedirigerÀNotification() {
         vue.redirigerÀNotification()
     }
+
+    override fun traiterRedirigerÀParametre() {
+        vue.redirigerÀParametre()
+    }
 }
