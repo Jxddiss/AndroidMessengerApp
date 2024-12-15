@@ -41,6 +41,7 @@ class PrésentateurLogin(
                 try {
                     modèle.seConnecter( email, motDePasse )
                     CoroutineScope( Dispatchers.Main ).launch {
+                        modèle.montrerNavUnit?.let { it() }
                         vue.redirigerÀAccueil()
                     }
                 } catch ( ex : EmailInvalideException ){

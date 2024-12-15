@@ -20,6 +20,7 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
 
     override fun traiterObtenirConversation() {
         if( !modèle.estConnecté ) {
+            modèle.cacherNav()
             vue.redirigerÀLogin()
         } else {
 

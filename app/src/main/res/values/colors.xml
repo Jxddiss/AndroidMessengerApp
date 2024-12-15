@@ -2,10 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="couleur_principale">#237A32</color>
+    <color name="couleur_principale">#47AC2A</color>
     <color name="couleur_btn_jaune">#E9E109</color>
     <color name="couleur_btn_typeVol">#BDBDBA</color>
     <color name="couleurAppuyée">#502F3969</color>
     <color name="grey">#504C4F60</color>
-
+    <color name="online">#B558C339</color>
+    <color name="disconnected">#B5C52F2F</color>
+    <color name="inactif">#B5E4D541</color>
+    <color name="absent">#B59B9A9A</color>
 </resources>

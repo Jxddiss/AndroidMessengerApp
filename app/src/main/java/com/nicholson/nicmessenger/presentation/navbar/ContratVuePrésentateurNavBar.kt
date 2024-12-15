@@ -8,6 +8,8 @@ interface ContratVuePrésentateurNavBar {
         fun redirigerÀAccueil()
         fun redirigerÀNotification()
         fun redirigerÀParametre()
+        fun montrerNav()
+        fun cacherNav()
     }
 
     interface IPrésentateurNavBar {

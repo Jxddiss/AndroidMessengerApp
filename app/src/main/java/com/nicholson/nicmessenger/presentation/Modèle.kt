@@ -16,6 +16,8 @@ class Modèle private constructor() : IModèle {
 
     override var estConnecté = false
     override var utilisateurConnecté : Utilisateur? = null
+    override var montrerNavUnit : (() -> Unit)? = null
+    override var cacherNavUnit : (() -> Unit)? = null
 
     override suspend fun seConnecter( email: String, motDePasse: String ) {
         utilisateurConnecté = Authentification.seConnecter( email, motDePasse )
@@ -26,4 +28,7 @@ class Modèle private constructor() : IModèle {
         Authentification.demandeMotDePasseOublié( email )
     }
 
+    override fun cacherNav() {
+        cacherNavUnit?.let { it() }
+    }
 }
