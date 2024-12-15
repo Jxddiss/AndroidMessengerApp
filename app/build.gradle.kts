@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.json)
     implementation (libs.gson)
+    implementation(libs.java.websocket)
+    implementation(libs.stomp.android)
     implementation(libs.androidx.security.crypto)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

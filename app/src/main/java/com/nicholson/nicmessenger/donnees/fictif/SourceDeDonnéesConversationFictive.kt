@@ -1,6 +1,7 @@
 package com.nicholson.nicmessenger.donnees.fictif
 
 import com.nicholson.nicmessenger.domaine.modele.Conversation
+import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.donnees.ISourceDeDonnéesConversation
 
 class SourceDeDonnéesConversationFictive : ISourceDeDonnéesConversation {
@@ -14,6 +15,10 @@ class SourceDeDonnéesConversationFictive : ISourceDeDonnéesConversation {
         return FaussesDonnées.listeConversations.first {
             it.id == id
         }
+    }
+
+    override suspend fun obtenirMessagesDeConversation(id: Long): List<Message> {
+        return FaussesDonnées.listeMessages
     }
 
 }

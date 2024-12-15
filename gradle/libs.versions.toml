@@ -3,6 +3,7 @@ agp = "8.4.0"
 compiler = "4.12.0"
 glide = "4.16.0"
 gson = "2.11.0"
+javaWebsocket = "1.5.3"
 json = "20231013"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
@@ -19,6 +20,7 @@ navigationFragmentKtx = "2.8.3"
 navigationUiKtx = "2.8.3"
 okhttp = "4.12.0"
 securityCrypto = "1.1.0-alpha06"
+stompAndroid = "2.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -26,6 +28,7 @@ androidx-security-crypto = { module = "androidx.security:security-crypto", versi
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+java-websocket = { module = "org.java-websocket:Java-WebSocket", version.ref = "javaWebsocket" }
 json = { module = "org.json:json", version.ref = "json" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -42,6 +45,7 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+stomp-android = { module = "io.github.stomp-js:stomp-android", version.ref = "stompAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
