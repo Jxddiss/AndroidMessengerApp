@@ -7,6 +7,7 @@ import com.google.gson.JsonSyntaxException
 import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.donnees.ISourceDeDonnéesStomp
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
+import com.nicholson.nicmessenger.donnees.jsonutils.GsonInstance
 import com.nicholson.nicmessenger.donnees.jsonutils.JSONAdapteurDate
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -14,9 +15,6 @@ import kotlinx.coroutines.flow.flow
 import java.time.LocalDateTime
 
 class SourceDeDonnéesStompFictive : ISourceDeDonnéesStomp {
-    private val gson : Gson = GsonBuilder()
-        .registerTypeAdapter( LocalDateTime::class.java, JSONAdapteurDate() )
-        .create()
 
     override suspend fun disconnect() {
     }
@@ -27,7 +25,7 @@ class SourceDeDonnéesStompFictive : ISourceDeDonnéesStomp {
                 for ( messageJson in FaussesDonnées.listMessagesJson ) {
                     delay((500..2000).random().toLong())
                     try {
-                        val message = gson.fromJson( messageJson, type ) as T
+                        val message = GsonInstance.obtenirInstance().fromJson( messageJson, type ) as T
                         emit( message )
                     } catch ( ex : JsonSyntaxException ) {
                         throw SourceDeDonnéesException( "Exception Json : ${ex.message}" )
@@ -41,7 +39,7 @@ class SourceDeDonnéesStompFictive : ISourceDeDonnéesStomp {
     override suspend fun <T> sendMessage( destination: String, message: T ) {
         when {
             destination.contains( "chat" ) -> {
-                FaussesDonnées.listMessagesJson.add( gson.toJson( message ) )
+                FaussesDonnées.listMessagesJson.add( GsonInstance.obtenirInstance().toJson( message ) )
             }
         }
     }
