@@ -2,6 +2,7 @@ package com.nicholson.nicmessenger.donnees.fictif
 
 import com.nicholson.nicmessenger.domaine.modele.Conversation
 import com.nicholson.nicmessenger.domaine.modele.Message
+import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import java.time.LocalDateTime
 
@@ -89,6 +90,49 @@ class FaussesDonnées {
                 type = "texte",
                 style = "normal",
                 winkName = ""
+            )
+        )
+
+        val notifications = listOf(
+            Notification(
+                id = 1L,
+                titre = "Bob Martin",
+                message = "Vous a envoyé un message",
+                image = "https://robohash.org//bob.jpg",
+                type = "msn",
+                lu = false
+            ),
+            Notification(
+                id = 2L,
+                titre = "Bob Martin",
+                message = "Vous a envoyé un message",
+                image = "https://robohash.org//bob.jpg",
+                type = "msn",
+                lu = true
+            ),
+            Notification(
+                id = 3L,
+                titre = "Bob Martin",
+                message = "Vous a envoyé un message",
+                image = "https://robohash.org//bob.jpg",
+                type = "msn",
+                lu = false
+            ),
+            Notification(
+                id = 4L,
+                titre = "Charlie Leroy",
+                message = "Vous a envoyé un message",
+                image = "assets/images/buddy2",
+                type = "msn",
+                lu = false
+            ),
+            Notification(
+                id = 5L,
+                titre = "Charlie Leroy",
+                message = "Vous a envoyé un message",
+                image = "assets/images/buddy2",
+                type = "msn",
+                lu = false
             )
         )
 
