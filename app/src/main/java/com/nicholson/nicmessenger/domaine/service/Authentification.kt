@@ -23,5 +23,10 @@ class Authentification {
             if( !EMAIL_REGEX.matches( email ) ) throw EmailInvalideException( "Email Invalide" )
             return sourceDeDonnées.seConnecter( email, motDePasse )
         }
+
+        suspend fun demandeMotDePasseOublié( email : String ) {
+            if( !EMAIL_REGEX.matches( email ) ) throw EmailInvalideException( "Email Invalide" )
+            sourceDeDonnées.demandeMotDePasseOublié( email )
+        }
     }
 }

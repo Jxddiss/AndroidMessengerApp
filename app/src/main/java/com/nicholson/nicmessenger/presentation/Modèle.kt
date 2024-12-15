@@ -22,4 +22,8 @@ class Modèle private constructor() : IModèle {
         estConnecté = true
     }
 
+    override suspend fun demandeMotDePasseOublié( email: String ) {
+        Authentification.demandeMotDePasseOublié( email )
+    }
+
 }

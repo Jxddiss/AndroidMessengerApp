@@ -24,5 +24,6 @@ interface ContratVuePrésentateurLogin {
         fun traiterSeConnecter()
         fun traiterMotDePasseOublié()
         fun traiterConfirmerMotDePasseOublié()
+        fun traiterAnnulerMotDePasseOublié()
     }
 }

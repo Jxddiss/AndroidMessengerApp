@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -23,6 +24,7 @@ import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.login.ContratVuePrésentateurLogin.*
 
 class VueLogin : Fragment(), IVueLogin {
+    private lateinit var loginTitreTextView : TextView
     private lateinit var emailEditText : EditText
     private lateinit var passwordEditText : EditText
     private lateinit var textInputLayoutEmail : TextInputLayout
@@ -58,6 +60,7 @@ class VueLogin : Fragment(), IVueLogin {
     override fun onViewCreated( vue: View, savedInstanceState: Bundle? ) {
         super.onViewCreated( vue, savedInstanceState )
         présentateur = PrésentateurLogin( this )
+        loginTitreTextView = vue.findViewById( R.id.loginTitreTextView )
         emailEditText = vue.findViewById( R.id.emailEditText )
         textInputLayoutEmail = vue.findViewById( R.id.layoutEmailTextInput )
         textInputLayoutPassword = vue.findViewById( R.id.layoutPasswordTextInput )
@@ -130,31 +133,34 @@ class VueLogin : Fragment(), IVueLogin {
 
 
     override fun cacherEditTextPasswordEtBtnLogin() {
-        btnLogin.visibility = View.GONE
         textInputLayoutPassword.visibility = View.GONE
+        loginTitreTextView.text = getString( R.string.mot_de_passe_oubli )
     }
 
     override fun changerListenerMotDePasseOubliéVersConfirmerEnvEmail() {
-        btnForgotPassword.text = getString( R.string.confirmer )
-        btnForgotPassword.backgroundTintList =
-            ColorStateList.valueOf( ContextCompat.getColor( requireContext(), R.color.couleur_principale ) )
-        btnForgotPassword.setOnClickListener { présentateur.traiterConfirmerMotDePasseOublié() }
+        btnLogin.text = getString( R.string.confirmer )
+        btnForgotPassword.text = getString( R.string.annuler )
+        btnLogin.setOnClickListener { présentateur.traiterConfirmerMotDePasseOublié() }
+        btnForgotPassword.setOnClickListener { présentateur.traiterAnnulerMotDePasseOublié() }
     }
 
 
 
     override fun renitialiserListenerMotDePasseOublié() {
+        loginTitreTextView.text = getString( R.string.se_connecter )
+        btnLogin.text = getString( R.string.se_connecter )
         btnForgotPassword.text = getString( R.string.mot_de_passe_oubli )
-        btnForgotPassword.backgroundTintList =
-            ColorStateList.valueOf( ContextCompat.getColor( requireContext(), R.color.grey ) )
-        btnLogin.visibility = View.VISIBLE
         textInputLayoutPassword.visibility = View.VISIBLE
+        btnLogin.setOnClickListener { présentateur.traiterSeConnecter() }
         btnForgotPassword.setOnClickListener { présentateur.traiterMotDePasseOublié() }
     }
 
     override fun montrerMessageEmailMotDePasseOubliéEnvoyé() {
-        Toast.makeText( requireContext(),
-            getString( R.string.email_mot_de_passe_oublie ),
-            Toast.LENGTH_SHORT ).show()
+        val dialog = MaterialAlertDialogBuilder( requireContext() )
+        dialog.setMessage( getString( R.string.email_mot_de_passe_oublie ) )
+        dialog.setPositiveButton( "OK" ) { it, _ ->
+            it.dismiss()
+        }
+        dialog.show()
     }
 }

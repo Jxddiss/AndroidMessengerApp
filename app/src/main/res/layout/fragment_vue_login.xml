@@ -21,7 +21,7 @@
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/logiTitreTextView"
+                android:id="@+id/loginTitreTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:hint="@string/email"
-                app:layout_constraintTop_toBottomOf="@id/logiTitreTextView">
+                app:layout_constraintTop_toBottomOf="@id/loginTitreTextView">
 
                 <EditText
                     android:id="@+id/emailEditText"

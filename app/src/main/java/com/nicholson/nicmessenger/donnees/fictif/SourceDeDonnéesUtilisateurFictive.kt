@@ -13,4 +13,6 @@ class SourceDeDonnéesUtilisateurFictive : ISourceDeDonéesUtilisateur {
     override suspend fun seConnecter( email: String, motDePasse: String ): Utilisateur {
         return FaussesDonnées.listeUtilisateur[0]
     }
+
+    override suspend fun demandeMotDePasseOublié( email: String ) {  }
 }

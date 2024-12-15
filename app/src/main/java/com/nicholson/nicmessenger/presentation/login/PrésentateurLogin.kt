@@ -63,10 +63,30 @@ class PrésentateurLogin(
     override fun traiterMotDePasseOublié() {
         vue.cacherEditTextPasswordEtBtnLogin()
         vue.changerListenerMotDePasseOubliéVersConfirmerEnvEmail()
-
     }
 
     override fun traiterConfirmerMotDePasseOublié() {
+        val email = vue.obtenirEmail()
+        job = CoroutineScope( iocontext ).launch {
+            try {
+                modèle.demandeMotDePasseOublié( email )
+                CoroutineScope( Dispatchers.Main ).launch {
+                    vue.montrerMessageEmailMotDePasseOubliéEnvoyé()
+                    vue.renitialiserListenerMotDePasseOublié()
+                }
+            } catch ( ex : EmailInvalideException ){
+                CoroutineScope( Dispatchers.Main ).launch {
+                    vue.montrerEmailInvalide()
+                }
+            } catch ( ex : SourceDeDonnéesException ) {
+                CoroutineScope( Dispatchers.Main ).launch {
+                    vue.montrerErreurRéseau()
+                }
+            }
+        }
+    }
+
+    override fun traiterAnnulerMotDePasseOublié() {
         vue.renitialiserListenerMotDePasseOublié()
     }
 }
