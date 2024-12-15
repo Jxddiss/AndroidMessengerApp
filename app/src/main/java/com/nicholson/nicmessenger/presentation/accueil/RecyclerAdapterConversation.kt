@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
@@ -16,8 +17,7 @@ import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.otd.ConversationItemOTD
 
 class RecyclerAdapterConversation(
-    val conversationsOTD : List<ConversationItemOTD>,
-    val context : Context
+    val conversationsOTD : List<ConversationItemOTD>
 ) : RecyclerView.Adapter<RecyclerAdapterConversation.MyViewHolder>(){
 
     var itemCliquéÉvènement: ((Int) ->Unit)? = null
@@ -43,27 +43,40 @@ class RecyclerAdapterConversation(
 
     override fun onBindViewHolder( holder: MyViewHolder, position: Int ) {
         holder.nomTextView.text = conversationsOTD[position].nomComplet
-        holder.statutTextView.text =  getStatutStringFromStatut( conversationsOTD[position].statut )
+        holder.statutTextView.text =
+            getStatutStringFromStatut( conversationsOTD[position].statut, holder.itemView.context )
         holder.descriptionTextView.text = conversationsOTD[position].description
         val avatar = conversationsOTD[position].avatar
         if ( avatar.contains("buddy2") ){
             holder.avatarImageView.background =
-                AppCompatResources.getDrawable( context, R.drawable.buddy2 )
+                AppCompatResources.getDrawable( holder.itemView.context, R.drawable.buddy2 )
         } else {
-            Glide.with( context )
+            Glide.with( holder.itemView.context )
                 .load( avatar )
                 .into( holder.avatarImageView )
         }
         holder.statutCardView.backgroundTintList =
-            ColorStateList.valueOf( ContextCompat.getColor(context,
-                getColorFromStatut( conversationsOTD[position].statut ) ) )
+            ColorStateList.valueOf( ContextCompat.getColor(holder.itemView.context,
+                getColorFromStatut( conversationsOTD[position].statut, holder.itemView.context ) ) )
 
         holder.itemView.setOnClickListener{
             itemCliquéÉvènement?.invoke(position)
         }
+
+        if ( !positionAnimés.contains( position ) ) {
+            val animation = AnimationUtils.loadAnimation( holder.itemView.context,
+                R.anim.glisser_de_la_gauche )
+
+            if( !listeInitialisé ) {
+                animation.startOffset = position * 100L
+            }
+
+            holder.itemView.startAnimation(animation)
+            positionAnimés.add( position )
+        }
     }
 
-    private fun getColorFromStatut( statut : String ) : Int {
+    private fun getColorFromStatut( statut : String, context : Context ) : Int {
         return context.resources
             .getIdentifier(
                 statut,
@@ -71,7 +84,7 @@ class RecyclerAdapterConversation(
                 context.packageName )
     }
 
-    private fun getStatutStringFromStatut( statut: String ) : String {
+    private fun getStatutStringFromStatut( statut: String, context : Context ) : String {
         return context.getString(
             context.resources
                 .getIdentifier(
