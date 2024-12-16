@@ -46,16 +46,18 @@ class RecyclerAdapterConversation(
         holder.statutTextView.text =
             getStatutStringFromStatut( conversationsOTD[position].statut, holder.itemView.context )
         holder.descriptionTextView.text = conversationsOTD[position].description
+
         val avatar = conversationsOTD[position].avatar
-        if ( avatar.contains("buddy2") ){
-            holder.avatarImageView.background =
-                AppCompatResources.getDrawable( holder.itemView.context, R.drawable.buddy2 )
-        } else {
+        if ( !avatar.contains("buddy2") ){
             Glide.with( holder.itemView.context )
                 .load( avatar )
+                .placeholder( R.drawable.buddy2 )
                 .error( R.drawable.buddy2  )
                 .into( holder.avatarImageView )
+        } else {
+            holder.avatarImageView.setImageResource( R.drawable.buddy2 )
         }
+
         holder.statutCardView.backgroundTintList =
             ColorStateList.valueOf( ContextCompat.getColor(holder.itemView.context,
                 getColorFromStatut( conversationsOTD[position].statut, holder.itemView.context ) ) )

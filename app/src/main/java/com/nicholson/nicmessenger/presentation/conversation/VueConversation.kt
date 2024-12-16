@@ -90,11 +90,11 @@ class VueConversation : Fragment(), IVueConversation {
                 getColorFromStatut( conversationOTD.statut, requireContext() ) ) )
         val bannière = conversationOTD.bannière
         if ( bannière.contains("default") ){
-            banniereImageView.background =
-                AppCompatResources.getDrawable( requireContext(), R.drawable.bann )
+            banniereImageView.setImageResource( R.drawable.bann )
         } else {
             Glide.with( requireContext() )
                 .load( bannière )
+                .placeholder( R.drawable.bann )
                 .error( R.drawable.bann  )
                 .into( banniereImageView )
         }
