@@ -2,9 +2,9 @@
     <string name="app_name">NicMessenger</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="password">Password</string>
+    <string name="password">Mot de passe</string>
     <string name="se_connecter">Se connecter</string>
-    <string name="mot_de_passe_oubli">Mot de passe oublié?</string>
+    <string name="mot_de_passe_oubli">Mot de passe oublié ?</string>
     <string name="email">Email</string>
     <string name="email_mot_de_passe_oublie">Le courriel de rénitialisation du mot de passe à été envoyé</string>
     <string name="une_erreur_r_seau_c_est_produite">Une erreur réseau c\'est produite</string>
@@ -16,7 +16,7 @@
     <string name="disconnected">( Déconnecté )</string>
     <string name="inactif">( Inactif )</string>
     <string name="absent">( Absent )</string>
-    <string name="url_api">https://api.nicholsonrj.com</string>
-    <string name="url_wss">wss://api.nicholsonrj.com/ws</string>
+    <string name="url_api" translatable="false">https://api.nicholsonrj.com</string>
+    <string name="url_wss" translatable="false">wss://api.nicholsonrj.com/ws</string>
     <string name="crivez_un_message">Écrivez un message</string>
 </resources>

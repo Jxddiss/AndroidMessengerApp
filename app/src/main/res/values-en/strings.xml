@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NicMessenger</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="password">Password</string>
+    <string name="se_connecter">Login</string>
+    <string name="mot_de_passe_oubli">Forgot Password ?</string>
+    <string name="email">Email</string>
+    <string name="email_mot_de_passe_oublie">The reset password has been sent</string>
+    <string name="une_erreur_r_seau_c_est_produite">A network error occured</string>
+    <string name="identifiant_invalide">Email or Password are wrong</string>
+    <string name="confirmer">Confirm</string>
+    <string name="annuler">Cancel</string>
+    <string name="mes_conversations">My Conversations</string>
+    <string name="online">( Online )</string>
+    <string name="disconnected">( Disconnected )</string>
+    <string name="inactif">( Inactive )</string>
+    <string name="absent">( Absent )</string>
+    <string name="crivez_un_message">Write a message</string>
+</resources>
