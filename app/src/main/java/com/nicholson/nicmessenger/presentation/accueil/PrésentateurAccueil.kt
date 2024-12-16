@@ -19,6 +19,7 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
 
     private var job : Job? = null
     private lateinit var modèle : IModèle
+    private var conversations : List<Conversation> = listOf()
 
     override fun traiterDémarrage() {
         modèle = Modèle.obtenirInstance()
@@ -32,9 +33,9 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
         } else {
             vue.montrerChargement()
             job = CoroutineScope( iocontext ).launch {
-                var conversations : List<Conversation> = listOf()
                 try {
                     conversations = modèle.obtenirMesConversations()
+                    modèle.envoyerStatut()
                 } catch ( ex : AuthentificationException ) {
                     CoroutineScope( Dispatchers.Main ).launch {
                         vue.redirigerÀLogin()
@@ -64,6 +65,29 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
         vue.redirigerÀLogin()
     }
 
+    override fun attendreStatus() {
+        job = CoroutineScope( iocontext ).launch {
+            try {
+                conversations.forEachIndexed { index, conversation ->
+                    val idAutreUtilisateur = conversation.utilisateurs.firstOrNull {
+                        it.id != modèle.utilisateurConnecté?.id
+                    }?.id
+                    idAutreUtilisateur?.let { id ->
+                        Log.d( "Sub presenter", "/topic/user/status/$id" )
+                        modèle.subscribeStatus( "/topic/user/status/$id" ).collect{
+                            Log.d( "Status received presenter", it )
+                            CoroutineScope( Dispatchers.Main ).launch {
+                                mettreÀJourStatus( index, it )
+                            }
+                        }
+                    }
+                }
+            } catch ( ex : SourceDeDonnéesException ) {
+                Log.d( "Exception", "${ex.message}" )
+            }
+        }
+    }
+
     private fun convertirConversationAConversationOTD( conversation: Conversation ) : ConversationItemOTD {
         val autreUtilisateur = conversation
             .utilisateurs.first { it.id != modèle.utilisateurConnecté?.id }
@@ -74,5 +98,9 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
             description = autreUtilisateur.description,
             avatar = autreUtilisateur.avatar
         )
+    }
+
+    private fun mettreÀJourStatus( position : Int, status : String ) {
+        vue.mettreÀJourStatus( position, status )
     }
 }

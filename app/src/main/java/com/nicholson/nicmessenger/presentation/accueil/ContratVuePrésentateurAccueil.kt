@@ -10,6 +10,7 @@ interface ContratVuePrésentateurAccueil {
         fun montrerChargement()
         fun masquerChargement()
         fun attacherListeConversationsRecycler( conversationsOTDS : List<ConversationItemOTD> )
+        fun mettreÀJourStatus( position : Int, status : String )
     }
 
     interface IPrésentateurAccueil {
@@ -17,5 +18,6 @@ interface ContratVuePrésentateurAccueil {
         fun traiterObtenirConversation()
         fun traiterConversationCliquer( indice : Int )
         fun traiterDeconnexion()
+        fun attendreStatus()
     }
 }

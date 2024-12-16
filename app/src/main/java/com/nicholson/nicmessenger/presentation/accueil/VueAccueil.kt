@@ -23,6 +23,7 @@ class VueAccueil : Fragment(), IVueAccueil {
     private lateinit var bouttonDéconnexion : FloatingActionButton
     private lateinit var navController: NavController
     private lateinit var présentateur : IPrésentateurAccueil
+    private var conversations : MutableList<ConversationItemOTD> = mutableListOf()
 
 
     override fun onCreateView(
@@ -67,12 +68,19 @@ class VueAccueil : Fragment(), IVueAccueil {
     }
 
     override fun attacherListeConversationsRecycler(conversationsOTDS: List<ConversationItemOTD>) {
-        adaptateur = RecyclerAdapterConversation( conversationsOTDS )
+        conversations = conversationsOTDS.toMutableList()
+        adaptateur = RecyclerAdapterConversation( conversations )
         adaptateur.itemCliquéÉvènement = {
             présentateur.traiterConversationCliquer( it )
         }
         recyclerConversation.layoutManager = LinearLayoutManager( requireContext() )
         recyclerConversation.itemAnimator = DefaultItemAnimator()
         recyclerConversation.adapter = adaptateur
+        présentateur.attendreStatus()
+    }
+
+    override fun mettreÀJourStatus(position: Int, status : String ) {
+        conversations[position].statut = status
+        adaptateur.notifyItemChanged( position )
     }
 }

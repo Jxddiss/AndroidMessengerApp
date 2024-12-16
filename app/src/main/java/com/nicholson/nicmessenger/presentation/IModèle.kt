@@ -15,14 +15,16 @@ interface IModèle {
     var indiceConversationCourrante : Int
     var conversationCourrante : Conversation?
     var token : String?
+    var currentStatus : String?
     fun cacherNav()
     fun seDéconnecter()
     suspend fun seConnecter( email : String, motDePasse : String )
+    suspend fun envoyerStatut()
     suspend fun demandeMotDePasseOublié( email : String )
     suspend fun obtenirMesConversations() : List<Conversation>
     suspend fun obtenirConversationCourrante() : Conversation
     suspend fun obtenirMessagesPrécédent() : List<Message>
     suspend fun subscribeMessage( topic : String ) : Flow<Message>
     suspend fun envoyerMessage( destination : String, contenu : String )
-
+    suspend fun subscribeStatus( topic : String ) : Flow<String>
 }

@@ -48,8 +48,9 @@ class SourceDeDonnéesStomp( val urlApiWs : String )  : ISourceDeDonnéesStomp {
     }
 
     override suspend fun <T> sendMessage( destination: String, message: T ) {
+        val messageToSend = if (message is String) message else GsonInstance.obtenirInstance().toJson(message)
         val stompClient = StompClientInstance.obtenirInstance( urlApiWs )
-        val sub = stompClient.send( destination, GsonInstance.obtenirInstance().toJson( message ) )
+        val sub = stompClient.send( destination, messageToSend )
             .subscribe(
                 { Log.d("Sending message", "Sent data!") },
                 { error -> Log.d("Sending message", "Encountered error while sending data!", error) }

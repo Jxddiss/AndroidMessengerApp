@@ -17,7 +17,7 @@ import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.otd.ConversationItemOTD
 
 class RecyclerAdapterConversation(
-    val conversationsOTD : List<ConversationItemOTD>
+    val conversationsOTD : MutableList<ConversationItemOTD>
 ) : RecyclerView.Adapter<RecyclerAdapterConversation.MyViewHolder>(){
 
     var itemCliquéÉvènement: ((Int) ->Unit)? = null

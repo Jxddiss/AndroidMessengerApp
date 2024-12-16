@@ -5,8 +5,10 @@ import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
+import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
+import com.nicholson.nicmessenger.domaine.service.ObtenirStatus
 import com.nicholson.nicmessenger.donnees.http.ClientHttp
 import com.nicholson.nicmessenger.donnees.websocket.StompClientInstance
 import kotlinx.coroutines.flow.Flow
@@ -31,12 +33,22 @@ class Modèle private constructor() : IModèle {
     override var conversationCourrante : Conversation? = null
     override var token: String? = null
     override var seDéconnecter: (() -> Unit)? = null
+    override var currentStatus: String? = null
 
     override suspend fun seConnecter( email: String, motDePasse: String ){
         val (tokenObtenue, utilisateur) = Authentification.seConnecter( email, motDePasse )
         token = tokenObtenue
         utilisateurConnecté = utilisateur
         estConnecté = true
+        currentStatus = "online"
+    }
+
+    override suspend fun envoyerStatut() {
+        utilisateurConnecté?.let { utilisateur ->
+            currentStatus?.let {
+                ManipulerStatut.envoyerStatut( utilisateur.id, it )
+            }
+        }
     }
 
     override suspend fun demandeMotDePasseOublié( email: String ) {
@@ -73,7 +85,7 @@ class Modèle private constructor() : IModèle {
         return ObtenirMessages.messageListener( topic )
     }
 
-    override suspend fun envoyerMessage(destination: String, contenu : String) {
+    override suspend fun envoyerMessage( destination: String, contenu : String ) {
         EnvoyerMessage.envoyerMessage(
             destination = destination,
             contenu = contenu,
@@ -81,5 +93,8 @@ class Modèle private constructor() : IModèle {
             conversationCourrante?.id ?: 0L )
     }
 
+    override suspend fun subscribeStatus( topic: String ): Flow<String> {
+        return ObtenirStatus.subscribeStatus( topic )
+    }
 
 }

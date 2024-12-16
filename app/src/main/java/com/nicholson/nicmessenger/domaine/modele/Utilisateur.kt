@@ -4,7 +4,7 @@ data class Utilisateur(
     val id : Long,
     val nomComplet : String,
     val email : String,
-    val statut : String,
+    var statut : String,
     val description : String,
     val avatar : String,
     val banniere : String )
