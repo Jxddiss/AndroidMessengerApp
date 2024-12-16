@@ -26,6 +26,7 @@ class PrésentateurLogin(
         val userJSON = vue.obtenirUserEnregistré()
         if ( token != null && userJSON != null ){
             modèle.traiterConnexionEnregistré( token, userJSON )
+            modèle.montrerNavUnit?.let { it() }
             vue.redirigerÀAccueil()
         } else{
             vue.miseEnPlace()

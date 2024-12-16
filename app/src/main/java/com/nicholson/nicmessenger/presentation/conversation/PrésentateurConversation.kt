@@ -78,7 +78,7 @@ class PrésentateurConversation(
                 conversation?.let {
                     try {
                         modèle.envoyerMessage(
-                            destination = "/chat/${it.id}",
+                            destination = "/app/chat/${it.id}",
                             contenu = messageContenu )
                     } catch ( ex : SourceDeDonnéesException ) {
                         Log.d("Exception : ", ex.message.toString())

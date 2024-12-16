@@ -1,14 +1,15 @@
 package com.nicholson.nicmessenger.donnees.websocket
 
 import ua.naiksoftware.stomp.Stomp
-import ua.naiksoftware.stomp.StompHeader
-import ua.naiksoftware.stomp.client.StompClient
+import ua.naiksoftware.stomp.StompClient
+import ua.naiksoftware.stomp.dto.StompHeader
 
 class StompClientInstance {
     companion object {
         @Volatile
         private var instance : StompClient? = null
-        private var headers : List<StompHeader>? = null
+        var headers : List<StompHeader>? = null
+        var currentUrlApiWs : String = ""
 
         fun obtenirInstance( urlApiWs : String ) =
             instance ?: synchronized(this) {
@@ -17,17 +18,14 @@ class StompClientInstance {
 
         private fun builStompClient( urlApiWs : String ) : StompClient {
             val stompClient = Stomp.over( Stomp.ConnectionProvider.OKHTTP, urlApiWs )
+            currentUrlApiWs = urlApiWs
             return stompClient
         }
 
         fun addToken( token : String ) {
             headers = listOf( StompHeader("Authorization", "Bearer $token") )
-        }
-
-        fun connect(){
-            headers?.let {
-                instance?.connect( headers )
-            }
+            instance?.disconnect()
+            obtenirInstance( currentUrlApiWs ).connect( headers )
         }
     }
 }

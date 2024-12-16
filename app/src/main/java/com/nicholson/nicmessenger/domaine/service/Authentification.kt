@@ -27,7 +27,6 @@ class Authentification {
             val ( token, utilisateur ) = sourceDeDonnées.seConnecter( email, motDePasse )
             ClientHttp.ajouterToken( token )
             StompClientInstance.addToken( token )
-            StompClientInstance.connect()
             return  token to utilisateur
         }
 
@@ -39,9 +38,7 @@ class Authentification {
         fun setupToken( token : String, json : String ) : Pair<String, Utilisateur> {
             ClientHttp.ajouterToken( token )
             StompClientInstance.addToken( token )
-            StompClientInstance.connect()
             val utilisateur = GsonInstance.obtenirInstance().fromJson( json, Utilisateur::class.java )
-
             return token to utilisateur
         }
 

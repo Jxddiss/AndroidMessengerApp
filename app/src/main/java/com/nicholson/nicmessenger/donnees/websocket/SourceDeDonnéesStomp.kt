@@ -43,13 +43,16 @@ class SourceDeDonnéesStomp( val urlApiWs : String )  : ISourceDeDonnéesStomp {
 
         awaitClose {
             Log.d("Cancelling subscribe", "In source")
-            subscription.unsubscribe()
+            subscription.dispose()
         }
     }
 
     override suspend fun <T> sendMessage( destination: String, message: T ) {
-        Log.d("Sending message", GsonInstance.obtenirInstance().toJson( message ) )
         val stompClient = StompClientInstance.obtenirInstance( urlApiWs )
         stompClient.send( destination, GsonInstance.obtenirInstance().toJson( message ) )
+            .subscribe(
+                { Log.d("Sending message", "Sent data!") },
+                { error -> Log.d("Sending message", "Encountered error while sending data!", error) }
+            )
     }
 }

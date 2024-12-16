@@ -12,6 +12,7 @@ import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesConversationHttp
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesUtilisateurHttp
 import com.nicholson.nicmessenger.donnees.websocket.SourceDeDonnéesStomp
+import com.nicholson.nicmessenger.donnees.websocket.StompClientInstance
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,13 +25,16 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        StompClientInstance.currentUrlApiWs = getString( R.string.url_wss )
+
+        val sourceDeDonnéesStomp = SourceDeDonnéesStomp( getString( R.string.url_wss ) )
         Authentification.sourceDeDonnées =
             SourceDeDonnéesUtilisateurHttp( getString( R.string.url_api ) )
         val sourceDeDonnéesConversation =
             SourceDeDonnéesConversationHttp( getString( R.string.url_api ) )
         ObtenirConversations.sourceDeDonnées = sourceDeDonnéesConversation
 
-        val sourceDeDonnéesStomp = SourceDeDonnéesStomp( getString( R.string.url_wss ) )
+
         ObtenirMessages.sourceDeDonnéesStomp = sourceDeDonnéesStomp
         ObtenirMessages.sourceDeDonnéesConversation = sourceDeDonnéesConversation
         EnvoyerMessage.sourceDeDonnéesStomp = sourceDeDonnéesStomp
