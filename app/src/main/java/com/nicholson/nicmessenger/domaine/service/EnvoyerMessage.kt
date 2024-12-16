@@ -1,5 +1,6 @@
 package com.nicholson.nicmessenger.domaine.service
 
+import com.nicholson.nicmessenger.domaine.modele.Conversation
 import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.donnees.ISourceDeDonnéesStomp
 import com.nicholson.nicmessenger.donnees.fictif.SourceDeDonnéesStompFictive
@@ -9,7 +10,11 @@ class EnvoyerMessage {
     companion object {
         var sourceDeDonnéesStomp : ISourceDeDonnéesStomp = SourceDeDonnéesStompFictive()
 
-        suspend fun envoyerMessage( destination : String, contenu : String, nomSender : String ) {
+        suspend fun envoyerMessage( destination : String,
+                                    contenu : String,
+                                    nomSender : String,
+                                    idConv : Long ) {
+
             val message = Message(
                 id = 0L,
                 nomSender = nomSender,
@@ -17,7 +22,8 @@ class EnvoyerMessage {
                 type = "text",
                 date = LocalDateTime.now(),
                 style = null,
-                winkName = null
+                winkName = null,
+                conversation = Conversation( idConv, setOf() )
             )
 
             sourceDeDonnéesStomp.sendMessage( destination, message )

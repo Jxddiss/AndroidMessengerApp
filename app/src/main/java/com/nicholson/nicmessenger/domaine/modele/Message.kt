@@ -9,5 +9,6 @@ data class Message(
     val nomSender : String,
     var type : String,
     var style : String?,
-    val winkName : String?
+    val winkName : String?,
+    val conversation: Conversation?
 )

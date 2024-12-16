@@ -62,7 +62,8 @@ class FaussesDonnées {
                 nomSender = "Alice Dupont",
                 type = "text",
                 style = "normal",
-                winkName = ""
+                winkName = "",
+                conversation = null
             ),
             Message(
                 id = 2L,
@@ -71,7 +72,8 @@ class FaussesDonnées {
                 nomSender = "Bob Martin",
                 type = "text",
                 style = "bold",
-                winkName = ""
+                winkName = "",
+                conversation = null
             ),
             Message(
                 id = 3L,
@@ -80,7 +82,8 @@ class FaussesDonnées {
                 nomSender = "Alice Dupont",
                 type = "text",
                 style = "italic",
-                winkName = "funnyGif"
+                winkName = "funnyGif",
+                conversation = null
             ),
             Message(
                 id = 4L,
@@ -89,7 +92,8 @@ class FaussesDonnées {
                 nomSender = "Bob Martin",
                 type = "text",
                 style = "normal",
-                winkName = ""
+                winkName = "",
+                conversation = null
             )
         )
 

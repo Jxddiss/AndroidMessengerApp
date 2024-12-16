@@ -10,14 +10,14 @@ interface IModèle {
     var utilisateurConnecté : Utilisateur?
     var montrerNavUnit : (() -> Unit)?
     var cacherNavUnit : (() -> Unit)?
+    var seDéconnecter : (() -> Unit)?
     var conversations : List<Conversation>
     var indiceConversationCourrante : Int
     var conversationCourrante : Conversation?
     var token : String?
     fun cacherNav()
-    fun obtenirUserJson() : String?
-    fun traiterConnexionEnregistré( token : String, userJson : String )
-    suspend fun seConnecter( email : String, motDePasse : String ) : Pair<String, String>
+    fun seDéconnecter()
+    suspend fun seConnecter( email : String, motDePasse : String )
     suspend fun demandeMotDePasseOublié( email : String )
     suspend fun obtenirMesConversations() : List<Conversation>
     suspend fun obtenirConversationCourrante() : Conversation
