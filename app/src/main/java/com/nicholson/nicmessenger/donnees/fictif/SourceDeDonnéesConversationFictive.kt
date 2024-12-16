@@ -11,12 +11,6 @@ class SourceDeDonnéesConversationFictive : ISourceDeDonnéesConversation {
         }
     }
 
-    override suspend fun obtenirConversationParId( id: Long ): Conversation {
-        return FaussesDonnées.listeConversations.first {
-            it.id == id
-        }
-    }
-
     override suspend fun obtenirMessagesDeConversation(id: Long): List<Message> {
         return FaussesDonnées.listeMessages
     }

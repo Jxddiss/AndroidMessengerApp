@@ -36,7 +36,9 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                 try {
                     conversations = modèle.obtenirMesConversations()
                 } catch ( ex : AuthentificationException ) {
-                    vue.redirigerÀLogin()
+                    CoroutineScope( Dispatchers.Main ).launch {
+                        vue.redirigerÀLogin()
+                    }
                 } catch ( ex : SourceDeDonnéesException ) {
                     Log.d( "Exception", "message : ${ex.message}" )
                 }

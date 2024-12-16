@@ -1,0 +1,103 @@
+package com.nicholson.nicmessenger.donnees.http
+
+import android.util.Log
+import com.google.gson.JsonSyntaxException
+import com.nicholson.nicmessenger.domaine.modele.Utilisateur
+import com.nicholson.nicmessenger.donnees.ISourceDeDonéesUtilisateur
+import com.nicholson.nicmessenger.donnees.exceptions.AuthentificationException
+import com.nicholson.nicmessenger.donnees.exceptions.IdentifiantsException
+import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
+import com.nicholson.nicmessenger.donnees.jsonutils.GsonInstance
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okio.IOException
+
+class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesUtilisateur {
+
+    override suspend fun seConnecter(email: String, motDePasse: String): Pair<String, Utilisateur> {
+        val urlRequête = "$urlApi/login"
+
+        val clientHttp = ClientHttp.obtenirInstance()
+
+        try {
+
+            val donnéesJson = GsonInstance.obtenirInstance().toJson(
+                mapOf(
+                    "email" to email,
+                    "password" to motDePasse
+                )
+            )
+
+            val corpsDeRequête = donnéesJson
+                .toRequestBody("application/json".toMediaTypeOrNull())
+
+            val requête = Request.Builder()
+                .url( urlRequête )
+                .post( corpsDeRequête )
+                .build()
+
+            val réponse = clientHttp.newCall( requête ).execute()
+            if ( réponse.code == 200 ) {
+                val corpsDeRéponse = réponse.body?.string()
+                réponse.body?.close()
+                if( corpsDeRéponse != null ){
+                    val utilisateur = GsonInstance.obtenirInstance()
+                        .fromJson( corpsDeRéponse, Utilisateur::class.java )
+
+                    val token = réponse.headers["Jwt-Token"] ?: ""
+                    return token to utilisateur
+                } else {
+                    throw SourceDeDonnéesException( "Corps de réponse vide" )
+                }
+            } else if( réponse.code == 400 || réponse.code == 401 || réponse.code == 403 ) {
+                Log.d("identifiant", donnéesJson)
+                Log.d("Exception", "Code : ${réponse.code}")
+                réponse.body?.string()?.let { Log.d("Corps de réponse", it) }
+                throw IdentifiantsException("Code : ${réponse.code}")
+            } else {
+                throw SourceDeDonnéesException("Code : ${réponse.code}")
+            }
+        } catch( ex : JsonSyntaxException) {
+            throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
+        } catch( ex : IOException ) {
+            throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
+        }
+    }
+
+    override suspend fun demandeMotDePasseOublié( email: String ) {
+        val urlRequête = "$urlApi/reset-password"
+
+        val clientHttp = ClientHttp.obtenirInstance()
+
+        try {
+
+            val donnéesJson = GsonInstance.obtenirInstance().toJson(
+                mapOf(
+                    "email" to email
+                )
+            )
+
+            val corpsDeRequête = donnéesJson
+                .toRequestBody("application/json".toMediaTypeOrNull())
+
+            val requête = Request.Builder()
+                .url( urlRequête )
+                .post( corpsDeRequête )
+                .build()
+
+            val réponse = clientHttp.newCall( requête ).execute()
+            if ( réponse.code == 200 ) {
+                réponse.body?.close()
+            } else if( réponse.code == 403 || réponse.code == 401 ) {
+                throw AuthentificationException("Code : ${réponse.code}")
+            } else {
+                throw SourceDeDonnéesException("Code : ${réponse.code}")
+            }
+        } catch( ex : JsonSyntaxException) {
+            throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
+        } catch( ex : IOException ) {
+            throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
+        }
+    }
+}

@@ -11,9 +11,5 @@ class ObtenirConversations {
         suspend fun obtenirMesConversations( id : Long ) : List<Conversation> {
             return sourceDeDonnées.obtenirConversation( id )
         }
-
-        suspend fun obtenirConversationParId( id : Long ) : Conversation {
-            return sourceDeDonnées.obtenirConversationParId( id )
-        }
     }
 }

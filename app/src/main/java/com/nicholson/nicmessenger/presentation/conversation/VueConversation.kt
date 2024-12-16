@@ -105,6 +105,7 @@ class VueConversation : Fragment(), IVueConversation {
         recyclerMessages.layoutManager = LinearLayoutManager( requireContext() )
         recyclerMessages.itemAnimator = DefaultItemAnimator()
         recyclerMessages.adapter = adapteur
+        recyclerMessages.scrollToPosition( adapteur.messagesOTD.size - 1 )
     }
 
     override fun ajouterMessage(messageOTD: MessageOTD) {
@@ -126,7 +127,9 @@ class VueConversation : Fragment(), IVueConversation {
     }
 
     override fun obtenirContenueMessage(): String {
-        return messageEditText.text.toString()
+        val contenu =  messageEditText.text.toString()
+        messageEditText.text.clear()
+        return contenu
     }
 
     private fun getColorFromStatut( statut : String, context : Context) : Int {

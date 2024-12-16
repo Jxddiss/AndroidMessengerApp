@@ -27,9 +27,12 @@ class Modèle private constructor() : IModèle {
     override var conversations: List<Conversation> = listOf()
     override var indiceConversationCourrante: Int = 0
     override var conversationCourrante : Conversation? = null
+    override var token: String? = null
 
     override suspend fun seConnecter( email: String, motDePasse: String ) {
-        utilisateurConnecté = Authentification.seConnecter( email, motDePasse )
+        val (tokenObtenue, utilisateur) = Authentification.seConnecter( email, motDePasse )
+        token = tokenObtenue
+        utilisateurConnecté = utilisateur
         estConnecté = true
     }
 
@@ -45,12 +48,8 @@ class Modèle private constructor() : IModèle {
     }
 
     override suspend fun obtenirConversationCourrante(): Conversation {
-        if( conversationCourrante != null
-            && conversations[indiceConversationCourrante].id == conversationCourrante?.id ) {
-            return conversationCourrante as Conversation
-        } else {
-            return ObtenirConversations.obtenirConversationParId( conversations[indiceConversationCourrante].id )
-        }
+        conversationCourrante = conversations[indiceConversationCourrante]
+        return conversationCourrante as Conversation
     }
 
     override fun cacherNav() {

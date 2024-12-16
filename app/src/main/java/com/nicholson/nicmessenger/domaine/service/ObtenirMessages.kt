@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 class ObtenirMessages {
     companion object {
         var sourceDeDonnéesStomp : ISourceDeDonnéesStomp = SourceDeDonnéesStompFictive()
-        var sourceDeDonnéesConversation : ISourceDeDonnéesConversation = SourceDeDonnéesConversationFictive()
+        var sourceDeDonnéesConversation : ISourceDeDonnéesConversation =
+            SourceDeDonnéesConversationFictive()
 
         suspend fun obtenirMessagesPrécédents( idConversation : Long ) : List<Message> {
             return sourceDeDonnéesConversation.obtenirMessagesDeConversation( idConversation )

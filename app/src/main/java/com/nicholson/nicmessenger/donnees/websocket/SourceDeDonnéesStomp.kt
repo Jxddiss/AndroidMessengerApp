@@ -1,5 +1,6 @@
 package com.nicholson.nicmessenger.donnees.websocket
 
+import android.util.Log
 import com.google.gson.JsonSyntaxException
 import com.nicholson.nicmessenger.donnees.ISourceDeDonnéesStomp
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
@@ -19,12 +20,13 @@ class SourceDeDonnéesStomp( urlApiWs : String )  : ISourceDeDonnéesStomp {
     override suspend fun <T> subscribe( topic: String, type: Class<T> ): Flow<T> = callbackFlow {
         val subscription = stompClient.topic( topic ).subscribe(
             { messageFrame ->
+                Log.d("Message received", "In source ${messageFrame.payload}")
                 try {
                     val message =
                         GsonInstance.obtenirInstance()
                             .fromJson( messageFrame.payload, type ) as T
 
-                    trySend(message).onFailure { exception ->
+                    trySend( message ).onFailure { exception ->
                         throw
                             SourceDeDonnéesException( "Erreur dans la reception du message : " +
                                     "${exception?.message}" )
@@ -38,7 +40,10 @@ class SourceDeDonnéesStomp( urlApiWs : String )  : ISourceDeDonnéesStomp {
             }
         )
 
-        awaitClose { subscription.unsubscribe() }
+        awaitClose {
+            Log.d("Cancelling subscribe", "In source")
+            subscription.unsubscribe()
+        }
     }
 
     override suspend fun <T> sendMessage( destination: String, message: T ) {

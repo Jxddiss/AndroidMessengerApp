@@ -4,6 +4,8 @@ import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.domaine.service.exceptions.EmailInvalideException
 import com.nicholson.nicmessenger.donnees.ISourceDeDonéesUtilisateur
 import com.nicholson.nicmessenger.donnees.fictif.SourceDeDonnéesUtilisateurFictive
+import com.nicholson.nicmessenger.donnees.http.ClientHttp
+import com.nicholson.nicmessenger.donnees.websocket.StompClientInstance
 
 class Authentification {
     companion object {
@@ -19,9 +21,13 @@ class Authentification {
 
         var sourceDeDonnées : ISourceDeDonéesUtilisateur = SourceDeDonnéesUtilisateurFictive()
 
-        suspend fun seConnecter( email : String, motDePasse : String ) : Utilisateur {
+        suspend fun seConnecter( email : String, motDePasse : String ) : Pair<String, Utilisateur> {
             if( !EMAIL_REGEX.matches( email ) ) throw EmailInvalideException( "Email Invalide" )
-            return sourceDeDonnées.seConnecter( email, motDePasse )
+            val ( token, utilisateur ) = sourceDeDonnées.seConnecter( email, motDePasse )
+            ClientHttp.ajouterToken( token )
+            StompClientInstance.addToken( token )
+            StompClientInstance.connect()
+            return  token to utilisateur
         }
 
         suspend fun demandeMotDePasseOublié( email : String ) {

@@ -46,9 +46,10 @@ class PrésentateurConversation(
             }
 
             conversation?.let { it ->
-                val listMessageOTD = messages.map { message ->
-                    convertirMessageÀMessageOTD( message )
-                }
+                val listMessageOTD = messages.filter { message ->
+                    message.type == "text"
+                }.map { message -> convertirMessageÀMessageOTD( message ) }
+
                 CoroutineScope( Dispatchers.Main ).launch {
                     vue.placerConversation( convertirConversationÀConversationOTD( it ) )
                     vue.placerMessagesPrécédents( listMessageOTD )
@@ -56,8 +57,11 @@ class PrésentateurConversation(
                 }
                 try {
                     modèle.subscribeMessage("/topic/conversation/${it.id}").collect {
-                        CoroutineScope( Dispatchers.Main ).launch {
-                            vue.ajouterMessage( convertirMessageÀMessageOTD( it ) )
+                        Log.d("Message received", "In presenter")
+                        if( it.type == "text" ) {
+                            CoroutineScope( Dispatchers.Main ).launch {
+                                vue.ajouterMessage( convertirMessageÀMessageOTD( it ) )
+                            }
                         }
                     }
                 } catch ( ex : SourceDeDonnéesException ) {

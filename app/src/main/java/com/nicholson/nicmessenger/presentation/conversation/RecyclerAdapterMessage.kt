@@ -16,9 +16,6 @@ class RecyclerAdapterMessage(
     val messagesOTD : MutableList<MessageOTD>
 ) : RecyclerView.Adapter<RecyclerAdapterMessage.MyViewHolder>(){
 
-    private var positionAnimés = mutableSetOf<Int>()
-    var listeInitialisé = false
-
     class MyViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
         val nomTextView : TextView = itemView.findViewById( R.id.nomTextView )
         val messageTextView : TextView = itemView.findViewById( R.id.messageTextView )
@@ -46,18 +43,6 @@ class RecyclerAdapterMessage(
                 .load( avatar )
                 .error( R.drawable.buddy2  )
                 .into( holder.avatarImageView )
-        }
-
-        if ( !positionAnimés.contains( position ) ) {
-            val animation = AnimationUtils.loadAnimation( holder.itemView.context,
-                R.anim.glisser_de_la_gauche )
-
-            if( !listeInitialisé ) {
-                animation.startOffset = position * 100L
-            }
-
-            holder.itemView.startAnimation(animation)
-            positionAnimés.add( position )
         }
     }
 

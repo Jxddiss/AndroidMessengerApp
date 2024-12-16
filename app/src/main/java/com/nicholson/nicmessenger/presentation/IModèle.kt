@@ -13,6 +13,7 @@ interface IModèle {
     var conversations : List<Conversation>
     var indiceConversationCourrante : Int
     var conversationCourrante : Conversation?
+    var token : String?
     suspend fun seConnecter( email : String, motDePasse : String )
     suspend fun demandeMotDePasseOublié( email : String )
     suspend fun obtenirMesConversations() : List<Conversation>

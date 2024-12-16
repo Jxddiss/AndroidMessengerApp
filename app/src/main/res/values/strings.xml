@@ -16,4 +16,6 @@
     <string name="disconnected">( Déconnecté )</string>
     <string name="inactif">( Inactif )</string>
     <string name="absent">( Absent )</string>
+    <string name="url_api">https://api.nicholsonrj.com</string>
+    <string name="url_wss">wss://api.nicholsonrj.com/ws</string>
 </resources>
