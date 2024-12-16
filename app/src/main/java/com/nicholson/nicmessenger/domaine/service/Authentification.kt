@@ -5,7 +5,6 @@ import com.nicholson.nicmessenger.domaine.service.exceptions.EmailInvalideExcept
 import com.nicholson.nicmessenger.donnees.ISourceDeDonéesUtilisateur
 import com.nicholson.nicmessenger.donnees.fictif.SourceDeDonnéesUtilisateurFictive
 import com.nicholson.nicmessenger.donnees.http.ClientHttp
-import com.nicholson.nicmessenger.donnees.jsonutils.GsonInstance
 import com.nicholson.nicmessenger.donnees.websocket.StompClientInstance
 
 class Authentification {
@@ -33,17 +32,6 @@ class Authentification {
         suspend fun demandeMotDePasseOublié( email : String ) {
             if( !EMAIL_REGEX.matches( email ) ) throw EmailInvalideException( "Email Invalide" )
             sourceDeDonnées.demandeMotDePasseOublié( email )
-        }
-
-        fun setupToken( token : String, json : String ) : Pair<String, Utilisateur> {
-            ClientHttp.ajouterToken( token )
-            StompClientInstance.addToken( token )
-            val utilisateur = GsonInstance.obtenirInstance().fromJson( json, Utilisateur::class.java )
-            return token to utilisateur
-        }
-
-        fun encoderUtilisateur( utilisateur: Utilisateur ) : String {
-            return GsonInstance.obtenirInstance().toJson( utilisateur )
         }
     }
 }

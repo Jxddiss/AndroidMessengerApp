@@ -157,13 +157,13 @@
                 android:layout_height="70dp"
                 android:layout_width="0dip"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Écrivez un message">
-                <EditText
+                android:hint="@string/crivez_un_message">
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/messageEditText"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:inputType="textMultiLine" >
-                </EditText>
+                </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
             <ImageButton
                 android:id="@+id/btnSend"

@@ -10,12 +10,12 @@ interface ContratVuePrésentateurLogin {
         fun redirigerÀAccueil()
         fun montrerErreurIdentifiants()
         fun montrerErreurRéseau()
-        fun obtenirTokenEnregistré() : String?
-        fun obtenirUserEnregistré() : String?
-        fun retirerTokenEnregistré()
-        fun retirerUserEnregistré()
-        fun enregistrerTokenPréférences( token : String )
-        fun enregistrerUserPréférence( userString : String )
+        fun obtenirEmailEnregistré() : String?
+        fun obtenirMotDePasseEnregistré() : String?
+        fun retirerEmailEnregistré()
+        fun retirerMotDePasseEnregistré()
+        fun enregistrerEmailPréférences( email : String )
+        fun enregistrerMotDePassePréférence( motDePasse : String )
         fun cacherEditTextPasswordEtBtnLogin()
         fun changerListenerMotDePasseOubliéVersConfirmerEnvEmail()
         fun renitialiserListenerMotDePasseOublié()

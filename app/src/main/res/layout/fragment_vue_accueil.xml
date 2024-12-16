@@ -14,6 +14,20 @@
         app:layout_constraintStart_toEndOf="@id/guideline_start_text"
         app:layout_constraintBottom_toTopOf="@id/guideline_bottom_text"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bouttonDéconnexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/Widget.Material3.FloatingActionButton.Large.Secondary"
+        app:srcCompat="@drawable/logout"
+        app:tint="@android:color/white"
+        app:rippleColor="#19FFFFFF"
+        app:backgroundTint="@color/couleur_principale"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerConversation"
         android:layout_width="match_parent"

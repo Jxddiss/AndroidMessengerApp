@@ -59,6 +59,11 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
         vue.redirigerÀConversation()
     }
 
+    override fun traiterDeconnexion() {
+        modèle.seDéconnecter()
+        vue.redirigerÀLogin()
+    }
+
     private fun convertirConversationAConversationOTD( conversation: Conversation ) : ConversationItemOTD {
         val autreUtilisateur = conversation
             .utilisateurs.first { it.id != modèle.utilisateurConnecté?.id }

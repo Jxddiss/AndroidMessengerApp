@@ -1,32 +1,28 @@
 package com.nicholson.nicmessenger.presentation.login
 
 import android.content.SharedPreferences
-import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.login.ContratVuePrésentateurLogin.*
 
 class VueLogin : Fragment(), IVueLogin {
     private lateinit var loginTitreTextView : TextView
-    private lateinit var emailEditText : EditText
-    private lateinit var passwordEditText : EditText
+    private lateinit var emailEditText : TextInputEditText
+    private lateinit var passwordEditText : TextInputEditText
     private lateinit var textInputLayoutEmail : TextInputLayout
     private lateinit var textInputLayoutPassword : TextInputLayout
     private lateinit var btnLogin : Button
@@ -120,27 +116,23 @@ class VueLogin : Fragment(), IVueLogin {
         dialogErreur.show()
     }
 
-    override fun obtenirTokenEnregistré(): String? =
-         préférences.getString( "token", null )
+    override fun obtenirEmailEnregistré(): String? =
+        préférences.getString( "email", null )
 
-    override fun obtenirUserEnregistré(): String? =
-        préférences.getString( "user", null )
+    override fun obtenirMotDePasseEnregistré(): String? =
+        préférences.getString( "motDePasse", null )
 
+    override fun retirerEmailEnregistré() =
+        préférences.edit().remove( "email" ).apply()
 
+    override fun retirerMotDePasseEnregistré() =
+        préférences.edit().remove( "motDePasse" ).apply()
 
-    override fun retirerTokenEnregistré() =
-        préférences.edit().remove( "token" ).apply()
+    override fun enregistrerEmailPréférences(email: String) =
+        préférences.edit().putString( "email", email ).apply()
 
-    override fun retirerUserEnregistré() =
-        préférences.edit().remove( "user" ).apply()
-
-
-    override fun enregistrerTokenPréférences( token : String ) =
-        préférences.edit().putString( "token", token ).apply()
-
-    override fun enregistrerUserPréférence( userString : String ) =
-        préférences.edit().putString( "user", userString ).apply()
-
+    override fun enregistrerMotDePassePréférence(motDePasse: String) =
+        préférences.edit().putString( "motDePasse", motDePasse ).apply()
 
     override fun cacherEditTextPasswordEtBtnLogin() {
         textInputLayoutPassword.visibility = View.GONE

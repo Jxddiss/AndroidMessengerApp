@@ -16,5 +16,6 @@ interface ContratVuePrésentateurAccueil {
         fun traiterDémarrage()
         fun traiterObtenirConversation()
         fun traiterConversationCliquer( indice : Int )
+        fun traiterDeconnexion()
     }
 }

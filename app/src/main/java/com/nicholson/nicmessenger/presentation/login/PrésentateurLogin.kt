@@ -22,12 +22,10 @@ class PrésentateurLogin(
 
     override fun traiterDémarage() {
         modèle = Modèle.obtenirInstance()
-        val token = vue.obtenirTokenEnregistré()
-        val userJSON = vue.obtenirUserEnregistré()
-        if ( token != null && userJSON != null ){
-            modèle.traiterConnexionEnregistré( token, userJSON )
-            modèle.montrerNavUnit?.let { it() }
-            vue.redirigerÀAccueil()
+        val email = vue.obtenirEmailEnregistré()
+        val motDePasse = vue.obtenirMotDePasseEnregistré()
+        if ( email != null && motDePasse != null ){
+            connexion( email, motDePasse )
         } else{
             vue.miseEnPlace()
         }
@@ -45,29 +43,7 @@ class PrésentateurLogin(
         } else if( motDePasse.isEmpty() ){
             vue.montrerMotDePasseInvalide()
         } else {
-            job = CoroutineScope( iocontext ).launch {
-                try {
-                    val ( token, jsonUtilisateur ) = modèle.seConnecter( email, motDePasse )
-                    CoroutineScope( Dispatchers.Main ).launch {
-                        vue.enregistrerTokenPréférences( token )
-                        vue.enregistrerUserPréférence( jsonUtilisateur )
-                        modèle.montrerNavUnit?.let { it() }
-                        vue.redirigerÀAccueil()
-                    }
-                } catch ( ex : EmailInvalideException ){
-                    CoroutineScope( Dispatchers.Main ).launch {
-                        vue.montrerEmailInvalide()
-                    }
-                } catch ( ex : IdentifiantsException ) {
-                    CoroutineScope( Dispatchers.Main ).launch {
-                        vue.montrerErreurIdentifiants()
-                    }
-                } catch ( ex : SourceDeDonnéesException ) {
-                    CoroutineScope( Dispatchers.Main ).launch {
-                        vue.montrerErreurRéseau()
-                    }
-                }
-            }
+            connexion( email, motDePasse )
         }
     }
 
@@ -99,5 +75,39 @@ class PrésentateurLogin(
 
     override fun traiterAnnulerMotDePasseOublié() {
         vue.renitialiserListenerMotDePasseOublié()
+    }
+
+    private fun connexion( email : String, motDePasse : String ){
+        job = CoroutineScope( iocontext ).launch {
+            try {
+                modèle.seConnecter( email, motDePasse )
+                CoroutineScope( Dispatchers.Main ).launch {
+                    vue.enregistrerEmailPréférences( email )
+                    vue.enregistrerMotDePassePréférence( motDePasse )
+                    modèle.montrerNavUnit?.let { it() }
+                    modèle.seDéconnecter = { seDéconnecter() }
+                    vue.redirigerÀAccueil()
+                }
+            } catch ( ex : EmailInvalideException ){
+                CoroutineScope( Dispatchers.Main ).launch {
+                    vue.montrerEmailInvalide()
+                }
+            } catch ( ex : IdentifiantsException ) {
+                CoroutineScope( Dispatchers.Main ).launch {
+                    vue.montrerErreurIdentifiants()
+                }
+            } catch ( ex : SourceDeDonnéesException ) {
+                CoroutineScope( Dispatchers.Main ).launch {
+                    vue.montrerErreurRéseau()
+                }
+            }
+        }
+    }
+
+    private fun seDéconnecter() {
+        modèle.cacherNav()
+        modèle.estConnecté = false
+        vue.retirerEmailEnregistré()
+        vue.retirerMotDePasseEnregistré()
     }
 }

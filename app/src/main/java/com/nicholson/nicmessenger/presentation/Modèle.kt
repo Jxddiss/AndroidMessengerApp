@@ -7,6 +7,8 @@ import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
+import com.nicholson.nicmessenger.donnees.http.ClientHttp
+import com.nicholson.nicmessenger.donnees.websocket.StompClientInstance
 import kotlinx.coroutines.flow.Flow
 
 class Modèle private constructor() : IModèle {
@@ -28,13 +30,13 @@ class Modèle private constructor() : IModèle {
     override var indiceConversationCourrante: Int = 0
     override var conversationCourrante : Conversation? = null
     override var token: String? = null
+    override var seDéconnecter: (() -> Unit)? = null
 
-    override suspend fun seConnecter( email: String, motDePasse: String ) : Pair<String, String> {
+    override suspend fun seConnecter( email: String, motDePasse: String ){
         val (tokenObtenue, utilisateur) = Authentification.seConnecter( email, motDePasse )
         token = tokenObtenue
         utilisateurConnecté = utilisateur
         estConnecté = true
-        return tokenObtenue to Authentification.encoderUtilisateur(utilisateur)
     }
 
     override suspend fun demandeMotDePasseOublié( email: String ) {
@@ -57,16 +59,10 @@ class Modèle private constructor() : IModèle {
         cacherNavUnit?.let { it() }
     }
 
-    override fun obtenirUserJson(): String? {
-        return utilisateurConnecté?.let { Authentification.encoderUtilisateur(it) }
-    }
-
-    override fun traiterConnexionEnregistré( tokenEnregistré : String, userJson: String ) {
-        val ( tokenObtenue, utilisateur )
-            = Authentification.setupToken( tokenEnregistré, userJson )
-        token = tokenObtenue
-        utilisateurConnecté = utilisateur
-        estConnecté = true
+    override fun seDéconnecter() {
+        seDéconnecter?.let { it() }
+        estConnecté = false
+        ClientHttp.retirerIntercepteurs()
     }
 
     override suspend fun obtenirMessagesPrécédent(): List<Message> {
@@ -81,7 +77,8 @@ class Modèle private constructor() : IModèle {
         EnvoyerMessage.envoyerMessage(
             destination = destination,
             contenu = contenu,
-            nomSender = utilisateurConnecté?.nomComplet ?: "" )
+            nomSender = utilisateurConnecté?.nomComplet ?: "",
+            conversationCourrante?.id ?: 0L )
     }
 
 

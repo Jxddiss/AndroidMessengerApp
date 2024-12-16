@@ -18,4 +18,5 @@
     <string name="absent">( Absent )</string>
     <string name="url_api">https://api.nicholsonrj.com</string>
     <string name="url_wss">wss://api.nicholsonrj.com/ws</string>
+    <string name="crivez_un_message">Écrivez un message</string>
 </resources>

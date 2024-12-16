@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.accueil.ContratVuePrésentateurAccueil.*
 import com.nicholson.nicmessenger.presentation.otd.ConversationItemOTD
@@ -19,8 +20,10 @@ class VueAccueil : Fragment(), IVueAccueil {
     private lateinit var adaptateur : RecyclerAdapterConversation
     private lateinit var recyclerConversation : RecyclerView
     private lateinit var layoutBarChargement : ConstraintLayout
+    private lateinit var bouttonDéconnexion : FloatingActionButton
     private lateinit var navController: NavController
     private lateinit var présentateur : IPrésentateurAccueil
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,12 +37,16 @@ class VueAccueil : Fragment(), IVueAccueil {
         super.onViewCreated( vue, savedInstanceState )
         layoutBarChargement = vue.findViewById( R.id.barDeChargement )
         recyclerConversation = vue.findViewById( R.id.recyclerConversation )
+        bouttonDéconnexion = vue.findViewById( R.id.bouttonDéconnexion )
         navController = Navigation.findNavController( vue )
         présentateur = PrésentateurAccueil( this )
         présentateur.traiterDémarrage()
     }
 
     override fun miseEnPlace() {
+        bouttonDéconnexion.setOnClickListener {
+            présentateur.traiterDeconnexion()
+        }
         présentateur.traiterObtenirConversation()
     }
 

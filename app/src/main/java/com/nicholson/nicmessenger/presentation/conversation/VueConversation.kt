@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputEditText
 import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.conversation.ContratVuePrésentateurConversation.*
 import com.nicholson.nicmessenger.presentation.otd.ConversationOTD
@@ -34,7 +34,7 @@ class VueConversation : Fragment(), IVueConversation {
     private lateinit var descriptionTextView : TextView
     private lateinit var avatarImageView : ImageView
     private lateinit var banniereImageView : ImageView
-    private lateinit var messageEditText : EditText
+    private lateinit var messageEditText : TextInputEditText
     private lateinit var btnSend : ImageButton
     private lateinit var statutCardView : CardView
     private lateinit var navController: NavController
@@ -128,7 +128,7 @@ class VueConversation : Fragment(), IVueConversation {
 
     override fun obtenirContenueMessage(): String {
         val contenu =  messageEditText.text.toString()
-        messageEditText.text.clear()
+        messageEditText.text?.clear()
         return contenu
     }
 
