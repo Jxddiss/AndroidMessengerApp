@@ -14,12 +14,15 @@ interface IModèle {
     var indiceConversationCourrante : Int
     var conversationCourrante : Conversation?
     var token : String?
-    suspend fun seConnecter( email : String, motDePasse : String )
+    fun cacherNav()
+    fun obtenirUserJson() : String?
+    fun traiterConnexionEnregistré( token : String, userJson : String )
+    suspend fun seConnecter( email : String, motDePasse : String ) : Pair<String, String>
     suspend fun demandeMotDePasseOublié( email : String )
     suspend fun obtenirMesConversations() : List<Conversation>
     suspend fun obtenirConversationCourrante() : Conversation
-    fun cacherNav()
     suspend fun obtenirMessagesPrécédent() : List<Message>
     suspend fun subscribeMessage( topic : String ) : Flow<Message>
     suspend fun envoyerMessage( destination : String, contenu : String )
+
 }

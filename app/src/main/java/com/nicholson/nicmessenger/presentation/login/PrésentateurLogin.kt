@@ -22,7 +22,14 @@ class PrésentateurLogin(
 
     override fun traiterDémarage() {
         modèle = Modèle.obtenirInstance()
-        vue.miseEnPlace()
+        val token = vue.obtenirTokenEnregistré()
+        val userJSON = vue.obtenirUserEnregistré()
+        if ( token != null && userJSON != null ){
+            modèle.traiterConnexionEnregistré( token, userJSON )
+            vue.redirigerÀAccueil()
+        } else{
+            vue.miseEnPlace()
+        }
     }
 
     override fun traiterSeConnecter() {
@@ -39,8 +46,10 @@ class PrésentateurLogin(
         } else {
             job = CoroutineScope( iocontext ).launch {
                 try {
-                    modèle.seConnecter( email, motDePasse )
+                    val ( token, jsonUtilisateur ) = modèle.seConnecter( email, motDePasse )
                     CoroutineScope( Dispatchers.Main ).launch {
+                        vue.enregistrerTokenPréférences( token )
+                        vue.enregistrerUserPréférence( jsonUtilisateur )
                         modèle.montrerNavUnit?.let { it() }
                         vue.redirigerÀAccueil()
                     }

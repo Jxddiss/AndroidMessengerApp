@@ -29,11 +29,12 @@ class Modèle private constructor() : IModèle {
     override var conversationCourrante : Conversation? = null
     override var token: String? = null
 
-    override suspend fun seConnecter( email: String, motDePasse: String ) {
+    override suspend fun seConnecter( email: String, motDePasse: String ) : Pair<String, String> {
         val (tokenObtenue, utilisateur) = Authentification.seConnecter( email, motDePasse )
         token = tokenObtenue
         utilisateurConnecté = utilisateur
         estConnecté = true
+        return tokenObtenue to Authentification.encoderUtilisateur(utilisateur)
     }
 
     override suspend fun demandeMotDePasseOublié( email: String ) {
@@ -56,6 +57,18 @@ class Modèle private constructor() : IModèle {
         cacherNavUnit?.let { it() }
     }
 
+    override fun obtenirUserJson(): String? {
+        return utilisateurConnecté?.let { Authentification.encoderUtilisateur(it) }
+    }
+
+    override fun traiterConnexionEnregistré( tokenEnregistré : String, userJson: String ) {
+        val ( tokenObtenue, utilisateur )
+            = Authentification.setupToken( tokenEnregistré, userJson )
+        token = tokenObtenue
+        utilisateurConnecté = utilisateur
+        estConnecté = true
+    }
+
     override suspend fun obtenirMessagesPrécédent(): List<Message> {
         return ObtenirMessages.obtenirMessagesPrécédents( conversationCourrante?.id ?: 0L )
     }
@@ -70,4 +83,6 @@ class Modèle private constructor() : IModèle {
             contenu = contenu,
             nomSender = utilisateurConnecté?.nomComplet ?: "" )
     }
+
+
 }

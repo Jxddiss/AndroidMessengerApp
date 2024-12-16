@@ -123,13 +123,23 @@ class VueLogin : Fragment(), IVueLogin {
     override fun obtenirTokenEnregistré(): String? =
          préférences.getString( "token", null )
 
+    override fun obtenirUserEnregistré(): String? =
+        préférences.getString( "user", null )
+
+
 
     override fun retirerTokenEnregistré() =
         préférences.edit().remove( "token" ).apply()
 
+    override fun retirerUserEnregistré() =
+        préférences.edit().remove( "user" ).apply()
+
 
     override fun enregistrerTokenPréférences( token : String ) =
         préférences.edit().putString( "token", token ).apply()
+
+    override fun enregistrerUserPréférence( userString : String ) =
+        préférences.edit().putString( "user", userString ).apply()
 
 
     override fun cacherEditTextPasswordEtBtnLogin() {
@@ -143,8 +153,6 @@ class VueLogin : Fragment(), IVueLogin {
         btnLogin.setOnClickListener { présentateur.traiterConfirmerMotDePasseOublié() }
         btnForgotPassword.setOnClickListener { présentateur.traiterAnnulerMotDePasseOublié() }
     }
-
-
 
     override fun renitialiserListenerMotDePasseOublié() {
         loginTitreTextView.text = getString( R.string.se_connecter )
