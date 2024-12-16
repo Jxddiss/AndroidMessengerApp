@@ -25,6 +25,7 @@ class StompClientInstance {
         fun addToken( token : String ) {
             headers = listOf( StompHeader("Authorization", "Bearer $token") )
             instance?.disconnect()
+            instance = null
             obtenirInstance( currentUrlApiWs ).connect( headers )
         }
     }
