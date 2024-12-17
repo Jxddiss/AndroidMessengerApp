@@ -9,6 +9,7 @@ import com.nicholson.nicmessenger.donnees.exceptions.IdentifiantsException
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import com.nicholson.nicmessenger.donnees.jsonutils.GsonInstance
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
@@ -72,14 +73,9 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
 
         try {
 
-            val donnéesJson = GsonInstance.obtenirInstance().toJson(
-                mapOf(
-                    "email" to email
-                )
-            )
-
-            val corpsDeRequête = donnéesJson
-                .toRequestBody("application/json".toMediaTypeOrNull())
+            val corpsDeRequête = MultipartBody.Builder().setType( MultipartBody.FORM )
+                .addFormDataPart( "email", email )
+                .build()
 
             val requête = Request.Builder()
                 .url( urlRequête )
