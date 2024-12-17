@@ -78,6 +78,7 @@ class PrésentateurLogin(
     }
 
     private fun connexion( email : String, motDePasse : String ){
+        vue.desactiverBouttons()
         job = CoroutineScope( iocontext ).launch {
             try {
                 modèle.seConnecter( email, motDePasse )
@@ -90,14 +91,17 @@ class PrésentateurLogin(
                 }
             } catch ( ex : EmailInvalideException ){
                 CoroutineScope( Dispatchers.Main ).launch {
+                    vue.reactiverBouttons()
                     vue.montrerEmailInvalide()
                 }
             } catch ( ex : IdentifiantsException ) {
                 CoroutineScope( Dispatchers.Main ).launch {
+                    vue.reactiverBouttons()
                     vue.montrerErreurIdentifiants()
                 }
             } catch ( ex : SourceDeDonnéesException ) {
                 CoroutineScope( Dispatchers.Main ).launch {
+                    vue.reactiverBouttons()
                     vue.montrerErreurRéseau()
                 }
             }

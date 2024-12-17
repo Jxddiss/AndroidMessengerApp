@@ -1,6 +1,7 @@
 package com.nicholson.nicmessenger.presentation.login
 
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -162,5 +163,19 @@ class VueLogin : Fragment(), IVueLogin {
             it.dismiss()
         }
         dialog.show()
+    }
+
+    override fun desactiverBouttons() {
+        btnLogin.isClickable = false
+        btnForgotPassword.isClickable = false
+        btnLogin.background.alpha = 100
+        btnForgotPassword.background.alpha = 100
+    }
+
+    override fun reactiverBouttons() {
+        btnLogin.isClickable = true
+        btnForgotPassword.isClickable = true
+        btnLogin.background.alpha = 255
+        btnForgotPassword.background.alpha = 255
     }
 }

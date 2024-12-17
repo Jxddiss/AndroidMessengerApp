@@ -20,6 +20,8 @@ interface ContratVuePrésentateurLogin {
         fun changerListenerMotDePasseOubliéVersConfirmerEnvEmail()
         fun renitialiserListenerMotDePasseOublié()
         fun montrerMessageEmailMotDePasseOubliéEnvoyé()
+        fun desactiverBouttons()
+        fun reactiverBouttons()
     }
 
     interface IPrésentateurLogin {

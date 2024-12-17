@@ -35,7 +35,6 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
             job = CoroutineScope( iocontext ).launch {
                 try {
                     conversations = modèle.obtenirMesConversations()
-                    modèle.envoyerStatut()
                 } catch ( ex : AuthentificationException ) {
                     CoroutineScope( Dispatchers.Main ).launch {
                         vue.redirigerÀLogin()
