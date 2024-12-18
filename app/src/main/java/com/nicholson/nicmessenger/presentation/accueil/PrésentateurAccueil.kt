@@ -35,6 +35,7 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
             job = CoroutineScope( iocontext ).launch {
                 try {
                     conversations = modèle.obtenirMesConversations()
+                    modèle.envoyerStatut()
                 } catch ( ex : AuthentificationException ) {
                     CoroutineScope( Dispatchers.Main ).launch {
                         vue.redirigerÀLogin()
@@ -73,10 +74,12 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                     }?.id
                     idAutreUtilisateur?.let { id ->
                         Log.d( "Sub presenter", "/topic/user/status/$id" )
-                        modèle.subscribeStatus( "/topic/user/status/$id" ).collect{
-                            Log.d( "Status received presenter", it )
-                            CoroutineScope( Dispatchers.Main ).launch {
-                                mettreÀJourStatus( index, it )
+                        launch {
+                            modèle.subscribeStatus( "/topic/user/status/$id" ).collect{
+                                Log.d( "Status received presenter", it )
+                                CoroutineScope( Dispatchers.Main ).launch {
+                                    mettreÀJourStatus( index, it )
+                                }
                             }
                         }
                     }
