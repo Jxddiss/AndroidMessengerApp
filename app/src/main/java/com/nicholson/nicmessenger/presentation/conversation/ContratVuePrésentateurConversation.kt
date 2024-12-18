@@ -14,6 +14,7 @@ interface ContratVuePrésentateurConversation {
         fun montrerChargement()
         fun masquerChargement()
         fun obtenirContenueMessage() : String
+        fun mettreÀJourStatusAmi( status : String )
     }
 
     interface IPrésentateurConversation {
@@ -21,5 +22,6 @@ interface ContratVuePrésentateurConversation {
         fun traiterObtenirConversation()
         fun traiterEnvoieMessage()
         fun traiterEnvoieWizz()
+        fun attendreStatus()
     }
 }

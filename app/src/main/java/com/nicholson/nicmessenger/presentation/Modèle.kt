@@ -77,6 +77,12 @@ class Modèle private constructor() : IModèle {
         ClientHttp.retirerIntercepteurs()
     }
 
+    override fun mettreÀJourStatusAmi(status: String, position: Int ) {
+        conversations[position].utilisateurs.first {
+            it.id != utilisateurConnecté?.id
+        }.statut = status
+    }
+
     override suspend fun obtenirMessagesPrécédent(): List<Message> {
         return ObtenirMessages.obtenirMessagesPrécédents( conversationCourrante?.id ?: 0L )
     }

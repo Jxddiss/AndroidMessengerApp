@@ -18,6 +18,7 @@ interface IModèle {
     var currentStatus : String?
     fun cacherNav()
     fun seDéconnecter()
+    fun mettreÀJourStatusAmi(status : String, position : Int )
     suspend fun seConnecter( email : String, motDePasse : String )
     suspend fun envoyerStatut()
     suspend fun demandeMotDePasseOublié( email : String )

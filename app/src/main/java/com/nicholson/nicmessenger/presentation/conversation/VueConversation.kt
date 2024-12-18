@@ -107,6 +107,7 @@ class VueConversation : Fragment(), IVueConversation {
                 .error( R.drawable.bann  )
                 .into( banniereImageView )
         }
+        présentateur.attendreStatus()
     }
 
     override fun placerMessagesPrécédents( messagesOTDS: List<MessageOTD> ) {
@@ -159,6 +160,12 @@ class VueConversation : Fragment(), IVueConversation {
         val contenu =  messageEditText.text.toString()
         messageEditText.text?.clear()
         return contenu
+    }
+
+    override fun mettreÀJourStatusAmi( status: String ) {
+        statutCardView.backgroundTintList =
+            ColorStateList.valueOf( ContextCompat.getColor( requireContext(),
+                getColorFromStatut( status, requireContext() ) ) )
     }
 
     private fun getColorFromStatut( statut : String, context : Context) : Int {

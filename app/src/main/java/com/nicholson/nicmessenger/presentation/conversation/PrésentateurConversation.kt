@@ -59,7 +59,6 @@ class PrésentateurConversation(
                 modèle.subscribeMessage("/topic/conversation/${it.id}")
                     .catch {
                         Log.d("Exception : ", it.message.toString())
-
                     }.collect {
                         Log.d("Message received", "In presenter")
                         if( it.type == "text" ) {
@@ -91,6 +90,25 @@ class PrésentateurConversation(
         job = CoroutineScope( iocontext ).launch {
             conversation?.let {
                 envoyerMessage( it.id, "", "nudge" )
+            }
+        }
+    }
+
+    override fun attendreStatus() {
+        job = CoroutineScope( iocontext ).launch {
+            val idAutreUtilisateur = conversation?.utilisateurs?.firstOrNull {
+                it.id != modèle.utilisateurConnecté?.id
+            }?.id
+
+            idAutreUtilisateur?.let { id ->
+                modèle.subscribeStatus( "/topic/user/status/$id" )
+                    .catch {
+                        Log.d("Exception : ", it.message.toString())
+                    }.collect{
+                        CoroutineScope( Dispatchers.Main ).launch {
+                            vue.mettreÀJourStatusAmi( it )
+                        }
+                    }
             }
         }
     }

@@ -77,8 +77,9 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                         launch {
                             modèle.subscribeStatus( "/topic/user/status/$id" ).collect{
                                 Log.d( "Status received presenter", it )
+                                modèle.mettreÀJourStatusAmi( it, index )
                                 CoroutineScope( Dispatchers.Main ).launch {
-                                    mettreÀJourStatus( index, it )
+                                    vue.mettreÀJourStatus( index, it )
                                 }
                             }
                         }
@@ -100,9 +101,5 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
             description = autreUtilisateur.description,
             avatar = autreUtilisateur.avatar
         )
-    }
-
-    private fun mettreÀJourStatus( position : Int, status : String ) {
-        vue.mettreÀJourStatus( position, status )
     }
 }
