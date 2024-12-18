@@ -13,6 +13,7 @@ import com.nicholson.nicmessenger.presentation.otd.MessageOTD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 import kotlin.coroutines.CoroutineContext
@@ -48,25 +49,29 @@ class PrésentateurConversation(
             conversation?.let { it ->
                 val listMessageOTD = messages.filter { message ->
                     message.type == "text"
-                }.map { message -> convertirMessageÀMessageOTD( message ) }
+                }.map { message -> convertirMessageÀMessageOTD( message ) }.takeLast( 20 )
 
                 CoroutineScope( Dispatchers.Main ).launch {
                     vue.placerConversation( convertirConversationÀConversationOTD( it ) )
                     vue.placerMessagesPrécédents( listMessageOTD )
                     vue.masquerChargement()
                 }
-                try {
-                    modèle.subscribeMessage("/topic/conversation/${it.id}").collect {
+                modèle.subscribeMessage("/topic/conversation/${it.id}")
+                    .catch {
+                        Log.d("Exception : ", it.message.toString())
+
+                    }.collect {
                         Log.d("Message received", "In presenter")
                         if( it.type == "text" ) {
                             CoroutineScope( Dispatchers.Main ).launch {
                                 vue.ajouterMessage( convertirMessageÀMessageOTD( it ) )
                             }
+                        } else if ( it.type == "nudge" && it.nomSender != modèle.utilisateurConnecté?.nomComplet ) {
+                            CoroutineScope( Dispatchers.Main ).launch {
+                                vue.wizz()
+                            }
                         }
                     }
-                } catch ( ex : SourceDeDonnéesException ) {
-                    Log.d("Exception : ", ex.message.toString())
-                }
             }
         }
     }
@@ -76,14 +81,16 @@ class PrésentateurConversation(
         if ( messageContenu.isNotEmpty() ){
             job = CoroutineScope( iocontext ).launch {
                 conversation?.let {
-                    try {
-                        modèle.envoyerMessage(
-                            destination = "/app/chat/${it.id}",
-                            contenu = messageContenu )
-                    } catch ( ex : SourceDeDonnéesException ) {
-                        Log.d("Exception : ", ex.message.toString())
-                    }
+                    envoyerMessage( it.id, messageContenu, "text" )
                 }
+            }
+        }
+    }
+
+    override fun traiterEnvoieWizz() {
+        job = CoroutineScope( iocontext ).launch {
+            conversation?.let {
+                envoyerMessage( it.id, "", "nudge" )
             }
         }
     }
@@ -112,6 +119,17 @@ class PrésentateurConversation(
             nomSender = message.nomSender,
             avatar = autreAvatar
         )
+    }
+
+    private suspend fun envoyerMessage( idConv : Long, messageContenu : String, type : String ) {
+        try {
+            modèle.envoyerMessage(
+                destination = "/app/chat/${idConv}",
+                contenu = messageContenu,
+                type = type )
+        } catch ( ex : SourceDeDonnéesException ) {
+            Log.d("Exception : ", ex.message.toString())
+        }
     }
 
 }

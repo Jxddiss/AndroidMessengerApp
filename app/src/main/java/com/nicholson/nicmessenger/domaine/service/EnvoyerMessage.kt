@@ -13,13 +13,14 @@ class EnvoyerMessage {
         suspend fun envoyerMessage( destination : String,
                                     contenu : String,
                                     nomSender : String,
+                                    type : String,
                                     idConv : Long ) {
 
             val message = Message(
                 id = 0L,
                 nomSender = nomSender,
                 contenu = contenu,
-                type = "text",
+                type = type,
                 date = LocalDateTime.now(),
                 style = null,
                 winkName = null,

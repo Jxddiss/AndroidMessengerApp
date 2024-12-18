@@ -9,6 +9,7 @@ interface ContratVuePrésentateurConversation {
         fun placerConversation( conversationOTD: ConversationOTD )
         fun placerMessagesPrécédents( messagesOTDS : List<MessageOTD> )
         fun ajouterMessage( messageOTD: MessageOTD )
+        fun wizz()
         fun redirigerÀLogin()
         fun montrerChargement()
         fun masquerChargement()
@@ -19,5 +20,6 @@ interface ContratVuePrésentateurConversation {
         fun traiterDémarrage()
         fun traiterObtenirConversation()
         fun traiterEnvoieMessage()
+        fun traiterEnvoieWizz()
     }
 }

@@ -25,6 +25,6 @@ interface IModèle {
     suspend fun obtenirConversationCourrante() : Conversation
     suspend fun obtenirMessagesPrécédent() : List<Message>
     suspend fun subscribeMessage( topic : String ) : Flow<Message>
-    suspend fun envoyerMessage( destination : String, contenu : String )
+    suspend fun envoyerMessage( destination : String, contenu : String, type : String  )
     suspend fun subscribeStatus( topic : String ) : Flow<String>
 }

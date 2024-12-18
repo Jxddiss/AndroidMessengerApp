@@ -85,12 +85,13 @@ class Modèle private constructor() : IModèle {
         return ObtenirMessages.messageListener( topic )
     }
 
-    override suspend fun envoyerMessage( destination: String, contenu : String ) {
+    override suspend fun envoyerMessage( destination: String, contenu : String, type : String ) {
         EnvoyerMessage.envoyerMessage(
             destination = destination,
             contenu = contenu,
             nomSender = utilisateurConnecté?.nomComplet ?: "",
-            conversationCourrante?.id ?: 0L )
+            type = type,
+            idConv = conversationCourrante?.id ?: 0L )
     }
 
     override suspend fun subscribeStatus( topic: String ): Flow<String> {

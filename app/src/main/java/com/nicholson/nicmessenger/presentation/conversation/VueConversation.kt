@@ -1,12 +1,18 @@
 package com.nicholson.nicmessenger.presentation.conversation
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.res.ColorStateList
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.CycleInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,11 +20,13 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.animation.AnimatorSetCompat.playTogether
 import com.google.android.material.textfield.TextInputEditText
 import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.conversation.ContratVuePrésentateurConversation.*
@@ -36,6 +44,7 @@ class VueConversation : Fragment(), IVueConversation {
     private lateinit var banniereImageView : ImageView
     private lateinit var messageEditText : TextInputEditText
     private lateinit var btnSend : ImageButton
+    private lateinit var btnWizz : ImageButton
     private lateinit var statutCardView : CardView
     private lateinit var navController: NavController
     private lateinit var présentateur : IPrésentateurConversation
@@ -59,15 +68,15 @@ class VueConversation : Fragment(), IVueConversation {
         banniereImageView = vue.findViewById( R.id.banniereImageView )
         messageEditText = vue.findViewById( R.id.messageEditText )
         btnSend = vue.findViewById( R.id.btnSend )
+        btnWizz = vue.findViewById( R.id.btnWizz )
         statutCardView = vue.findViewById( R.id.statutCardView )
         présentateur = PrésentateurConversation( this )
         présentateur.traiterDémarrage()
     }
 
     override fun miseEnPlace() {
-        btnSend.setOnClickListener {
-            présentateur.traiterEnvoieMessage()
-        }
+        btnSend.setOnClickListener { présentateur.traiterEnvoieMessage() }
+        btnWizz.setOnClickListener { présentateur.traiterEnvoieWizz() }
         présentateur.traiterObtenirConversation()
     }
 
@@ -103,7 +112,9 @@ class VueConversation : Fragment(), IVueConversation {
     override fun placerMessagesPrécédents( messagesOTDS: List<MessageOTD> ) {
         adapteur = RecyclerAdapterMessage( messagesOTDS.toMutableList() )
         recyclerMessages.layoutManager = LinearLayoutManager( requireContext() )
-        recyclerMessages.itemAnimator = DefaultItemAnimator()
+        recyclerMessages.itemAnimator = DefaultItemAnimator().apply {
+            addDuration = 150
+        }
         recyclerMessages.adapter = adapteur
         recyclerMessages.scrollToPosition( adapteur.messagesOTD.size - 1 )
     }
@@ -112,6 +123,24 @@ class VueConversation : Fragment(), IVueConversation {
         adapteur.messagesOTD.add( messageOTD )
         adapteur.notifyItemInserted( adapteur.messagesOTD.size -1 )
         recyclerMessages.scrollToPosition( adapteur.messagesOTD.size - 1 )
+    }
+
+    override fun wizz() {
+        val shakeAnimationX = ObjectAnimator.ofFloat(view, "translationX", 0f, 30f, -30f, 30f, -30f, 0f)
+        val shakeAnimationY = ObjectAnimator.ofFloat(view, "translationY", 0f, -20f, 20f, -20f, 20f, 0f)
+
+        val shakeAnimatorSet = AnimatorSet().apply {
+            playTogether( shakeAnimationX, shakeAnimationY )
+        }
+        shakeAnimatorSet.duration = 800
+        shakeAnimatorSet.interpolator = CycleInterpolator(1f)
+
+        val mediaPlayer = MediaPlayer.create( requireContext(),R.raw.nudge )
+        mediaPlayer.setVolume( 0.8f,0.8f )
+
+        mediaPlayer.start()
+        shakeAnimatorSet.start()
+        vibratePhone()
     }
 
     override fun redirigerÀLogin() {
@@ -148,5 +177,15 @@ class VueConversation : Fragment(), IVueConversation {
                     "string",
                     context.packageName )
         )
+    }
+
+    private fun vibratePhone() {
+        val vibrator = requireContext().getSystemService( Context.VIBRATOR_SERVICE ) as Vibrator
+
+        if (vibrator.hasVibrator()) {
+            val vibrationEffect = VibrationEffect.createOneShot(500,
+                VibrationEffect.DEFAULT_AMPLITUDE)
+            vibrator.vibrate(vibrationEffect)
+        }
     }
 }

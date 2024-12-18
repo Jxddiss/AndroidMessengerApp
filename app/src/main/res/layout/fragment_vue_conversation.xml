@@ -89,6 +89,21 @@
                 app:layout_constraintBottom_toTopOf="@id/guideline_bottom_description"
                 />
 
+            <ImageButton
+                android:id="@+id/btnWizz"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:src="@drawable/wizz"
+                android:scaleType="fitCenter"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guideline_bottom_description"
+                android:background="@drawable/circle_shape"
+                android:backgroundTint="@color/grey"/>
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_start_text"
                 android:layout_width="wrap_content"
