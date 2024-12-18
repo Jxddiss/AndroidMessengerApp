@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         StompClientInstance.currentUrlApiWs = getString( R.string.url_wss )
 
-        val sourceDeDonnéesStomp = SourceDeDonnéesStomp( getString( R.string.url_wss ) )
+        val sourceDeDonnéesStomp = SourceDeDonnéesStomp()
         ObtenirMessages.sourceDeDonnéesStomp = sourceDeDonnéesStomp
         EnvoyerMessage.sourceDeDonnéesStomp = sourceDeDonnéesStomp
         ManipulerStatut.sourceDeDonnéesStomp = sourceDeDonnéesStomp
@@ -43,10 +43,5 @@ class MainActivity : AppCompatActivity() {
         ObtenirConversations.sourceDeDonnées = sourceDeDonnéesConversation
 
         ObtenirMessages.sourceDeDonnéesConversation = sourceDeDonnéesConversation
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        StompClientInstance.obtenirInstance( getString( R.string.url_wss ) ).disconnect()
     }
 }

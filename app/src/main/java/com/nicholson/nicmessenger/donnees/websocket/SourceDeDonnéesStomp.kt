@@ -10,15 +10,15 @@ import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class SourceDeDonnéesStomp( val urlApiWs : String )  : ISourceDeDonnéesStomp {
+class SourceDeDonnéesStomp()  : ISourceDeDonnéesStomp {
 
     override suspend fun disconnect() {
-        val stompClient = StompClientInstance.obtenirInstance( urlApiWs )
+        val stompClient = StompClientInstance.obtenirInstance()
         stompClient.disconnect()
     }
 
     override suspend fun <T> subscribe( topic: String, type: Class<T> ): Flow<T> = callbackFlow {
-        val stompClient = StompClientInstance.obtenirInstance( urlApiWs )
+        val stompClient = StompClientInstance.obtenirInstance()
         val subscription = stompClient.topic( topic ).subscribe(
             { messageFrame ->
                 Log.d("Message received", "In source ${messageFrame.payload}")
@@ -49,7 +49,7 @@ class SourceDeDonnéesStomp( val urlApiWs : String )  : ISourceDeDonnéesStomp {
 
     override suspend fun <T> sendMessage( destination: String, message: T ) {
         val messageToSend = if (message is String) message else GsonInstance.obtenirInstance().toJson(message)
-        val stompClient = StompClientInstance.obtenirInstance( urlApiWs )
+        val stompClient = StompClientInstance.obtenirInstance()
         val sub = stompClient.send( destination, messageToSend )
             .subscribe(
                 { Log.d("Sending message", "Sent data!") },

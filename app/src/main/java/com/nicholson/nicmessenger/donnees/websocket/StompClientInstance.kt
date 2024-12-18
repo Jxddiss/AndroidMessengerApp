@@ -11,14 +11,13 @@ class StompClientInstance {
         var headers : List<StompHeader>? = null
         var currentUrlApiWs : String = ""
 
-        fun obtenirInstance( urlApiWs : String ) =
+        fun obtenirInstance() =
             instance ?: synchronized(this) {
-                instance ?: builStompClient( urlApiWs ).also { instance = it }
+                instance ?: builStompClient( ).also { instance = it }
             }
 
-        private fun builStompClient( urlApiWs : String ) : StompClient {
-            val stompClient = Stomp.over( Stomp.ConnectionProvider.OKHTTP, urlApiWs )
-            currentUrlApiWs = urlApiWs
+        private fun builStompClient() : StompClient {
+            val stompClient = Stomp.over( Stomp.ConnectionProvider.OKHTTP, currentUrlApiWs )
             return stompClient
         }
 
@@ -26,7 +25,7 @@ class StompClientInstance {
             headers = listOf( StompHeader("Authorization", "Bearer $token") )
             instance?.disconnect()
             instance = null
-            obtenirInstance( currentUrlApiWs ).connect( headers )
+            obtenirInstance().connect( headers )
         }
     }
 }
