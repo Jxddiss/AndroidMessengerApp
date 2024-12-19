@@ -134,10 +134,12 @@ class VueConversation : Fragment(), IVueConversation {
         shakeAnimatorSet.duration = 800
         shakeAnimatorSet.interpolator = CycleInterpolator(1f)
 
-        val mediaPlayer = MediaPlayer.create( requireContext(),R.raw.nudge )
-        mediaPlayer.setVolume( 0.8f,0.8f )
+        context?.let {
+            val mediaPlayer = MediaPlayer.create( it,R.raw.nudge )
+            mediaPlayer.setVolume( 0.8f,0.8f )
+            mediaPlayer.start()
+        }
 
-        mediaPlayer.start()
         shakeAnimatorSet.start()
         vibratePhone()
     }
@@ -161,9 +163,11 @@ class VueConversation : Fragment(), IVueConversation {
     }
 
     override fun mettreÀJourStatusAmi( status: String ) {
-        statutCardView.backgroundTintList =
-            ColorStateList.valueOf( ContextCompat.getColor( requireContext(),
-                getColorFromStatut( status, requireContext() ) ) )
+        context?.let {
+            statutCardView.backgroundTintList =
+                ColorStateList.valueOf( ContextCompat.getColor( it,
+                    getColorFromStatut( status, it ) ) )
+        }
     }
 
     private fun getColorFromStatut( statut : String, context : Context) : Int {
@@ -185,12 +189,14 @@ class VueConversation : Fragment(), IVueConversation {
     }
 
     private fun vibratePhone() {
-        val vibrator = requireContext().getSystemService( Context.VIBRATOR_SERVICE ) as Vibrator
+        context?.let {
+            val vibrator = it.getSystemService( Context.VIBRATOR_SERVICE ) as Vibrator
 
-        if (vibrator.hasVibrator()) {
-            val vibrationEffect = VibrationEffect.createOneShot(500,
-                VibrationEffect.DEFAULT_AMPLITUDE)
-            vibrator.vibrate(vibrationEffect)
+            if (vibrator.hasVibrator()) {
+                val vibrationEffect = VibrationEffect.createOneShot(500,
+                    VibrationEffect.DEFAULT_AMPLITUDE)
+                vibrator.vibrate(vibrationEffect)
+            }
         }
     }
 }
