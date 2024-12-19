@@ -39,4 +39,8 @@ class PréesentateurNavBar( val vue : IVueNavBar ) :  IPrésentateurNavBar {
     override fun traiterRedirigerÀParametre() {
         vue.redirigerÀParametre()
     }
+
+    override fun attendreNotifications() {
+
+    }
 }
