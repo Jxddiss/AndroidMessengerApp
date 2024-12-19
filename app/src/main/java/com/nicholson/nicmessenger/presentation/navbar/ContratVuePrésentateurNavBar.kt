@@ -10,6 +10,7 @@ interface ContratVuePrésentateurNavBar {
         fun redirigerÀParametre()
         fun montrerNav()
         fun cacherNav()
+        fun montrerNotification()
     }
 
     interface IPrésentateurNavBar {
@@ -19,5 +20,6 @@ interface ContratVuePrésentateurNavBar {
         fun traiterRedirigerÀAccueil()
         fun traiterRedirigerÀNotification()
         fun traiterRedirigerÀParametre()
+        fun attendreNotifications()
     }
 }

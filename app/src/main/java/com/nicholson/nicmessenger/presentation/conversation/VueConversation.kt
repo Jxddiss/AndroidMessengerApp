@@ -20,13 +20,11 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.animation.AnimatorSetCompat.playTogether
 import com.google.android.material.textfield.TextInputEditText
 import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.conversation.ContratVuePrésentateurConversation.*

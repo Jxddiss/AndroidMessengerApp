@@ -1,5 +1,6 @@
 package com.nicholson.nicmessenger.presentation.navbar
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,6 +21,7 @@ class VueNavBar : Fragment(), IVueNavBar {
     private lateinit var floatingButtonHomeNav : FloatingActionButton
     private lateinit var buttonNotification : ImageButton
     private lateinit var buttonParametres : ImageButton
+    private lateinit var indicateurNotifView : View
     private lateinit var présentateur : IPrésentateurNavBar
     private lateinit var navOptions : NavOptions
     var navHostFragment: NavHostFragment? = null
@@ -39,6 +41,7 @@ class VueNavBar : Fragment(), IVueNavBar {
         floatingButtonHomeNav = vue.findViewById( R.id.floatingButtonHomeNav )
         buttonNotification = vue.findViewById( R.id.buttonNotification )
         buttonParametres = vue.findViewById( R.id.buttonParametres )
+        indicateurNotifView = vue.findViewById( R.id.indicateurNotifView )
         navHostFragment = activity?.supportFragmentManager
             ?.findFragmentById( R.id.fragmentContainerView ) as NavHostFragment?
         navController = navHostFragment?.navController
@@ -101,12 +104,18 @@ class VueNavBar : Fragment(), IVueNavBar {
     }
 
     override fun montrerNav() {
-        Log.d("nav", "Supposer être montrer")
         view?.visibility = View.VISIBLE
     }
 
     override fun cacherNav() {
-        Log.d("nav", "Supposer être cacher")
         view?.visibility = View.GONE
+    }
+
+    override fun montrerNotification() {
+        indicateurNotifView.visibility = View.VISIBLE
+        val mediaPlayer = MediaPlayer.create( requireContext(),R.raw.type )
+        mediaPlayer.setVolume( 0.8f,0.8f )
+
+        mediaPlayer.start()
     }
 }
