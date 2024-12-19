@@ -131,11 +131,18 @@ class PrésentateurConversation(
         val autreAvatar = conversation
             ?.utilisateurs?.firstOrNull { it.nomComplet == message.nomSender }?.avatar ?: "buddy2"
 
+        val color = if ( message.style?.color != null && message.style?.color!!.isNotEmpty() ) {
+            message.style?.color
+        } else {
+            null
+        }
+
         return MessageOTD(
             contenu = message.contenu,
             date = date,
             nomSender = message.nomSender,
-            avatar = autreAvatar
+            avatar = autreAvatar,
+            color = color
         )
     }
 

@@ -1,5 +1,7 @@
 package com.nicholson.nicmessenger.presentation.conversation
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +43,13 @@ class RecyclerAdapterMessage(
                 .into( holder.avatarImageView )
         }  else {
             holder.avatarImageView.setImageResource( R.drawable.buddy2 )
+        }
+        messagesOTD[position].color?.let {
+            try {
+                holder.messageTextView.setTextColor( Color.parseColor( it ) )
+            } catch ( ex : IllegalArgumentException ) {
+                Log.d( "Color parse", "Cant parse color" )
+            }
         }
     }
 

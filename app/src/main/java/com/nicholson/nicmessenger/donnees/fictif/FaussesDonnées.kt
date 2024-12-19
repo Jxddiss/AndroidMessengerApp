@@ -3,6 +3,7 @@ package com.nicholson.nicmessenger.donnees.fictif
 import com.nicholson.nicmessenger.domaine.modele.Conversation
 import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.domaine.modele.Notification
+import com.nicholson.nicmessenger.domaine.modele.Style
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import java.time.LocalDateTime
 
@@ -61,7 +62,7 @@ class FaussesDonnées {
                 date = LocalDateTime.now().minusHours(1),
                 nomSender = "Alice Dupont",
                 type = "text",
-                style = "normal",
+                style = null,
                 winkName = "",
                 conversation = null
             ),
@@ -71,7 +72,7 @@ class FaussesDonnées {
                 date = LocalDateTime.now().minusMinutes(50),
                 nomSender = "Bob Martin",
                 type = "text",
-                style = "bold",
+                style = null,
                 winkName = "",
                 conversation = null
             ),
@@ -81,7 +82,7 @@ class FaussesDonnées {
                 date = LocalDateTime.now().minusMinutes(30),
                 nomSender = "Alice Dupont",
                 type = "text",
-                style = "italic",
+                style = null,
                 winkName = "funnyGif",
                 conversation = null
             ),
@@ -91,7 +92,7 @@ class FaussesDonnées {
                 date = LocalDateTime.now().minusMinutes(15),
                 nomSender = "Bob Martin",
                 type = "text",
-                style = "normal",
+                style = Style("#47AC2A"),
                 winkName = "",
                 conversation = null
             )
@@ -141,10 +142,10 @@ class FaussesDonnées {
         )
 
         val listMessagesJson = mutableListOf(
-            "{\"id\": 1, \"contenu\": \"Salut! Comment ça va?\", \"date\": \"2024-12-15T15:40:08.840306\", \"nomSender\": \"Alice Dupont\", \"type\": \"text\", \"style\": \"normal\", \"winkName\": \"\"}",
-            "{\"id\": 2, \"contenu\": \"Ça va bien, et toi?\", \"date\": \"2024-12-15T15:50:08.840327\", \"nomSender\": \"Bob Martin\", \"type\": \"text\", \"style\": \"bold\", \"winkName\": \"\"}",
-            "{\"id\": 3, \"contenu\": \"Regarde ce gif 😂\", \"date\": \"2024-12-15T16:10:08.840334\", \"nomSender\": \"Alice Dupont\", \"type\": \"text\", \"style\": \"italic\", \"winkName\": \"funnyGif\"}",
-            "{\"id\": 4, \"contenu\": \"Je l'adore ! 😂\", \"date\": \"2024-12-15T16:25:08.840339\", \"nomSender\": \"Bob Martin\", \"type\": \"text\", \"style\": \"normal\", \"winkName\": \"\"}"
+            "{\"id\": 1, \"contenu\": \"Salut! Comment ça va?\", \"date\": \"2024-12-15T15:40:08.840306\", \"nomSender\": \"Alice Dupont\", \"type\": \"text\", \"winkName\": \"\"}",
+            "{\"id\": 2, \"contenu\": \"Ça va bien, et toi?\", \"date\": \"2024-12-15T15:50:08.840327\", \"nomSender\": \"Bob Martin\", \"type\": \"text\", \"winkName\": \"\"}",
+            "{\"id\": 3, \"contenu\": \"Regarde ce gif 😂\", \"date\": \"2024-12-15T16:10:08.840334\", \"nomSender\": \"Alice Dupont\", \"type\": \"text\", \"winkName\": \"funnyGif\"}",
+            "{\"id\": 4, \"contenu\": \"Je l'adore ! 😂\", \"date\": \"2024-12-15T16:25:08.840339\", \"nomSender\": \"Bob Martin\", \"type\": \"text\", \"style\": \"\"{\"color\":\"#f95353\",\"fontSize\":\"1.5rem\",\"fontWeight\":\"\",\"fontFamily\":\"Roboto\",\"textShadow\":\"none\"}\"\", \"winkName\": \"\"}"
         )
     }
 }

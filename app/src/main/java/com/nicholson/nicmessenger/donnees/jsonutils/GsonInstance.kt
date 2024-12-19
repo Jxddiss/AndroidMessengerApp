@@ -2,6 +2,7 @@ package com.nicholson.nicmessenger.donnees.jsonutils
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.nicholson.nicmessenger.domaine.modele.Style
 import java.time.LocalDateTime
 
 
@@ -18,6 +19,7 @@ class GsonInstance private constructor() {
         private fun buildGson() : Gson {
             return GsonBuilder()
                 .registerTypeAdapter( LocalDateTime::class.java, JSONAdapteurDate() )
+                .registerTypeAdapter( Style::class.java, JSONAdapteurStyle() )
                 .create()
         }
     }

@@ -8,7 +8,7 @@ data class Message(
     val date : LocalDateTime,
     val nomSender : String,
     var type : String,
-    var style : String?,
+    var style : Style?,
     val winkName : String?,
     val conversation: Conversation?
 )
