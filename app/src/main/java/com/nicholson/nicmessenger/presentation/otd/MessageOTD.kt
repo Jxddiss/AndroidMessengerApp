@@ -5,5 +5,6 @@ data class MessageOTD(
     val date : String,
     val avatar : String,
     val nomSender : String,
-    val color : String?
+    val color : String?,
+    val fontSize : Float?
 )

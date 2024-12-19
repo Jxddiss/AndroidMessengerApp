@@ -1,7 +1,9 @@
 package com.nicholson.nicmessenger.presentation.conversation
 
+import android.content.res.Resources
 import android.graphics.Color
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +34,9 @@ class RecyclerAdapterMessage(
     override fun getItemCount(): Int = messagesOTD.size
 
     override fun onBindViewHolder( holder: MyViewHolder, position: Int ) {
+        holder.messageTextView.setTextColor(Color.BLACK)
+        holder.messageTextView.textSize = 16f
+
         holder.nomTextView.text = messagesOTD[position].nomSender
         holder.messageTextView.text = messagesOTD[position].contenu
         val avatar = messagesOTD[position].avatar
@@ -50,6 +55,13 @@ class RecyclerAdapterMessage(
             } catch ( ex : IllegalArgumentException ) {
                 Log.d( "Color parse", "Cant parse color" )
             }
+        }
+
+        messagesOTD[position].fontSize?.let {
+            holder.messageTextView.textSize =  TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_SP,
+                it,
+                Resources.getSystem().displayMetrics)
         }
     }
 

@@ -26,10 +26,12 @@ class PrésentateurConversation(
     private var job : Job? = null
     val formatterDate = DateTimeFormatter.ofPattern( "dd MMMM yyyy HH:MM" )
     var conversation : Conversation? = null
+    var densitéÉcran : Float = 0.0F
 
     override fun traiterDémarrage() {
         vue.montrerChargement()
         vue.miseEnPlace()
+        densitéÉcran = vue.obtenirDensitéÉcran()
     }
 
     override fun traiterObtenirConversation() {
@@ -137,12 +139,20 @@ class PrésentateurConversation(
             null
         }
 
+        val fontSize = if ( message.style?.fontSize != null && message.style?.fontSize!!.isNotEmpty() ) {
+            val fontSizeString = message.style?.fontSize!!.removeSuffix("rem")
+            fontSizeString.toFloatOrNull()?.times(16)?.div(densitéÉcran)
+        } else {
+            null
+        }
+
         return MessageOTD(
             contenu = message.contenu,
             date = date,
             nomSender = message.nomSender,
             avatar = autreAvatar,
-            color = color
+            color = color,
+            fontSize = fontSize
         )
     }
 

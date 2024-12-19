@@ -4,6 +4,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.VibrationEffect
@@ -168,6 +169,10 @@ class VueConversation : Fragment(), IVueConversation {
                 ColorStateList.valueOf( ContextCompat.getColor( it,
                     getColorFromStatut( status, it ) ) )
         }
+    }
+
+    override fun obtenirDensitéÉcran(): Float {
+        return Resources.getSystem().displayMetrics.density
     }
 
     private fun getColorFromStatut( statut : String, context : Context) : Int {

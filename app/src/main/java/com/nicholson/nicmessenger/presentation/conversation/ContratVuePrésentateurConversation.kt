@@ -15,6 +15,7 @@ interface ContratVuePrésentateurConversation {
         fun masquerChargement()
         fun obtenirContenueMessage() : String
         fun mettreÀJourStatusAmi( status : String )
+        fun obtenirDensitéÉcran() : Float
     }
 
     interface IPrésentateurConversation {
