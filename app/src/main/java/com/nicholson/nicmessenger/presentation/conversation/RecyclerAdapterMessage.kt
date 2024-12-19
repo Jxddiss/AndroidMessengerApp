@@ -22,6 +22,7 @@ class RecyclerAdapterMessage(
         val nomTextView : TextView = itemView.findViewById( R.id.nomTextView )
         val messageTextView : TextView = itemView.findViewById( R.id.messageTextView )
         val avatarImageView : ImageView = itemView.findViewById( R.id.avatarImageView )
+        val dateTextView : TextView = itemView.findViewById( R.id.dateTextView )
     }
 
     override fun onCreateViewHolder( parent: ViewGroup, viewType: Int ): MyViewHolder {
@@ -39,6 +40,8 @@ class RecyclerAdapterMessage(
 
         holder.nomTextView.text = messagesOTD[position].nomSender
         holder.messageTextView.text = messagesOTD[position].contenu
+        holder.dateTextView.text = messagesOTD[position].date
+
         val avatar = messagesOTD[position].avatar
         if ( !avatar.contains("buddy2") ) {
             Glide.with( holder.itemView.context )
