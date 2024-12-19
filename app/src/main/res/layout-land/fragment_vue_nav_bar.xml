@@ -67,6 +67,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <View
+            android:id="@+id/indicateurNotifView"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_marginBottom="48dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="#C51818"
+            android:background="@drawable/circle_shape"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintBottom_toTopOf="@+id/buttonParametres"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
+
         <ImageButton
             android:id="@+id/buttonParametres"
             android:layout_width="wrap_content"
