@@ -51,7 +51,7 @@ class PrésentateurConversation(
             conversation?.let { it ->
                 val listMessageOTD = messages.filter { message ->
                     message.type == "text"
-                }.map { message -> convertirMessageÀMessageOTD( message ) }.takeLast( 20 )
+                }.map { message -> convertirMessageÀMessageOTD( message ) }.takeLast( 25 )
 
                 CoroutineScope( Dispatchers.Main ).launch {
                     vue.placerConversation( convertirConversationÀConversationOTD( it ) )
