@@ -24,7 +24,7 @@ class PrésentateurConversation(
 ) : IPrésentateurConversation {
     private val modèle : IModèle = Modèle.obtenirInstance()
     private var job : Job? = null
-    val formatterDate = DateTimeFormatter.ofPattern( "dd MMMM yyyy HH:MM" )
+    val formatterDate = DateTimeFormatter.ofPattern( "dd MMMM yyyy HH:mm" )
     var conversation : Conversation? = null
     var densitéÉcran : Float = 0.0F
 
