@@ -20,4 +20,5 @@
     <string name="refuser">Refuse</string>
     <string name="accepter">Accept</string>
     <string name="mes_demandes">My Requests</string>
+    <string name="mes_notifications">My Notifications</string>
 </resources>
