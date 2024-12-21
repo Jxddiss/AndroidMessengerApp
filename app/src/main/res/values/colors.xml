@@ -11,4 +11,6 @@
     <color name="disconnected">#B5C52F2F</color>
     <color name="inactif">#B5E4D541</color>
     <color name="absent">#B59B9A9A</color>
+    <color name="accepter">#AB00BCD4</color>
+    <color name="refuser">#90858080</color>
 </resources>

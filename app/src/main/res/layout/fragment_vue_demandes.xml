@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+tools:context=".presentation.demande.VueDemandes">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/mes_demandes"
+    android:textSize="30sp"
+    app:layout_constraintStart_toEndOf="@id/guideline_start_text"
+    app:layout_constraintBottom_toTopOf="@id/guideline_bottom_text"/>
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/bouttonDéconnexion"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:shapeAppearance="@style/Widget.Material3.FloatingActionButton.Large.Secondary"
+    app:srcCompat="@drawable/logout"
+    app:tint="@android:color/white"
+    app:rippleColor="#19FFFFFF"
+    app:backgroundTint="@color/couleur_principale"/>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recyclerDemandes"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    tools:listitem="@layout/demande_item"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/guideline_top_recycler"/>
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_top_recycler"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.12"
+    />
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_bottom_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.1"
+    />
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_start_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.05"
+    />
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/barDeChargement"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.demande.VueDemandes">
+    android:background="@color/white"
+    android:elevation="100dp"
+    android:visibility="gone">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Demandes" />
+    <ProgressBar
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

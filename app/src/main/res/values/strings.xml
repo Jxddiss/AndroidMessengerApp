@@ -19,4 +19,7 @@
     <string name="url_api" translatable="false">https://api.nicholsonrj.com</string>
     <string name="url_wss" translatable="false">wss://api.nicholsonrj.com/ws</string>
     <string name="crivez_un_message">Écrivez un message</string>
+    <string name="refuser">Refuser</string>
+    <string name="accepter">Accepter</string>
+    <string name="mes_demandes">Mes Demandes</string>
 </resources>

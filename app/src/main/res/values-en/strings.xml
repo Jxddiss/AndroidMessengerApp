@@ -17,4 +17,7 @@
     <string name="inactif">( Inactive )</string>
     <string name="absent">( Absent )</string>
     <string name="crivez_un_message">Write a message</string>
+    <string name="refuser">Refuse</string>
+    <string name="accepter">Accept</string>
+    <string name="mes_demandes">My Requests</string>
 </resources>
