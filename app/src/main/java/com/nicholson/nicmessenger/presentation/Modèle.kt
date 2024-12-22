@@ -2,12 +2,14 @@ package com.nicholson.nicmessenger.presentation
 
 import com.nicholson.nicmessenger.domaine.modele.Conversation
 import com.nicholson.nicmessenger.domaine.modele.Message
+import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
+import com.nicholson.nicmessenger.domaine.service.ObtenirNotificationsNonLus
 import com.nicholson.nicmessenger.domaine.service.ObtenirStatus
 import com.nicholson.nicmessenger.donnees.http.ClientHttp
 import com.nicholson.nicmessenger.donnees.websocket.StompClientInstance
@@ -102,6 +104,22 @@ class Modèle private constructor() : IModèle {
 
     override suspend fun subscribeStatus( topic: String ): Flow<String> {
         return ObtenirStatus.subscribeStatus( topic )
+    }
+
+    override suspend fun obtenirNotificationsNonLu(): List<Notification> {
+        utilisateurConnecté?.let {
+            return ObtenirNotificationsNonLus.obtenirNotificationNonLus( it.id )
+        }
+        return emptyList()
+    }
+
+    override suspend fun subscribeNotifications(): Flow<Notification> {
+        return ObtenirNotificationsNonLus
+            .subscribeNotifications( utilisateurConnecté?.id ?: 0 )
+    }
+
+    override suspend fun mettreNotificationLu( idNotifications: Long ) {
+        ObtenirNotificationsNonLus.envoyerNotificationLu( idNotifications )
     }
 
 }

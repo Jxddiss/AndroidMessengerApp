@@ -10,8 +10,11 @@ import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
+import com.nicholson.nicmessenger.domaine.service.ObtenirNotificationsNonLus
 import com.nicholson.nicmessenger.domaine.service.ObtenirStatus
+import com.nicholson.nicmessenger.donnees.fictif.SourceDeDonnéesNotificationsFictive
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesConversationHttp
+import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesNotificationHttp
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesUtilisateurHttp
 import com.nicholson.nicmessenger.donnees.websocket.SourceDeDonnéesStomp
 import com.nicholson.nicmessenger.donnees.websocket.StompClientInstance
@@ -43,5 +46,8 @@ class MainActivity : AppCompatActivity() {
         ObtenirConversations.sourceDeDonnées = sourceDeDonnéesConversation
 
         ObtenirMessages.sourceDeDonnéesConversation = sourceDeDonnéesConversation
+        ObtenirNotificationsNonLus.sourceDeDonnées =
+            SourceDeDonnéesNotificationHttp( getString( R.string.url_api ) )
+        ObtenirNotificationsNonLus.sourceDeDonnéesStomp = sourceDeDonnéesStomp
     }
 }

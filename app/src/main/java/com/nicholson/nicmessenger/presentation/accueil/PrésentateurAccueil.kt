@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class PrésentateurAccueil( private val vue : IVueAccueil,
-                           private val iocontext : CoroutineContext = Dispatchers.IO ) : IPrésentateurAccueil {
+                           private val iocontext : CoroutineContext = Dispatchers.IO )
+    : IPrésentateurAccueil {
 
     private var job : Job? = null
     private lateinit var modèle : IModèle
