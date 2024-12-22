@@ -41,4 +41,5 @@ interface IModèle {
     suspend fun obtenirDemandes() : List<Demande>
     suspend fun accepterDemande( position : Int )
     suspend fun refuserDemande( position : Int )
+    suspend fun mettreÀJourProfile()
 }

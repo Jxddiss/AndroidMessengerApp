@@ -23,4 +23,7 @@
     <string name="accepter">Accepter</string>
     <string name="mes_demandes">Mes Demandes</string>
     <string name="mes_notifications">Mes Notifications</string>
+    <string name="description">Description</string>
+    <string name="statut">Statut</string>
+    <string name="mis_a_jour_profile">Votre profile à été mis à jour</string>
 </resources>

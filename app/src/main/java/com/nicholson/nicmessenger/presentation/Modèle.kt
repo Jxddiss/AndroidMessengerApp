@@ -10,6 +10,7 @@ import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
 import com.nicholson.nicmessenger.domaine.service.ManipulerDemandes
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.MettreNotificationLu
+import com.nicholson.nicmessenger.domaine.service.MettreÀJourProfile
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirDemandes
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
@@ -58,6 +59,7 @@ class Modèle private constructor() : IModèle {
         utilisateurConnecté?.let { utilisateur ->
             currentStatus?.let {
                 ManipulerStatut.envoyerStatut( utilisateur.id, it )
+                utilisateur.statut = it
             }
         }
     }
@@ -142,6 +144,12 @@ class Modèle private constructor() : IModèle {
 
     override suspend fun refuserDemande( position: Int ) {
         ManipulerDemandes.refuserDemande( listeDemandes[position].id )
+    }
+
+    override suspend fun mettreÀJourProfile() {
+        utilisateurConnecté?.let {
+            MettreÀJourProfile.mettreÀJourProfile( it )
+        }
     }
 
 }

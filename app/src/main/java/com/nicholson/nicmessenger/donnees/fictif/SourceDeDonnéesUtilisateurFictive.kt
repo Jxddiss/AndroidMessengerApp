@@ -15,4 +15,7 @@ class SourceDeDonnéesUtilisateurFictive : ISourceDeDonéesUtilisateur {
     }
 
     override suspend fun demandeMotDePasseOublié( email: String ) {  }
+    override suspend fun mettreÀJourProfile(utilisateur: Utilisateur) {
+
+    }
 }

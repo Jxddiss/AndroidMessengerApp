@@ -10,6 +10,7 @@ import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
 import com.nicholson.nicmessenger.domaine.service.ManipulerDemandes
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.MettreNotificationLu
+import com.nicholson.nicmessenger.domaine.service.MettreÀJourProfile
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirDemandes
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
@@ -42,8 +43,10 @@ class MainActivity : AppCompatActivity() {
         ManipulerStatut.sourceDeDonnéesStomp = sourceDeDonnéesStomp
         ObtenirStatus.sourceDeDonnéesStomp = sourceDeDonnéesStomp
 
-        Authentification.sourceDeDonnées =
-            SourceDeDonnéesUtilisateurHttp( getString( R.string.url_api ) )
+        val sourceDeDonnéesUtilisateur = SourceDeDonnéesUtilisateurHttp( getString( R.string.url_api ) )
+
+        Authentification.sourceDeDonnées = sourceDeDonnéesUtilisateur
+        MettreÀJourProfile.sourceDeDonnées = sourceDeDonnéesUtilisateur
 
         val sourceDeDonnéesConversation =
             SourceDeDonnéesConversationHttp( getString( R.string.url_api ) )

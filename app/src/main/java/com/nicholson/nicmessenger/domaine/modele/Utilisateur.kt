@@ -5,6 +5,6 @@ data class Utilisateur(
     val nomComplet : String,
     val email : String,
     var statut : String,
-    val description : String,
+    var description : String,
     val avatar : String,
     val banniere : String )

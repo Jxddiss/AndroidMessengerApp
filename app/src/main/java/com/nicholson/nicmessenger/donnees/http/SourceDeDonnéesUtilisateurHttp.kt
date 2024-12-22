@@ -96,4 +96,37 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
             throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
         }
     }
+
+    override suspend fun mettreÀJourProfile(utilisateur: Utilisateur) {
+        val urlRequête = "$urlApi/utilisateur/update/${utilisateur.id}"
+
+        val clientHttp = ClientHttp.obtenirInstance()
+
+        try {
+
+            val corpsDeRequête = MultipartBody.Builder().setType( MultipartBody.FORM )
+                .addFormDataPart( "nom", utilisateur.nomComplet )
+                .addFormDataPart( "description", utilisateur.description )
+                .addFormDataPart( "statut", utilisateur.statut )
+                .build()
+
+            val requête = Request.Builder()
+                .url( urlRequête )
+                .put( corpsDeRequête )
+                .build()
+
+            val réponse = clientHttp.newCall( requête ).execute()
+            if ( réponse.code == 200 ) {
+                réponse.body?.close()
+            } else if( réponse.code == 403 || réponse.code == 401 ) {
+                throw AuthentificationException("Code : ${réponse.code}")
+            } else {
+                throw SourceDeDonnéesException("Code : ${réponse.code}")
+            }
+        } catch( ex : JsonSyntaxException) {
+            throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
+        } catch( ex : IOException ) {
+            throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
+        }
+    }
 }
