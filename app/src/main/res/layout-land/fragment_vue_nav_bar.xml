@@ -62,7 +62,7 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="@color/couleur_principale"
             android:src="@drawable/bell"
-            app:layout_constraintBottom_toTopOf="@+id/buttonParametres"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAbout"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -76,12 +76,12 @@
             android:backgroundTint="#C51818"
             android:background="@drawable/circle_shape"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintBottom_toTopOf="@+id/buttonParametres"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAbout"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"/>
 
         <ImageButton
-            android:id="@+id/buttonParametres"
+            android:id="@+id/buttonAbout"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginBottom="24dp"

@@ -1,7 +1,6 @@
 package com.nicholson.nicmessenger.presentation.navbar
 
 import android.util.Log
-import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import com.nicholson.nicmessenger.presentation.IModèle
 import com.nicholson.nicmessenger.presentation.Modèle
 import com.nicholson.nicmessenger.presentation.navbar.ContratVuePrésentateurNavBar.*
@@ -47,8 +46,8 @@ class PréesentateurNavBar( val vue : IVueNavBar ,
         vue.redirigerÀNotification()
     }
 
-    override fun traiterRedirigerÀParametre() {
-        vue.redirigerÀParametre()
+    override fun traiterRedirigerÀAbout() {
+        vue.redirigerÀAbout()
     }
 
     private fun attendreNotifications() {

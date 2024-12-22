@@ -87,8 +87,8 @@
             app:destination="@id/vueLogin" />
     </fragment>
     <fragment
-        android:id="@+id/vueParametre"
-        android:name="com.nicholson.nicmessenger.presentation.parametre.VueParametre"
-        android:label="fragment_vue_parametre"
-        tools:layout="@layout/fragment_vue_parametre" />
+        android:id="@+id/vueAbout"
+        android:name="com.nicholson.nicmessenger.presentation.about.VueAbout"
+        android:label="fragment_vue_about"
+        tools:layout="@layout/fragment_vue_about" />
 </navigation>

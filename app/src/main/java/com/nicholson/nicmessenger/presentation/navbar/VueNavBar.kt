@@ -2,7 +2,6 @@ package com.nicholson.nicmessenger.presentation.navbar
 
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,7 @@ class VueNavBar : Fragment(), IVueNavBar {
     private lateinit var buttonModifier : ImageButton
     private lateinit var floatingButtonHomeNav : FloatingActionButton
     private lateinit var buttonNotification : ImageButton
-    private lateinit var buttonParametres : ImageButton
+    private lateinit var buttonAbout : ImageButton
     private lateinit var indicateurNotifView : View
     private lateinit var présentateur : IPrésentateurNavBar
     private lateinit var navOptions : NavOptions
@@ -40,7 +39,7 @@ class VueNavBar : Fragment(), IVueNavBar {
         buttonModifier = vue.findViewById( R.id.buttonModifier )
         floatingButtonHomeNav = vue.findViewById( R.id.floatingButtonHomeNav )
         buttonNotification = vue.findViewById( R.id.buttonNotification )
-        buttonParametres = vue.findViewById( R.id.buttonParametres )
+        buttonAbout = vue.findViewById( R.id.buttonAbout )
         indicateurNotifView = vue.findViewById( R.id.indicateurNotifView )
         navHostFragment = activity?.supportFragmentManager
             ?.findFragmentById( R.id.fragmentContainerView ) as NavHostFragment?
@@ -60,7 +59,7 @@ class VueNavBar : Fragment(), IVueNavBar {
         buttonModifier.setOnClickListener { présentateur.traiterRedirigerÀProfile() }
         floatingButtonHomeNav.setOnClickListener { présentateur.traiterRedirigerÀAccueil() }
         buttonNotification.setOnClickListener { présentateur.traiterRedirigerÀNotification() }
-        buttonParametres.setOnClickListener { présentateur.traiterRedirigerÀParametre() }
+        buttonAbout.setOnClickListener { présentateur.traiterRedirigerÀAbout() }
     }
 
     override fun redirigerÀDemandes() {
@@ -95,9 +94,9 @@ class VueNavBar : Fragment(), IVueNavBar {
         )
     }
 
-    override fun redirigerÀParametre() {
+    override fun redirigerÀAbout() {
         navController?.navigate(
-            resId = R.id.vueParametre,
+            resId = R.id.vueAbout,
             args = null,
             navOptions = navOptions
         )

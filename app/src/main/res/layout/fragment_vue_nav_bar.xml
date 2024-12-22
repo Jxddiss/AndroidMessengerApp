@@ -61,7 +61,7 @@
             android:backgroundTint="@color/couleur_principale"
             android:src="@drawable/bell"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonParametres"
+            app:layout_constraintEnd_toStartOf="@+id/buttonAbout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
@@ -74,17 +74,17 @@
             android:background="@drawable/circle_shape"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonParametres"
+            app:layout_constraintEnd_toStartOf="@+id/buttonAbout"
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="gone"/>
 
         <ImageButton
-            android:id="@+id/buttonParametres"
+            android:id="@+id/buttonAbout"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="24dp"
             android:backgroundTint="@color/couleur_principale"
-            android:src="@drawable/ic_gear"
+            android:src="@drawable/badge_info"
             android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
