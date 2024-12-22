@@ -7,6 +7,7 @@ import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
+import com.nicholson.nicmessenger.domaine.service.MettreNotificationLu
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
 import com.nicholson.nicmessenger.domaine.service.ObtenirNotificationsNonLus
@@ -123,7 +124,7 @@ class Modèle private constructor() : IModèle {
     }
 
     override suspend fun mettreNotificationLu( idNotifications: Long ) {
-        ObtenirNotificationsNonLus.envoyerNotificationLu( idNotifications )
+        MettreNotificationLu.envoyerNotificationLu( idNotifications )
     }
 
 }

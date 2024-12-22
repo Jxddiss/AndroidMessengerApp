@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
+import com.nicholson.nicmessenger.domaine.service.MettreNotificationLu
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
 import com.nicholson.nicmessenger.domaine.service.ObtenirNotificationsNonLus
@@ -49,5 +50,6 @@ class MainActivity : AppCompatActivity() {
         ObtenirNotificationsNonLus.sourceDeDonnées =
             SourceDeDonnéesNotificationHttp( getString( R.string.url_api ) )
         ObtenirNotificationsNonLus.sourceDeDonnéesStomp = sourceDeDonnéesStomp
+        MettreNotificationLu.sourceDeDonnéesStomp = sourceDeDonnéesStomp
     }
 }

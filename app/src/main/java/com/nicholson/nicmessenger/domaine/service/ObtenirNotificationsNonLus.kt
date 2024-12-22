@@ -20,10 +20,5 @@ class ObtenirNotificationsNonLus {
             return sourceDeDonnéesStomp
                 .subscribe( "/topic/notification/$idUtilisateur", Notification::class.java )
         }
-
-        suspend fun envoyerNotificationLu( idNotification : Long ) {
-            sourceDeDonnéesStomp
-                .sendMessage( "/app/notification/set-lu/$idNotification", idNotification )
-        }
     }
 }
