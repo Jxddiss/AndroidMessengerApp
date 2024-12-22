@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class PréesentateurNotifications( private val vue : IVueNotifications,
-                                  private val iocontext : CoroutineContext = Dispatchers.IO )
+class PrésentateurNotifications(private val vue : IVueNotifications,
+                                private val iocontext : CoroutineContext = Dispatchers.IO )
     : IPrésentateurNotifications {
 
     private var job : Job? = null

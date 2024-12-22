@@ -38,7 +38,7 @@ class VueNotifications : Fragment(), IVueNotifications {
         recycler = vue.findViewById( R.id.recyclerNotifications )
         bouttonDéconnexion = vue.findViewById( R.id.bouttonDéconnexion )
         navController = Navigation.findNavController( vue )
-        présentateur = PréesentateurNotifications( this )
+        présentateur = PrésentateurNotifications( this )
         présentateur.traiterDémarrage()
     }
 
@@ -55,6 +55,7 @@ class VueNotifications : Fragment(), IVueNotifications {
         recycler.itemAnimator = DefaultItemAnimator()
         recycler.adapter = adapteur
         présentateur.attendreNotification()
+        adapteur.listeInitialisé = true
     }
 
     override fun ajouterNotification( notificationOTD: NotificationOTD ) {

@@ -76,6 +76,7 @@ class VueAccueil : Fragment(), IVueAccueil {
         recyclerConversation.layoutManager = LinearLayoutManager( requireContext() )
         recyclerConversation.itemAnimator = DefaultItemAnimator()
         recyclerConversation.adapter = adaptateur
+        adaptateur.listeInitialisé = true
         présentateur.attendreStatus()
     }
 
