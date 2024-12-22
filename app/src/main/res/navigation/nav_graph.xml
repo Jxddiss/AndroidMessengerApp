@@ -90,5 +90,9 @@
         android:id="@+id/vueAbout"
         android:name="com.nicholson.nicmessenger.presentation.about.VueAbout"
         android:label="fragment_vue_about"
-        tools:layout="@layout/fragment_vue_about" />
+        tools:layout="@layout/fragment_vue_about" >
+        <action
+            android:id="@+id/action_vueAbout_vers_vueLogin"
+            app:destination="@id/vueLogin" />
+    </fragment>
 </navigation>

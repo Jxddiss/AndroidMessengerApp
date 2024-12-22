@@ -26,4 +26,14 @@
     <string name="description">Description</string>
     <string name="statut">Statut</string>
     <string name="mis_a_jour_profile">Votre profile à été mis à jour</string>
+    <string name="propos">À propos</string>
+    <string name="about_text">
+        Une application de messagerie instantanée inspirée de Windows Live Messenger réalisée à
+        la suite d\'une application web se trouvant à l\'adresse :
+        \n
+        <a href="https://msn.nicholsonrj.com\">https://msn.nicholsonrj.com
+        </a>
+    </string>
+    <string name="about_text_2">Tous les droits des images appartiennent à Microsoft.</string>
+    <string name="about_text_3">Développeur : Nicholson Rainville Jacques</string>
 </resources>
