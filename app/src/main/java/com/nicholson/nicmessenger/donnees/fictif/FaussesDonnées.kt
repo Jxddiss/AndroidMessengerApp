@@ -1,6 +1,7 @@
 package com.nicholson.nicmessenger.donnees.fictif
 
 import com.nicholson.nicmessenger.domaine.modele.Conversation
+import com.nicholson.nicmessenger.domaine.modele.Demande
 import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.domaine.modele.Style
@@ -146,6 +147,12 @@ class FaussesDonnées {
             "{\"id\": 2, \"contenu\": \"Ça va bien, et toi?\", \"date\": \"2024-12-15T15:50:08.840327\", \"nomSender\": \"Bob Martin\", \"type\": \"text\", \"winkName\": \"\"}",
             "{\"id\": 3, \"contenu\": \"Regarde ce gif 😂\", \"date\": \"2024-12-15T16:10:08.840334\", \"nomSender\": \"Alice Dupont\", \"type\": \"text\", \"winkName\": \"funnyGif\"}",
             "{\"id\": 4, \"contenu\": \"Je l'adore ! 😂\", \"date\": \"2024-12-15T16:25:08.840339\", \"nomSender\": \"Bob Martin\", \"type\": \"text\", \"style\": \"\"{\"color\":\"#f95353\",\"fontSize\":\"1.5rem\",\"fontWeight\":\"\",\"fontFamily\":\"Roboto\",\"textShadow\":\"none\"}\"\", \"winkName\": \"\"}"
+        )
+
+        val demandes = mutableListOf(
+            Demande( 1, listeUtilisateur[2], "en attente", false ),
+            Demande( 2, listeUtilisateur[2], "en attente", false ),
+            Demande( 3, listeUtilisateur[2], "en attente", false )
         )
     }
 }

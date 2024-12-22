@@ -1,14 +1,17 @@
 package com.nicholson.nicmessenger.presentation
 
 import com.nicholson.nicmessenger.domaine.modele.Conversation
+import com.nicholson.nicmessenger.domaine.modele.Demande
 import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
+import com.nicholson.nicmessenger.domaine.service.ManipulerDemandes
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.MettreNotificationLu
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
+import com.nicholson.nicmessenger.domaine.service.ObtenirDemandes
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
 import com.nicholson.nicmessenger.domaine.service.ObtenirNotificationsNonLus
 import com.nicholson.nicmessenger.domaine.service.ObtenirStatus
@@ -41,6 +44,7 @@ class Modèle private constructor() : IModèle {
     override var attendreNotificationNav: (() -> Unit)? = null
     override var cacheIndicateurNotification: (() -> Unit)? = null
     override var attendNotif: Boolean = false
+    override var listeDemandes: List<Demande> = emptyList()
 
     override suspend fun seConnecter( email: String, motDePasse: String ){
         val (tokenObtenue, utilisateur) = Authentification.seConnecter( email, motDePasse )
@@ -125,6 +129,19 @@ class Modèle private constructor() : IModèle {
 
     override suspend fun mettreNotificationLu( idNotifications: Long ) {
         MettreNotificationLu.envoyerNotificationLu( idNotifications )
+    }
+
+    override suspend fun obtenirDemandes(): List<Demande> {
+        listeDemandes = ObtenirDemandes.obtenirsDemande( utilisateurConnecté?.id ?: 0 )
+        return listeDemandes
+    }
+
+    override suspend fun accepterDemande( position: Int ) {
+        ManipulerDemandes.accepterDemande( listeDemandes[position].id )
+    }
+
+    override suspend fun refuserDemande( position: Int ) {
+        ManipulerDemandes.refuserDemande( listeDemandes[position].id )
     }
 
 }

@@ -7,14 +7,17 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
+import com.nicholson.nicmessenger.domaine.service.ManipulerDemandes
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.MettreNotificationLu
 import com.nicholson.nicmessenger.domaine.service.ObtenirConversations
+import com.nicholson.nicmessenger.domaine.service.ObtenirDemandes
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
 import com.nicholson.nicmessenger.domaine.service.ObtenirNotificationsNonLus
 import com.nicholson.nicmessenger.domaine.service.ObtenirStatus
 import com.nicholson.nicmessenger.donnees.fictif.SourceDeDonnéesNotificationsFictive
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesConversationHttp
+import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesDemandesHttp
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesNotificationHttp
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesUtilisateurHttp
 import com.nicholson.nicmessenger.donnees.websocket.SourceDeDonnéesStomp
@@ -51,5 +54,9 @@ class MainActivity : AppCompatActivity() {
             SourceDeDonnéesNotificationHttp( getString( R.string.url_api ) )
         ObtenirNotificationsNonLus.sourceDeDonnéesStomp = sourceDeDonnéesStomp
         MettreNotificationLu.sourceDeDonnéesStomp = sourceDeDonnéesStomp
+
+        val sourceDeDonnéesDemandes = SourceDeDonnéesDemandesHttp( getString( R.string.url_api ) )
+        ObtenirDemandes.sourceDeDonnées = sourceDeDonnéesDemandes
+        ManipulerDemandes.sourceDeDonnées = sourceDeDonnéesDemandes
     }
 }

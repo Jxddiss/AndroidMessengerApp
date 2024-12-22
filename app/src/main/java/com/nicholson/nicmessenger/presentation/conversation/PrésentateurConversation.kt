@@ -31,6 +31,7 @@ class PrésentateurConversation(
     override fun traiterDémarrage() {
         vue.montrerChargement()
         vue.miseEnPlace()
+        modèle.estSurVueNotifications = true
         densitéÉcran = vue.obtenirDensitéÉcran()
     }
 

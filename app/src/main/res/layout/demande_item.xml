@@ -20,14 +20,14 @@
             android:id="@+id/statutCardView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:elevation="10dp"
+            android:backgroundTint="@color/accepter"
             app:contentPadding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline_start_buddy"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline_end_buddy"
             app:layout_constraintDimensionRatio="1:1"
-            android:elevation="10dp"
-            android:backgroundTint="@color/online"
             app:cardCornerRadius="9dp" >
 
             <androidx.cardview.widget.CardView
@@ -61,6 +61,16 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.35"
             />
+
+        <TextView
+            android:id="@+id/statutTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="En attente"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toEndOf="@id/guideline_start_text"
+            app:layout_constraintBottom_toTopOf="@id/guideline_bottom_bouttons"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btnRefuserDemande"

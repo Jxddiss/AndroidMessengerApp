@@ -1,6 +1,7 @@
 package com.nicholson.nicmessenger.presentation
 
 import com.nicholson.nicmessenger.domaine.modele.Conversation
+import com.nicholson.nicmessenger.domaine.modele.Demande
 import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
@@ -21,6 +22,7 @@ interface IModèle {
     var currentStatus : String?
     var estSurVueNotifications : Boolean
     var attendNotif : Boolean
+    var listeDemandes : List<Demande>
     fun cacherNav()
     fun seDéconnecter()
     fun mettreÀJourStatusAmi(status : String, position : Int )
@@ -36,4 +38,7 @@ interface IModèle {
     suspend fun obtenirNotificationsNonLu() : List<Notification>
     suspend fun subscribeNotifications() : Flow<Notification>
     suspend fun mettreNotificationLu( idNotifications : Long )
+    suspend fun obtenirDemandes() : List<Demande>
+    suspend fun accepterDemande( position : Int )
+    suspend fun refuserDemande( position : Int )
 }
