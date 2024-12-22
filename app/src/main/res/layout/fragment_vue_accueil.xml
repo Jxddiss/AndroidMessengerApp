@@ -14,6 +14,18 @@
         app:layout_constraintStart_toEndOf="@id/guideline_start_text"
         app:layout_constraintBottom_toTopOf="@id/guideline_bottom_text"/>
 
+    <TextView
+        android:id="@+id/pasDeConvoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pas_de_conversations"
+        android:textSize="25sp"
+        android:maxWidth="300dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toEndOf="@id/guideline_start_text"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top_recycler"
+        android:visibility="gone"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bouttonDéconnexion"
         android:layout_width="wrap_content"

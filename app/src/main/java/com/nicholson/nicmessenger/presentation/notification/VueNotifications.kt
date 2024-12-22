@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -19,6 +20,7 @@ import com.nicholson.nicmessenger.presentation.otd.NotificationOTD
 class VueNotifications : Fragment(), IVueNotifications {
     private lateinit var adapteur: RecyclerAdapterNotification
     private lateinit var recycler : RecyclerView
+    private lateinit var pasDeNotifTextView : TextView
     private lateinit var layoutBarChargement : ConstraintLayout
     private lateinit var bouttonDéconnexion : FloatingActionButton
     private lateinit var navController: NavController
@@ -36,6 +38,7 @@ class VueNotifications : Fragment(), IVueNotifications {
         super.onViewCreated( vue, savedInstanceState )
         layoutBarChargement = vue.findViewById( R.id.barDeChargement )
         recycler = vue.findViewById( R.id.recyclerNotifications )
+        pasDeNotifTextView = vue.findViewById( R.id.pasDeNotifTextView )
         bouttonDéconnexion = vue.findViewById( R.id.bouttonDéconnexion )
         navController = Navigation.findNavController( vue )
         présentateur = PrésentateurNotifications( this )
@@ -50,6 +53,12 @@ class VueNotifications : Fragment(), IVueNotifications {
     }
 
     override fun placerNotifications( notificationsOTD: List<NotificationOTD> ) {
+        if ( notificationsOTD.isEmpty() ) {
+            pasDeNotifTextView.visibility = View.VISIBLE
+        } else {
+            pasDeNotifTextView.visibility = View.GONE
+        }
+
         adapteur = RecyclerAdapterNotification( notificationsOTD.toMutableList() )
         recycler.layoutManager = LinearLayoutManager( requireContext() )
         recycler.itemAnimator = DefaultItemAnimator()
@@ -59,6 +68,10 @@ class VueNotifications : Fragment(), IVueNotifications {
     }
 
     override fun ajouterNotification( notificationOTD: NotificationOTD ) {
+        if ( pasDeNotifTextView.visibility == View.VISIBLE ) {
+            pasDeNotifTextView.visibility = View.GONE
+        }
+
         adapteur.notificationsOTD.add( notificationOTD )
         adapteur.notifyItemInserted( adapteur.notificationsOTD.size - 1 )
         recycler.scrollToPosition( adapteur.notificationsOTD.size - 1 )

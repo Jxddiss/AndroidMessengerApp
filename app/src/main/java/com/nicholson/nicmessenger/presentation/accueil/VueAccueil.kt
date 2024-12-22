@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -21,6 +22,7 @@ class VueAccueil : Fragment(), IVueAccueil {
     private lateinit var recyclerConversation : RecyclerView
     private lateinit var layoutBarChargement : ConstraintLayout
     private lateinit var bouttonDéconnexion : FloatingActionButton
+    private lateinit var pasDeConvoTextView : TextView
     private lateinit var navController: NavController
     private lateinit var présentateur : IPrésentateurAccueil
     private var conversations : MutableList<ConversationItemOTD> = mutableListOf()
@@ -39,6 +41,7 @@ class VueAccueil : Fragment(), IVueAccueil {
         layoutBarChargement = vue.findViewById( R.id.barDeChargement )
         recyclerConversation = vue.findViewById( R.id.recyclerConversation )
         bouttonDéconnexion = vue.findViewById( R.id.bouttonDéconnexion )
+        pasDeConvoTextView = vue.findViewById( R.id.pasDeConvoTextView )
         navController = Navigation.findNavController( vue )
         présentateur = PrésentateurAccueil( this )
         présentateur.traiterDémarrage()
@@ -67,7 +70,13 @@ class VueAccueil : Fragment(), IVueAccueil {
         layoutBarChargement.visibility = View.GONE
     }
 
-    override fun attacherListeConversationsRecycler(conversationsOTDS: List<ConversationItemOTD>) {
+    override fun attacherListeConversationsRecycler( conversationsOTDS: List<ConversationItemOTD> ) {
+        if ( conversationsOTDS.isEmpty() ) {
+            pasDeConvoTextView.visibility = View.VISIBLE
+        } else {
+            pasDeConvoTextView.visibility = View.GONE
+        }
+
         conversations = conversationsOTDS.toMutableList()
         adaptateur = RecyclerAdapterConversation( conversations )
         adaptateur.itemCliquéÉvènement = {

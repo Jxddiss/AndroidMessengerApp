@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -19,6 +20,7 @@ import com.nicholson.nicmessenger.presentation.otd.DemandeOTD
 class VueDemandes : Fragment(), IVueDemandes {
     private lateinit var adapteur: RecyclerAdapterDemande
     private lateinit var recycler : RecyclerView
+    private lateinit var pasDeDemandesTextView : TextView
     private lateinit var layoutBarChargement : ConstraintLayout
     private lateinit var bouttonDéconnexion : FloatingActionButton
     private lateinit var navController: NavController
@@ -37,6 +39,7 @@ class VueDemandes : Fragment(), IVueDemandes {
         super.onViewCreated( vue, savedInstanceState )
         layoutBarChargement = vue.findViewById( R.id.barDeChargement )
         recycler = vue.findViewById( R.id.recyclerDemandes )
+        pasDeDemandesTextView = vue.findViewById( R.id.pasDeDemandesTextView )
         bouttonDéconnexion = vue.findViewById( R.id.bouttonDéconnexion )
         navController = Navigation.findNavController( vue )
         présentateur = PrésentateurDemandes( this )
@@ -51,6 +54,12 @@ class VueDemandes : Fragment(), IVueDemandes {
     }
 
     override fun placerDemandes( demandesOTD: List<DemandeOTD>, nomUtilisateurConnecté : String ) {
+        if ( demandesOTD.isEmpty() ) {
+            pasDeDemandesTextView.visibility = View.VISIBLE
+        } else {
+            pasDeDemandesTextView.visibility = View.GONE
+        }
+
         adapteur = RecyclerAdapterDemande( demandesOTD, nomUtilisateurConnecté )
         recycler.layoutManager = LinearLayoutManager( requireContext() )
         recycler.itemAnimator = DefaultItemAnimator()

@@ -36,4 +36,7 @@
     </string>
     <string name="about_text_2">Tous les droits des images appartiennent à Microsoft.</string>
     <string name="about_text_3">Développeur : Nicholson Rainville Jacques</string>
+    <string name="pas_de_conversations">Vous n\'avez pas encore de conversations</string>
+    <string name="pas_de_notifications">Vous n\'avez pas de nouvelles notifications</string>
+    <string name="pas_de_demandes">Vous n\'avez pas de nouvelles demandes</string>
 </resources>
