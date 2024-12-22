@@ -24,6 +24,7 @@ class PréesentateurNotifications( private val vue : IVueNotifications,
 
     override fun traiterDémarrage() {
         modèle = Modèle.obtenirInstance()
+        modèle.estSurVueNotifications = true
         vue.miseEnPlace()
         vue.montrerChargement()
     }
@@ -53,6 +54,7 @@ class PréesentateurNotifications( private val vue : IVueNotifications,
                 CoroutineScope( Dispatchers.Main ).launch {
                     vue.placerNotifications( notifificationsOTD )
                     vue.masquerChargement()
+                    modèle.cacheIndicateurNotification?.let { it() }
                 }
 
                 try {
@@ -79,10 +81,12 @@ class PréesentateurNotifications( private val vue : IVueNotifications,
                     CoroutineScope( Dispatchers.Main ).launch {
                         vue.ajouterNotification( convertirNotificationÀNotificationOTD(it) )
                     }
-                    try {
-                        modèle.mettreNotificationLu( it.id )
-                    } catch ( ex : SourceDeDonnéesException ) {
-                        Log.d( "Exception", "message : ${ex.message}" )
+                    if ( modèle.estSurVueNotifications ) {
+                        try {
+                            modèle.mettreNotificationLu( it.id )
+                        } catch ( ex : SourceDeDonnéesException ) {
+                            Log.d( "Exception", "message : ${ex.message}" )
+                        }
                     }
                 }
         }

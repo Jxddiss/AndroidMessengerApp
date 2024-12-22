@@ -24,6 +24,7 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
 
     override fun traiterDémarrage() {
         modèle = Modèle.obtenirInstance()
+        modèle.estSurVueNotifications = false
         vue.miseEnPlace()
     }
 
@@ -37,6 +38,9 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                 try {
                     conversations = modèle.obtenirMesConversations()
                     modèle.envoyerStatut()
+                    if ( !modèle.attendNotif ) {
+                        modèle.attendreNotificationNav?.let { it() }
+                    }
                 } catch ( ex : AuthentificationException ) {
                     CoroutineScope( Dispatchers.Main ).launch {
                         vue.redirigerÀLogin()

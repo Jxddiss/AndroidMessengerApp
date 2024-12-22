@@ -12,11 +12,15 @@ interface IModèle {
     var montrerNavUnit : (() -> Unit)?
     var cacherNavUnit : (() -> Unit)?
     var seDéconnecter : (() -> Unit)?
+    var attendreNotificationNav : (() -> Unit)?
+    var cacheIndicateurNotification : (() -> Unit)?
     var conversations : List<Conversation>
     var indiceConversationCourrante : Int
     var conversationCourrante : Conversation?
     var token : String?
     var currentStatus : String?
+    var estSurVueNotifications : Boolean
+    var attendNotif : Boolean
     fun cacherNav()
     fun seDéconnecter()
     fun mettreÀJourStatusAmi(status : String, position : Int )

@@ -118,4 +118,8 @@ class VueNavBar : Fragment(), IVueNavBar {
 
         mediaPlayer.start()
     }
+
+    override fun cacherNotification() {
+        indicateurNotifView.visibility = View.GONE
+    }
 }
