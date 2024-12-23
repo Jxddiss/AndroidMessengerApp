@@ -22,8 +22,9 @@ class Authentification {
         var sourceDeDonnées : ISourceDeDonéesUtilisateur = SourceDeDonnéesUtilisateurFictive()
 
         suspend fun seConnecter( email : String, motDePasse : String ) : Pair<String, Utilisateur> {
-            if( !EMAIL_REGEX.matches( email ) ) throw EmailInvalideException( "Email Invalide" )
-            val ( token, utilisateur ) = sourceDeDonnées.seConnecter( email, motDePasse )
+            val emailNormalisé = email.lowercase()
+            if( !EMAIL_REGEX.matches( emailNormalisé ) ) throw EmailInvalideException( "Email Invalide" )
+            val ( token, utilisateur ) = sourceDeDonnées.seConnecter( emailNormalisé, motDePasse )
             ClientHttp.ajouterToken( token )
             StompClientInstance.addToken( token )
             return  token to utilisateur

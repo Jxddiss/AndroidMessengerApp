@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -231,7 +230,7 @@ class VueNavBar : Fragment(), IVueNavBar {
         )
 
         val notification = NotificationCompat
-            .Builder( requireContext(), "CANNAL_NOTIFICATION_NICMESSENGER" )
+            .Builder( requireContext(), "NOTIFICATION_NICMESSENGER" )
             .setSmallIcon( R.drawable.buddy )
             .setContentTitle( notificationOTD.titre )
             .setContentText( notificationOTD.message )

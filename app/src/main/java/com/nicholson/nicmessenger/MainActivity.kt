@@ -3,7 +3,8 @@ package com.nicholson.nicmessenger
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,6 @@ import com.nicholson.nicmessenger.domaine.service.ObtenirDemandes
 import com.nicholson.nicmessenger.domaine.service.ObtenirMessages
 import com.nicholson.nicmessenger.domaine.service.ObtenirNotificationsNonLus
 import com.nicholson.nicmessenger.domaine.service.ObtenirStatus
-import com.nicholson.nicmessenger.donnees.fictif.SourceDeDonnéesNotificationsFictive
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesConversationHttp
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesDemandesHttp
 import com.nicholson.nicmessenger.donnees.http.SourceDeDonnéesNotificationHttp
@@ -72,9 +72,12 @@ class MainActivity : AppCompatActivity() {
         val name = "Mes notifications"
         val descriptionText = "Cannal pour notifications de NicMessenger"
         val importance = NotificationManager.IMPORTANCE_HIGH
-        val channel = NotificationChannel( "CANNAL_NOTIFICATION_NICMESSENGER", name, importance )
+        val soundURI = Uri.parse("android.resource://${packageName}/raw/type")
+        val channel = NotificationChannel( "NOTIFICATION_NICMESSENGER", name, importance )
             .apply {
                 description = descriptionText
+                setSound( soundURI,
+                    AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build() )
             }
 
         val notificationManager = getSystemService( Context.NOTIFICATION_SERVICE ) as NotificationManager

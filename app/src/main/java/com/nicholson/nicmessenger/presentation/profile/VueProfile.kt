@@ -102,6 +102,7 @@ class VueProfile : Fragment(), IVueProfile {
         statutDropdown.setText( statusMap[statusCourrant], false )
         descriptionEditText.setText( utilisateurOTD.description )
         descriptionTextView.text = utilisateurOTD.description
+        nomTextView.text = utilisateurOTD.nomComplet
 
         val avatar = utilisateurOTD.avatar
         if ( avatar.contains( "buddy2" ) ){
