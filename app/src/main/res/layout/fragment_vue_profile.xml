@@ -184,14 +184,14 @@
         android:id="@+id/btnChangeBanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/accepter"
-        android:text="@string/changer_votre_banni_re"
         android:layout_marginTop="30dp"
+        android:backgroundTint="#004C69"
         android:drawableEnd="@drawable/image"
+        android:text="@string/changer_votre_banni_re"
         app:cornerRadius="6dp"
-        app:strokeColor="#CECECE"
+        app:layout_constraintStart_toEndOf="@id/guideline_start_input"
         app:layout_constraintTop_toBottomOf="@id/layoutStatutTextInput"
-        app:layout_constraintStart_toEndOf="@id/guideline_start_input"/>
+        app:strokeColor="#CECECE" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/barDeChargement"
