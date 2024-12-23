@@ -9,8 +9,8 @@ class MettreÀJourProfile {
     companion object {
         var sourceDeDonnées : ISourceDeDonéesUtilisateur = SourceDeDonnéesUtilisateurFictive()
 
-        suspend fun mettreÀJourProfile( utilisateur : Utilisateur, avatarFile : File? ) : Utilisateur {
-            return sourceDeDonnées.mettreÀJourProfile( utilisateur, avatarFile )
+        suspend fun mettreÀJourProfile( utilisateur : Utilisateur, avatarFile : File?, bannièreFile : File? ) : Utilisateur {
+            return sourceDeDonnées.mettreÀJourProfile( utilisateur, avatarFile, bannièreFile )
         }
     }
 }

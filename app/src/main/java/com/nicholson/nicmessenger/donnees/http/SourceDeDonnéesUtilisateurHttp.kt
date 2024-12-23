@@ -101,7 +101,11 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
         }
     }
 
-    override suspend fun mettreÀJourProfile( utilisateur: Utilisateur, avatarFile : File? ) : Utilisateur {
+    override suspend fun mettreÀJourProfile(
+        utilisateur: Utilisateur,
+        avatarFile : File?,
+        bannièreFile : File? ) : Utilisateur {
+
         val urlRequête = "$urlApi/utilisateur/update/${utilisateur.id}"
 
         val clientHttp = ClientHttp.obtenirInstance()
@@ -117,6 +121,18 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
                 constructeurDeCorps.apply {
                     addFormDataPart(
                         "avatar",
+                        it.name,
+                        it.asRequestBody(
+                            getMimeTypeFromFile( it )?.toMediaTypeOrNull()
+                        )
+                    )
+                }
+            }
+
+            bannièreFile?.let {
+                constructeurDeCorps.apply {
+                    addFormDataPart(
+                        "banniere",
                         it.name,
                         it.asRequestBody(
                             getMimeTypeFromFile( it )?.toMediaTypeOrNull()

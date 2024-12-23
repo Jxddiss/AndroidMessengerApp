@@ -6,5 +6,5 @@ import java.io.File
 interface ISourceDeDonéesUtilisateur {
     suspend fun seConnecter( email : String, motDePasse : String ) : Pair<String, Utilisateur>
     suspend fun demandeMotDePasseOublié( email : String )
-    suspend fun mettreÀJourProfile( utilisateur: Utilisateur, avatarFile : File? ) : Utilisateur
+    suspend fun mettreÀJourProfile( utilisateur: Utilisateur, avatarFile : File?, bannièreFile : File? ) : Utilisateur
 }

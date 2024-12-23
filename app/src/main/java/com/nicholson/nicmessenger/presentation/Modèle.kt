@@ -160,9 +160,9 @@ class Modèle private constructor() : IModèle {
         ManipulerDemandes.refuserDemande( listeDemandes[position].id )
     }
 
-    override suspend fun mettreÀJourProfile( avatarFile : File? ) {
+    override suspend fun mettreÀJourProfile( avatarFile : File?, bannièreFile : File? ) {
         utilisateurConnecté?.let {
-            utilisateurConnecté = MettreÀJourProfile.mettreÀJourProfile( it, avatarFile )
+            utilisateurConnecté = MettreÀJourProfile.mettreÀJourProfile( it, avatarFile, bannièreFile )
         }
     }
 }

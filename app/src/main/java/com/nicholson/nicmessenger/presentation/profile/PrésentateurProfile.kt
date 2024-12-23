@@ -37,20 +37,22 @@ class PrésentateurProfile( val vue : IVueProfile,
     override fun mettreÀJourProfile() {
         val description = vue.obtenirDescription()
         val status = vue.obtenirStatus()
-        val file = vue.obtenirNouvelAvatar()
+        val avatarFile = vue.obtenirNouvelAvatar()
+        val bannièreFile = vue.obtenirNouvelleBannière()
 
         if ( description.isNotEmpty()
             && status.isNotEmpty()
             && ( description != modèle.utilisateurConnecté?.description
                  || status != modèle.utilisateurConnecté?.statut
-                 || file != null  ) ) {
+                 || avatarFile != null
+                 || bannièreFile != null ) ) {
 
             modèle.utilisateurConnecté?.statut = vue.obtenirStatus()
             modèle.utilisateurConnecté?.description = vue.obtenirDescription()
             job = CoroutineScope( iocontext ).launch {
                 try {
                     modèle.currentStatus = status
-                    modèle.mettreÀJourProfile( file )
+                    modèle.mettreÀJourProfile( avatarFile, bannièreFile )
                     modèle.envoyerStatut()
                 } catch ( ex : AuthentificationException) {
                     CoroutineScope( Dispatchers.Main ).launch {
