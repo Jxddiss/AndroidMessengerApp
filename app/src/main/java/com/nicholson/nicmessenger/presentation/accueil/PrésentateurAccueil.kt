@@ -121,7 +121,6 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                 }
                 delay( 500 )
                 Log.d( "sending", "sending status presenter" )
-                modèle.currentStatus = "online"
                 modèle.envoyerStatut()
             } catch ( ex : SourceDeDonnéesException ) {
                 Log.d( "Exception", "${ex.message}" )
