@@ -1,5 +1,7 @@
 package com.nicholson.nicmessenger.presentation.navbar
 
+import com.nicholson.nicmessenger.presentation.otd.NotificationOTD
+
 interface ContratVuePrésentateurNavBar {
     interface IVueNavBar{
         fun miseEnPlace()
@@ -10,7 +12,8 @@ interface ContratVuePrésentateurNavBar {
         fun redirigerÀAbout()
         fun montrerNav()
         fun cacherNav()
-        fun montrerNotification()
+        fun montrerNotification( notificationOTD : NotificationOTD )
+        fun montrerIndicateurNotif()
         fun cacherNotification()
         fun mettreBtnHomeGris()
         fun mettreBtnDemandeGris()

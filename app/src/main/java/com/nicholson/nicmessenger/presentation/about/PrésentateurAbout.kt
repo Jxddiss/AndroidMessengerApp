@@ -20,6 +20,8 @@ class PrésentateurAbout( private val vue : IVueAbout,
 
     override fun traiterDémarrage() {
         modèle = Modèle.obtenirInstance()
+        modèle.estSurVueNotifications = false
+        modèle.nomConversationCourrante = ""
         vue.miseEnPlace()
     }
 

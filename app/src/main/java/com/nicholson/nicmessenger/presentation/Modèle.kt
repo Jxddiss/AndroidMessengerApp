@@ -48,6 +48,8 @@ class Modèle private constructor() : IModèle {
     override var attendNotif: Boolean = false
     override var listeDemandes: List<Demande> = emptyList()
     override var listeNotifications: List<Notification> = emptyList()
+    override var nomConversationCourrante: String = ""
+    override var indicateurNotifVisible: Boolean = false
 
     override suspend fun seConnecter( email: String, motDePasse: String ){
         val (tokenObtenue, utilisateur) = Authentification.seConnecter( email, motDePasse )

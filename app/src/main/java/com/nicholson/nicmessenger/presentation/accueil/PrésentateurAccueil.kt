@@ -28,6 +28,7 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
     override fun traiterDémarrage() {
         modèle = Modèle.obtenirInstance()
         modèle.estSurVueNotifications = false
+        modèle.nomConversationCourrante = ""
         vue.miseEnPlace()
     }
 
@@ -66,7 +67,7 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                     emptyList()
                 }
 
-                if ( notifications.isNotEmpty() ) {
+                if ( notifications.isNotEmpty() && !modèle.indicateurNotifVisible ) {
                     CoroutineScope( Dispatchers.Main ).launch {
                         modèle.montrerIndicateurNotif?.let { it() }
                     }

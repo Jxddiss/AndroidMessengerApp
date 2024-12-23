@@ -25,6 +25,8 @@ interface IModèle {
     var attendNotif : Boolean
     var listeDemandes : List<Demande>
     var listeNotifications : List<Notification>
+    var nomConversationCourrante : String
+    var indicateurNotifVisible : Boolean
     fun cacherNav()
     fun seDéconnecter()
     fun mettreÀJourStatusAmi(status : String, position : Int )

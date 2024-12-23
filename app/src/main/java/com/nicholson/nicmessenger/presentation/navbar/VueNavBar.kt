@@ -1,5 +1,10 @@
 package com.nicholson.nicmessenger.presentation.navbar
 
+import android.app.ActivityManager
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -8,13 +13,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.nicholson.nicmessenger.MainActivity
 import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.navbar.ContratVuePrésentateurNavBar.*
+import com.nicholson.nicmessenger.presentation.otd.NotificationOTD
 
 class VueNavBar : Fragment(), IVueNavBar {
     private lateinit var buttonMesDemandes : ImageButton
@@ -27,7 +35,6 @@ class VueNavBar : Fragment(), IVueNavBar {
     private lateinit var navOptions : NavOptions
     var navHostFragment: NavHostFragment? = null
     var navController: NavController? = null
-    private var isAppInForeground = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +70,6 @@ class VueNavBar : Fragment(), IVueNavBar {
         floatingButtonHomeNav.setOnClickListener { présentateur.traiterRedirigerÀAccueil() }
         buttonNotification.setOnClickListener { présentateur.traiterRedirigerÀNotification() }
         buttonAbout.setOnClickListener { présentateur.traiterRedirigerÀAbout() }
-        isAppInForeground = true
     }
 
     override fun redirigerÀDemandes() {
@@ -114,15 +120,21 @@ class VueNavBar : Fragment(), IVueNavBar {
         view?.visibility = View.GONE
     }
 
-    override fun montrerNotification() {
+    override fun montrerNotification( notificationOTD : NotificationOTD ) {
+        if ( isAppInBackground() ) {
+            showNotification( notificationOTD )
+        } else {
+            montrerIndicateurNotif()
+        }
+    }
+
+    override fun montrerIndicateurNotif() {
         indicateurNotifView.visibility = View.VISIBLE
 
-        if ( isAppInForeground ) {
-            val mediaPlayer = MediaPlayer.create( requireContext(),R.raw.type )
-            mediaPlayer.setVolume( 0.5f,0.5f )
+        val mediaPlayer = MediaPlayer.create( requireContext(),R.raw.type )
+        mediaPlayer.setVolume( 0.5f,0.5f )
 
-            mediaPlayer.start()
-        }
+        mediaPlayer.start()
     }
 
     override fun cacherNotification() {
@@ -189,13 +201,45 @@ class VueNavBar : Fragment(), IVueNavBar {
         buttonAbout.isClickable = true
     }
 
-    override fun onResume() {
-        super.onResume()
-        isAppInForeground = true
+    private fun isAppInBackground(): Boolean {
+        val activityManager = requireContext()
+            .getSystemService( Context.ACTIVITY_SERVICE ) as ActivityManager
+        val appProcesses = activityManager.runningAppProcesses ?: return false
+        val packageName = requireContext().packageName
+        for ( appProcess in appProcesses ) {
+            if ( appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
+                appProcess.processName == packageName ) {
+                return false
+            }
+        }
+        return true
     }
 
-    override fun onPause() {
-        super.onPause()
-        isAppInForeground = false
+    private fun showNotification( notificationOTD: NotificationOTD) {
+        indicateurNotifView.visibility = View.VISIBLE
+
+        val notificationManager =
+            requireContext().getSystemService( Context.NOTIFICATION_SERVICE ) as NotificationManager
+
+        val intent = Intent( requireContext(), MainActivity::class.java )
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            requireContext(),
+            System.currentTimeMillis().toInt(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat
+            .Builder( requireContext(), "CANNAL_NOTIFICATION_NICMESSENGER" )
+            .setSmallIcon( R.drawable.buddy )
+            .setContentTitle( notificationOTD.titre )
+            .setContentText( notificationOTD.message )
+            .setPriority( NotificationCompat.PRIORITY_HIGH )
+            .setContentIntent( pendingIntent )
+            .setAutoCancel( true )
+            .build()
+
+        notificationManager.notify( notificationOTD.id, notification )
     }
 }

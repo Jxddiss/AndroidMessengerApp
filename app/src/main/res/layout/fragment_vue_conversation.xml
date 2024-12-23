@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -187,8 +188,6 @@
                 android:backgroundTint="@color/couleur_principale"
                 android:src="@drawable/send"/>
         </LinearLayout>
-
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom_header"

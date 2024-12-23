@@ -24,6 +24,7 @@ class PrésentateurDemandes( val vue : IVueDemandes,
     override fun traiterDémarrage() {
         modèle = Modèle.obtenirInstance()
         modèle.estSurVueNotifications = false
+        modèle.nomConversationCourrante = ""
         vue.miseEnPlace()
         vue.montrerChargement()
     }

@@ -75,17 +75,13 @@ class VueNotifications : Fragment(), IVueNotifications {
     }
 
     override fun ajouterNotification( notificationOTD: NotificationOTD ) {
-        if ( isAppInBackground() ) {
-            showNotification( notificationOTD )
-        } else {
-            if ( pasDeNotifTextView.visibility == View.VISIBLE ) {
-                pasDeNotifTextView.visibility = View.GONE
-            }
-
-            adapteur.notificationsOTD.add( notificationOTD )
-            adapteur.notifyItemInserted( adapteur.notificationsOTD.size - 1 )
-            recycler.scrollToPosition( adapteur.notificationsOTD.size - 1 )
+        if ( pasDeNotifTextView.visibility == View.VISIBLE ) {
+            pasDeNotifTextView.visibility = View.GONE
         }
+
+        adapteur.notificationsOTD.add( notificationOTD )
+        adapteur.notifyItemInserted( adapteur.notificationsOTD.size - 1 )
+        recycler.scrollToPosition( adapteur.notificationsOTD.size - 1 )
     }
 
     override fun redirigerÀLogin() {
@@ -98,46 +94,5 @@ class VueNotifications : Fragment(), IVueNotifications {
 
     override fun masquerChargement() {
         layoutBarChargement.visibility = View.GONE
-    }
-
-    private fun isAppInBackground(): Boolean {
-        val activityManager = requireContext()
-            .getSystemService( Context.ACTIVITY_SERVICE ) as ActivityManager
-        val appProcesses = activityManager.runningAppProcesses ?: return false
-        val packageName = requireContext().packageName
-        for ( appProcess in appProcesses ) {
-            if ( appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
-                appProcess.processName == packageName ) {
-                return false
-            }
-        }
-        return true
-    }
-
-    private fun showNotification(notificationOTD: NotificationOTD) {
-        val notificationManager =
-            requireContext().getSystemService( Context.NOTIFICATION_SERVICE ) as NotificationManager
-
-        val intent = Intent( requireContext(), MainActivity::class.java ).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(
-            requireContext(),
-            0,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val notification = NotificationCompat
-            .Builder( requireContext(), "CANNAL_NOTIFICATION_NICMESSENGER" )
-            .setSmallIcon( R.drawable.buddy2 )
-            .setContentTitle( notificationOTD.titre )
-            .setContentText( notificationOTD.message )
-            .setPriority( NotificationCompat.PRIORITY_HIGH )
-            .setContentIntent( pendingIntent )
-            .setAutoCancel( true )
-            .build()
-
-        notificationManager.notify( notificationOTD.id, notification )
     }
 }

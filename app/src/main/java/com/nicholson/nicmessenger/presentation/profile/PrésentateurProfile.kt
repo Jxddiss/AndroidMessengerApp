@@ -24,6 +24,7 @@ class PrésentateurProfile( val vue : IVueProfile,
     override fun traiterDémarrage() {
         modèle = Modèle.obtenirInstance()
         modèle.estSurVueNotifications = false
+        modèle.nomConversationCourrante = ""
         vue.miseEnPlace()
     }
 

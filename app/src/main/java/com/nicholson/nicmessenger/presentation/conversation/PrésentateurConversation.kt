@@ -31,7 +31,7 @@ class PrésentateurConversation(
     override fun traiterDémarrage() {
         vue.montrerChargement()
         vue.miseEnPlace()
-        modèle.estSurVueNotifications = true
+        modèle.estSurVueNotifications = false
         densitéÉcran = vue.obtenirDensitéÉcran()
     }
 
@@ -54,8 +54,11 @@ class PrésentateurConversation(
                     message.type == "text"
                 }.map { message -> convertirMessageÀMessageOTD( message ) }.takeLast( 25 )
 
+                val conversationOTD = convertirConversationÀConversationOTD( it )
+                modèle.nomConversationCourrante = conversationOTD.nomComplet
+
                 CoroutineScope( Dispatchers.Main ).launch {
-                    vue.placerConversation( convertirConversationÀConversationOTD( it ) )
+                    vue.placerConversation( conversationOTD )
                     vue.placerMessagesPrécédents( listMessageOTD )
                     vue.masquerChargement()
                 }
