@@ -61,7 +61,10 @@
             android:layout_height="wrap_content"
             android:text="Hello je suis Nom Complet"
             android:maxWidth="260dp"
+            android:enabled="true"
             android:textIsSelectable="true"
+            android:focusable="true"
+            android:longClickable="true"
             app:layout_constraintStart_toEndOf="@id/guideline_start_text"
             app:layout_constraintTop_toBottomOf="@id/nomTextView"
             />
