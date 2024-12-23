@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,7 +32,6 @@ import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.otd.UtilisateurOTD
 import com.nicholson.nicmessenger.presentation.profile.ContratVuePrésentateurProfile.*
 import java.io.File
-import java.net.URI
 
 
 class VueProfile : Fragment(), IVueProfile {
@@ -43,6 +43,7 @@ class VueProfile : Fragment(), IVueProfile {
     private lateinit var descriptionEditText : TextInputEditText
     private lateinit var statutDropdown : AutoCompleteTextView
     private lateinit var btnConfirmer : Button
+    private lateinit var btnChangeBanner : Button
     private lateinit var statutCardView : CardView
     private lateinit var bouttonDéconnexion : FloatingActionButton
     private lateinit var navController: NavController
@@ -51,7 +52,9 @@ class VueProfile : Fragment(), IVueProfile {
     private lateinit var statusMap : Map<String, String>
     private lateinit var displayStatus : List<String>
     private lateinit var intentLauncherAvatar : ActivityResultLauncher<Intent>
+    private lateinit var intentLauncherBannière : ActivityResultLauncher<Intent>
     private var avatarFile : File? = null
+    private var bannièreFile : File? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +63,11 @@ class VueProfile : Fragment(), IVueProfile {
         intentLauncherAvatar = registerForActivityResult(ActivityResultContracts
             .StartActivityForResult() ) {
                 onRésultatAvatar( it )
+            }
+
+        intentLauncherBannière = registerForActivityResult(ActivityResultContracts
+            .StartActivityForResult() ) {
+                onRésultatBannière( it )
             }
 
         // Inflate the layout for this fragment
@@ -78,6 +86,7 @@ class VueProfile : Fragment(), IVueProfile {
         descriptionEditText = vue.findViewById( R.id.descriptionEditText )
         statutDropdown = vue.findViewById( R.id.statutDropdown )
         btnConfirmer = vue.findViewById( R.id.btnConfirmer )
+        btnChangeBanner = vue.findViewById( R.id.btnChangeBanner )
         navController = Navigation.findNavController( vue )
         présentateur = PrésentateurProfile( this )
         statusMap = mapOf(
@@ -110,7 +119,8 @@ class VueProfile : Fragment(), IVueProfile {
             }
         }
 
-        avatarImageView.setOnClickListener { présentateur.traiterOuvrirGallerie() }
+        avatarImageView.setOnClickListener { présentateur.traiterOuvrirGalleriePourAvatar() }
+        btnChangeBanner.setOnClickListener { présentateur.traiterOuvrirGalleriePourBannière() }
         présentateur.traiterObtenirUtilisateurConnecté()
     }
 
@@ -186,39 +196,79 @@ class VueProfile : Fragment(), IVueProfile {
         navController.navigate( R.id.action_vueProfile_vers_vueLogin )
     }
 
-    override fun ouvrirGalleriePhoto() {
+    override fun ouvrirGalleriePhotoPourAvatar() {
 
-        val intent = Intent(Intent.ACTION_PICK).apply {
+        val intent = Intent( Intent.ACTION_PICK ).apply {
             type = "image/*"
         }
 
         intentLauncherAvatar.launch( intent )
     }
 
+    override fun ouvrirGalleriePhotoPourBannière() {
+        val intent = Intent( Intent.ACTION_PICK ).apply {
+            type = "image/*"
+        }
+
+        intentLauncherBannière.launch( intent )
+    }
+
     private fun onRésultatAvatar( result: ActivityResult ) {
         if ( result.resultCode == Activity.RESULT_OK ) {
             result.data?.let {
                 it.data?.let { uri ->
-                    val inputStream = requireContext().contentResolver.openInputStream( uri )
-                    val file = File(requireContext().cacheDir, "upload_image.jpg")
-                    val outputStream = file.outputStream()
-                    inputStream?.copyTo(outputStream)
-                    inputStream?.close()
-                    outputStream.close()
-                    avatarFile = file
-
-                    Glide.with( requireContext() )
-                        .load( uri )
-                        .placeholder( R.drawable.buddy2 )
-                        .error( R.drawable.buddy2 )
-                        .into( avatarImageView )
+                    traiterURI( uri, "avatar" )
                 }
+            }
+        }
+    }
+
+    private fun onRésultatBannière( result : ActivityResult ) {
+        if ( result.resultCode == Activity.RESULT_OK ) {
+            result.data?.let {
+                it.data?.let { uri ->
+                    traiterURI( uri, "bannière" )
+                }
+            }
+        }
+    }
+
+    private fun traiterURI(uri : Uri, type : String ) {
+        val inputStream = requireContext().contentResolver.openInputStream( uri )
+        val file = File(requireContext().cacheDir, "upload_image.jpg")
+        val outputStream = file.outputStream()
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream.close()
+
+        when( type ) {
+            "avatar" -> {
+                avatarFile = file
+
+                Glide.with( requireContext() )
+                    .load( uri )
+                    .placeholder( R.drawable.buddy2 )
+                    .error( R.drawable.buddy2 )
+                    .into( avatarImageView )
+            }
+            "bannière" -> {
+                bannièreFile = file
+
+                Glide.with( requireContext() )
+                    .load( uri )
+                    .placeholder( R.drawable.buddy2 )
+                    .error( R.drawable.buddy2 )
+                    .into( banniereImageView )
             }
         }
     }
 
     override fun obtenirNouvelAvatar() : File? {
         return avatarFile
+    }
+
+    override fun obtenirNouvelleBannière(): File? {
+        return bannièreFile
     }
 
     private fun getColorFromStatut( statut : String, context : Context) : Int {

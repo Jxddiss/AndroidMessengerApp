@@ -40,4 +40,5 @@
     <string name="pas_de_notifications">Vous n\'avez pas de nouvelles notifications</string>
     <string name="pas_de_demandes">Vous n\'avez pas de nouvelles demandes</string>
     <string name="home_button">Bouton d\'accueil</string>
+    <string name="changer_votre_banni_re">Changer votre bannière</string>
 </resources>

@@ -82,8 +82,12 @@ class PrésentateurProfile( val vue : IVueProfile,
         }
     }
 
-    override fun traiterOuvrirGallerie() {
-        vue.ouvrirGalleriePhoto()
+    override fun traiterOuvrirGalleriePourAvatar() {
+        vue.ouvrirGalleriePhotoPourAvatar()
+    }
+
+    override fun traiterOuvrirGalleriePourBannière() {
+        vue.ouvrirGalleriePhotoPourBannière()
     }
 
     private fun convertirUtilisateurÀUtilisateurOTD( utilisateur: Utilisateur ) : UtilisateurOTD =

@@ -14,8 +14,10 @@ interface ContratVuePrésentateurProfile {
         fun montrerErreurRéseau()
         fun montrerDialogSucces()
         fun redirigerÀLogin()
-        fun ouvrirGalleriePhoto()
+        fun ouvrirGalleriePhotoPourAvatar()
+        fun ouvrirGalleriePhotoPourBannière()
         fun obtenirNouvelAvatar() : File?
+        fun obtenirNouvelleBannière() : File?
     }
 
     interface IPrésentateurProfile {
@@ -23,6 +25,7 @@ interface ContratVuePrésentateurProfile {
         fun traiterObtenirUtilisateurConnecté()
         fun mettreÀJourProfile()
         fun traiterDeconnexion()
-        fun traiterOuvrirGallerie()
+        fun traiterOuvrirGalleriePourAvatar()
+        fun traiterOuvrirGalleriePourBannière()
     }
 }
