@@ -73,8 +73,19 @@ class PrésentateurNotifications(private val vue : IVueNotifications,
     }
 
     override fun traiterDeconnexion() {
-        modèle.seDéconnecter()
-        vue.redirigerÀLogin()
+        job = CoroutineScope( iocontext ).launch {
+            modèle.currentStatus = "disconnected"
+            try {
+                modèle.envoyerStatut()
+            } catch ( ex : SourceDeDonnéesException ) {
+                Log.d( "Exception", "message : ${ex.message}" )
+            }
+
+            CoroutineScope( Dispatchers.Main ).launch {
+                modèle.seDéconnecter()
+                vue.redirigerÀLogin()
+            }
+        }
     }
 
     override fun attendreNotification() {

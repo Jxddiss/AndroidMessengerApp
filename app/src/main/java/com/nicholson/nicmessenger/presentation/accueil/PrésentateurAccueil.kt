@@ -12,7 +12,9 @@ import com.nicholson.nicmessenger.presentation.otd.ConversationItemOTD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import kotlin.coroutines.CoroutineContext
 
 class PrésentateurAccueil( private val vue : IVueAccueil,
@@ -38,7 +40,6 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
             job = CoroutineScope( iocontext ).launch {
                 try {
                     conversations = modèle.obtenirMesConversations()
-                    modèle.envoyerStatut()
                     if ( !modèle.attendNotif ) {
                         modèle.attendreNotificationNav?.let { it() }
                     }
@@ -85,8 +86,19 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
     }
 
     override fun traiterDeconnexion() {
-        modèle.seDéconnecter()
-        vue.redirigerÀLogin()
+        job = CoroutineScope( iocontext ).launch {
+            modèle.currentStatus = "disconnected"
+            try {
+                modèle.envoyerStatut()
+            } catch ( ex : SourceDeDonnéesException ) {
+                Log.d( "Exception", "message : ${ex.message}" )
+            }
+
+            CoroutineScope( Dispatchers.Main ).launch {
+                modèle.seDéconnecter()
+                vue.redirigerÀLogin()
+            }
+        }
     }
 
     override fun attendreStatus() {
@@ -97,10 +109,8 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                         it.id != modèle.utilisateurConnecté?.id
                     }?.id
                     idAutreUtilisateur?.let { id ->
-                        Log.d( "Sub presenter", "/topic/user/status/$id" )
                         launch {
                             modèle.subscribeStatus( "/topic/user/status/$id" ).collect{
-                                Log.d( "Status received presenter", it )
                                 modèle.mettreÀJourStatusAmi( it, index )
                                 CoroutineScope( Dispatchers.Main ).launch {
                                     vue.mettreÀJourStatus( index, it )
@@ -109,6 +119,10 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                         }
                     }
                 }
+                delay( 500 )
+                Log.d( "sending", "sending status presenter" )
+                modèle.currentStatus = "online"
+                modèle.envoyerStatut()
             } catch ( ex : SourceDeDonnéesException ) {
                 Log.d( "Exception", "${ex.message}" )
             }
