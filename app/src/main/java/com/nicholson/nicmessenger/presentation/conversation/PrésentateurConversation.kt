@@ -3,6 +3,7 @@ package com.nicholson.nicmessenger.presentation.conversation
 import android.util.Log
 import com.nicholson.nicmessenger.domaine.modele.Conversation
 import com.nicholson.nicmessenger.domaine.modele.Message
+import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.donnees.exceptions.AuthentificationException
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import com.nicholson.nicmessenger.presentation.IModèle
@@ -27,6 +28,7 @@ class PrésentateurConversation(
     val formatterDate = DateTimeFormatter.ofPattern( "dd MMMM yyyy HH:mm" )
     var conversation : Conversation? = null
     var densitéÉcran : Float = 0.0F
+    var idAutreUtilisateur : Long? = null
 
     override fun traiterDémarrage() {
         vue.montrerChargement()
@@ -102,7 +104,7 @@ class PrésentateurConversation(
 
     override fun attendreStatus() {
         job = CoroutineScope( iocontext ).launch {
-            val idAutreUtilisateur = conversation?.utilisateurs?.firstOrNull {
+            idAutreUtilisateur = conversation?.utilisateurs?.firstOrNull {
                 it.id != modèle.utilisateurConnecté?.id
             }?.id
 
@@ -166,8 +168,33 @@ class PrésentateurConversation(
                 destination = "/app/chat/${idConv}",
                 contenu = messageContenu,
                 type = type )
+
+            envoyerNotification( type )
+
         } catch ( ex : SourceDeDonnéesException ) {
             Log.d("Exception : ", ex.message.toString())
+        }
+    }
+
+    private suspend fun envoyerNotification( type : String ) {
+        idAutreUtilisateur?.let {
+            val notificationType = when( type ) {
+                "text" -> "mesage"
+                "nudge" -> "nudge"
+                else -> ""
+            }
+
+            modèle.envoyerNotificationMessage(
+                Notification(
+                    id = 0L,
+                    titre = modèle.utilisateurConnecté?.nomComplet ?: "",
+                    image = modèle.utilisateurConnecté?.avatar ?: "",
+                    type = "msn",
+                    lu = false,
+                    message = "Vous à envoyé un $notificationType"
+                ),
+                it
+            )
         }
     }
 

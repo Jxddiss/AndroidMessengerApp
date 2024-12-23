@@ -120,9 +120,11 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                         }
                     }
                 }
-                delay( 500 )
-                Log.d( "sending", "sending status presenter" )
-                modèle.envoyerStatut()
+                if ( !modèle.statutOnlineConnexionEnvoyé ) {
+                    delay( 500 )
+                    modèle.envoyerStatut()
+                    modèle.statutOnlineConnexionEnvoyé = true
+                }
             } catch ( ex : SourceDeDonnéesException ) {
                 Log.d( "Exception", "${ex.message}" )
             }

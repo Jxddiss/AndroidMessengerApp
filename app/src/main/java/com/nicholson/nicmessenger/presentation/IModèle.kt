@@ -27,6 +27,7 @@ interface IModèle {
     var listeNotifications : List<Notification>
     var nomConversationCourrante : String
     var indicateurNotifVisible : Boolean
+    var statutOnlineConnexionEnvoyé : Boolean
     fun cacherNav()
     fun seDéconnecter()
     fun mettreÀJourStatusAmi(status : String, position : Int )
@@ -38,6 +39,7 @@ interface IModèle {
     suspend fun obtenirMessagesPrécédent() : List<Message>
     suspend fun subscribeMessage( topic : String ) : Flow<Message>
     suspend fun envoyerMessage( destination : String, contenu : String, type : String  )
+    suspend fun envoyerNotificationMessage( notification : Notification, receveurId : Long )
     suspend fun subscribeStatus( topic : String ) : Flow<String>
     suspend fun obtenirNotificationsNonLu() : List<Notification>
     suspend fun subscribeNotifications() : Flow<Notification>

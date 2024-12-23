@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
+import com.nicholson.nicmessenger.domaine.service.EnvoyerNotification
 import com.nicholson.nicmessenger.domaine.service.ManipulerDemandes
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.MettreNotificationLu
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         EnvoyerMessage.sourceDeDonnéesStomp = sourceDeDonnéesStomp
         ManipulerStatut.sourceDeDonnéesStomp = sourceDeDonnéesStomp
         ObtenirStatus.sourceDeDonnéesStomp = sourceDeDonnéesStomp
+        EnvoyerNotification.sourceDeDonnéesStomp = sourceDeDonnéesStomp
 
         val sourceDeDonnéesUtilisateur = SourceDeDonnéesUtilisateurHttp( getString( R.string.url_api ) )
 

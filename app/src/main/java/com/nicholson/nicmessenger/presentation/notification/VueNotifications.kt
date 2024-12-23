@@ -64,7 +64,6 @@ class VueNotifications : Fragment(), IVueNotifications {
         recycler.itemAnimator = DefaultItemAnimator()
         recycler.adapter = adapteur
         présentateur.attendreNotification()
-        adapteur.listeInitialisé = true
     }
 
     override fun ajouterNotification( notificationOTD: NotificationOTD ) {

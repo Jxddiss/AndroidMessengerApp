@@ -7,6 +7,7 @@ import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.domaine.service.Authentification
 import com.nicholson.nicmessenger.domaine.service.EnvoyerMessage
+import com.nicholson.nicmessenger.domaine.service.EnvoyerNotification
 import com.nicholson.nicmessenger.domaine.service.ManipulerDemandes
 import com.nicholson.nicmessenger.domaine.service.ManipulerStatut
 import com.nicholson.nicmessenger.domaine.service.MettreNotificationLu
@@ -50,6 +51,7 @@ class Modèle private constructor() : IModèle {
     override var listeNotifications: List<Notification> = emptyList()
     override var nomConversationCourrante: String = ""
     override var indicateurNotifVisible: Boolean = false
+    override var statutOnlineConnexionEnvoyé: Boolean = false
 
     override suspend fun seConnecter( email: String, motDePasse: String ){
         val (tokenObtenue, utilisateur) = Authentification.seConnecter( email, motDePasse )
@@ -115,6 +117,13 @@ class Modèle private constructor() : IModèle {
             nomSender = utilisateurConnecté?.nomComplet ?: "",
             type = type,
             idConv = conversationCourrante?.id ?: 0L )
+    }
+
+    override suspend fun envoyerNotificationMessage( notification : Notification, receveurId : Long ) {
+        EnvoyerNotification.envoyerNotification(
+            notification,
+            receveurId
+        )
     }
 
     override suspend fun subscribeStatus( topic: String ): Flow<String> {
