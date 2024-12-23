@@ -33,6 +33,7 @@ interface IModèle {
     fun seDéconnecter()
     fun mettreÀJourStatusAmi(status : String, position : Int )
     suspend fun seConnecter( email : String, motDePasse : String )
+    suspend fun inscription( email: String, motDePasse: String, nomComplet: String )
     suspend fun envoyerStatut()
     suspend fun demandeMotDePasseOublié( email : String )
     suspend fun obtenirMesConversations() : List<Conversation>

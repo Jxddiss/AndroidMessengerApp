@@ -62,6 +62,10 @@ class Modèle private constructor() : IModèle {
         currentStatus = "online"
     }
 
+    override suspend fun inscription( email: String, motDePasse: String, nomComplet: String ) {
+        Authentification.inscription( email, motDePasse, nomComplet )
+    }
+
     override suspend fun envoyerStatut() {
         utilisateurConnecté?.let { utilisateur ->
             currentStatus?.let {

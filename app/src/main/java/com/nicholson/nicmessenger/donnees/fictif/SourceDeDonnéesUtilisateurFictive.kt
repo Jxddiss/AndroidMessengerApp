@@ -15,6 +15,8 @@ class SourceDeDonnéesUtilisateurFictive : ISourceDeDonéesUtilisateur {
         return "token" to FaussesDonnées.listeUtilisateur[0]
     }
 
+    override suspend fun inscription( email: String, motDePasse: String, nomComplet: String ) { }
+
     override suspend fun demandeMotDePasseOublié( email: String ) {  }
     override suspend fun mettreÀJourProfile(
         utilisateur: Utilisateur,

@@ -20,7 +20,7 @@ import java.io.File
 
 class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesUtilisateur {
 
-    override suspend fun seConnecter(email: String, motDePasse: String): Pair<String, Utilisateur> {
+    override suspend fun seConnecter( email: String, motDePasse: String ): Pair<String, Utilisateur> {
         val urlRequête = "$urlApi/login"
 
         val clientHttp = ClientHttp.obtenirInstance()
@@ -58,6 +58,41 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
             } else if( réponse.code == 400 || réponse.code == 401 || réponse.code == 403 ) {
                 Log.d("identifiant", donnéesJson)
                 Log.d("Exception", "Code : ${réponse.code}")
+                réponse.body?.string()?.let { Log.d("Corps de réponse", it) }
+                throw IdentifiantsException("Code : ${réponse.code}")
+            } else {
+                throw SourceDeDonnéesException("Code : ${réponse.code}")
+            }
+        } catch( ex : JsonSyntaxException) {
+            throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
+        } catch( ex : IOException ) {
+            throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
+        }
+    }
+
+    override suspend fun inscription( email: String, motDePasse: String, nomComplet: String ) {
+        val urlRequête = "$urlApi/login"
+
+        val clientHttp = ClientHttp.obtenirInstance()
+
+        try {
+
+            val corpsDeRequête = MultipartBody.Builder().setType( MultipartBody.FORM )
+                .addFormDataPart( "email", email )
+                .addFormDataPart( "nom", nomComplet )
+                .addFormDataPart( "password", motDePasse )
+                .build()
+
+            val requête = Request.Builder()
+                .url( urlRequête )
+                .post( corpsDeRequête )
+                .build()
+
+            val réponse = clientHttp.newCall( requête ).execute()
+
+            if ( réponse.code == 200 ) {
+                réponse.body?.close()
+            } else if( réponse.code == 400 || réponse.code == 401 || réponse.code == 403 ) {
                 réponse.body?.string()?.let { Log.d("Corps de réponse", it) }
                 throw IdentifiantsException("Code : ${réponse.code}")
             } else {
