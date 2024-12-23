@@ -1,6 +1,7 @@
 package com.nicholson.nicmessenger.presentation.profile
 
 import com.nicholson.nicmessenger.presentation.otd.UtilisateurOTD
+import java.io.File
 
 interface ContratVuePrésentateurProfile {
     interface IVueProfile {
@@ -13,6 +14,8 @@ interface ContratVuePrésentateurProfile {
         fun montrerErreurRéseau()
         fun montrerDialogSucces()
         fun redirigerÀLogin()
+        fun ouvrirGalleriePhoto()
+        fun obtenirNouvelAvatar() : File?
     }
 
     interface IPrésentateurProfile {
@@ -20,5 +23,6 @@ interface ContratVuePrésentateurProfile {
         fun traiterObtenirUtilisateurConnecté()
         fun mettreÀJourProfile()
         fun traiterDeconnexion()
+        fun traiterOuvrirGallerie()
     }
 }

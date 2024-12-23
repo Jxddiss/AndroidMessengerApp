@@ -20,6 +20,7 @@ import com.nicholson.nicmessenger.domaine.service.ObtenirStatus
 import com.nicholson.nicmessenger.donnees.http.ClientHttp
 import com.nicholson.nicmessenger.donnees.websocket.StompClientInstance
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 class Modèle private constructor() : IModèle {
     companion object {
@@ -159,10 +160,9 @@ class Modèle private constructor() : IModèle {
         ManipulerDemandes.refuserDemande( listeDemandes[position].id )
     }
 
-    override suspend fun mettreÀJourProfile() {
+    override suspend fun mettreÀJourProfile( avatarFile : File? ) {
         utilisateurConnecté?.let {
-            MettreÀJourProfile.mettreÀJourProfile( it )
+            utilisateurConnecté = MettreÀJourProfile.mettreÀJourProfile( it, avatarFile )
         }
     }
-
 }

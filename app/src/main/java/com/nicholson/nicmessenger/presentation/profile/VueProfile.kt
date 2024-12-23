@@ -1,6 +1,8 @@
 package com.nicholson.nicmessenger.presentation.profile
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -25,8 +27,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.otd.UtilisateurOTD
 import com.nicholson.nicmessenger.presentation.profile.ContratVuePrésentateurProfile.*
+import java.io.File
+
 
 class VueProfile : Fragment(), IVueProfile {
+
+    companion object{
+        private const val REQUEST_CODE_PICK_AVATAR = 0
+    }
+
     private lateinit var layoutBarChargement : ConstraintLayout
     private lateinit var nomTextView : TextView
     private lateinit var descriptionTextView : TextView
@@ -42,6 +51,7 @@ class VueProfile : Fragment(), IVueProfile {
     private lateinit var statusCourrant : String
     private lateinit var statusMap : Map<String, String>
     private lateinit var displayStatus : List<String>
+    private var avatarFile : File? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,6 +104,8 @@ class VueProfile : Fragment(), IVueProfile {
                 statusCourrant = it
             }
         }
+
+        avatarImageView.setOnClickListener { présentateur.traiterOuvrirGallerie() }
         présentateur.traiterObtenirUtilisateurConnecté()
     }
 
@@ -167,6 +179,40 @@ class VueProfile : Fragment(), IVueProfile {
 
     override fun redirigerÀLogin() {
         navController.navigate( R.id.action_vueProfile_vers_vueLogin )
+    }
+
+    override fun ouvrirGalleriePhoto() {
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
+        }
+        startActivityForResult(intent, REQUEST_CODE_PICK_AVATAR)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_PICK_AVATAR && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                it.data?.let { uri ->
+                    val inputStream = requireContext().contentResolver.openInputStream( uri )
+                    val file = File(requireContext().cacheDir, "upload_image.jpg")
+                    val outputStream = file.outputStream()
+                    inputStream?.copyTo(outputStream)
+                    inputStream?.close()
+                    outputStream.close()
+                    avatarFile = file
+
+                    Glide.with( requireContext() )
+                        .load( uri )
+                        .placeholder( R.drawable.buddy2 )
+                        .error( R.drawable.buddy2 )
+                        .into( avatarImageView )
+                }
+            }
+        }
+    }
+
+    override fun obtenirNouvelAvatar() : File? {
+        return avatarFile
     }
 
     private fun getColorFromStatut( statut : String, context : Context) : Int {

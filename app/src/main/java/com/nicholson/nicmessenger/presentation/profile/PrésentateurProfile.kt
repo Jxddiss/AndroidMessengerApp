@@ -37,18 +37,20 @@ class PrésentateurProfile( val vue : IVueProfile,
     override fun mettreÀJourProfile() {
         val description = vue.obtenirDescription()
         val status = vue.obtenirStatus()
+        val file = vue.obtenirNouvelAvatar()
 
         if ( description.isNotEmpty()
             && status.isNotEmpty()
             && ( description != modèle.utilisateurConnecté?.description
-                 || status != modèle.utilisateurConnecté?.statut ) ) {
+                 || status != modèle.utilisateurConnecté?.statut
+                 || file != null  ) ) {
 
             modèle.utilisateurConnecté?.statut = vue.obtenirStatus()
             modèle.utilisateurConnecté?.description = vue.obtenirDescription()
             job = CoroutineScope( iocontext ).launch {
                 try {
                     modèle.currentStatus = status
-                    modèle.mettreÀJourProfile()
+                    modèle.mettreÀJourProfile( file )
                     modèle.envoyerStatut()
                 } catch ( ex : AuthentificationException) {
                     CoroutineScope( Dispatchers.Main ).launch {
@@ -78,6 +80,10 @@ class PrésentateurProfile( val vue : IVueProfile,
                 vue.redirigerÀLogin()
             }
         }
+    }
+
+    override fun traiterOuvrirGallerie() {
+        vue.ouvrirGalleriePhoto()
     }
 
     private fun convertirUtilisateurÀUtilisateurOTD( utilisateur: Utilisateur ) : UtilisateurOTD =

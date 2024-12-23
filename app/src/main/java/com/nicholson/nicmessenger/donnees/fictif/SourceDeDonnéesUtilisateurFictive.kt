@@ -4,6 +4,7 @@ import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.donnees.ISourceDeDonéesUtilisateur
 import com.nicholson.nicmessenger.donnees.exceptions.IdentifiantsException
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
+import java.io.File
 
 class SourceDeDonnéesUtilisateurFictive : ISourceDeDonéesUtilisateur {
 
@@ -15,7 +16,7 @@ class SourceDeDonnéesUtilisateurFictive : ISourceDeDonéesUtilisateur {
     }
 
     override suspend fun demandeMotDePasseOublié( email: String ) {  }
-    override suspend fun mettreÀJourProfile(utilisateur: Utilisateur) {
-
+    override suspend fun mettreÀJourProfile( utilisateur: Utilisateur, avatarFile : File? ) : Utilisateur {
+        return FaussesDonnées.listeUtilisateur[0]
     }
 }

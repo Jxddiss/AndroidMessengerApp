@@ -1,6 +1,7 @@
 package com.nicholson.nicmessenger.donnees.http
 
 import android.util.Log
+import android.webkit.MimeTypeMap
 import com.google.gson.JsonSyntaxException
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.donnees.ISourceDeDonéesUtilisateur
@@ -8,11 +9,14 @@ import com.nicholson.nicmessenger.donnees.exceptions.AuthentificationException
 import com.nicholson.nicmessenger.donnees.exceptions.IdentifiantsException
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import com.nicholson.nicmessenger.donnees.jsonutils.GsonInstance
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
+import java.io.File
 
 class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesUtilisateur {
 
@@ -97,18 +101,31 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
         }
     }
 
-    override suspend fun mettreÀJourProfile(utilisateur: Utilisateur) {
+    override suspend fun mettreÀJourProfile( utilisateur: Utilisateur, avatarFile : File? ) : Utilisateur {
         val urlRequête = "$urlApi/utilisateur/update/${utilisateur.id}"
 
         val clientHttp = ClientHttp.obtenirInstance()
 
         try {
 
-            val corpsDeRequête = MultipartBody.Builder().setType( MultipartBody.FORM )
+            val constructeurDeCorps = MultipartBody.Builder().setType( MultipartBody.FORM )
                 .addFormDataPart( "nom", utilisateur.nomComplet )
                 .addFormDataPart( "description", utilisateur.description )
                 .addFormDataPart( "statut", utilisateur.statut )
-                .build()
+
+            avatarFile?.let {
+                constructeurDeCorps.apply {
+                    addFormDataPart(
+                        "avatar",
+                        it.name,
+                        it.asRequestBody(
+                            getMimeTypeFromFile( it )?.toMediaTypeOrNull()
+                        )
+                    )
+                }
+            }
+
+            val corpsDeRequête = constructeurDeCorps.build()
 
             val requête = Request.Builder()
                 .url( urlRequête )
@@ -117,7 +134,15 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
 
             val réponse = clientHttp.newCall( requête ).execute()
             if ( réponse.code == 200 ) {
+                val corpsDeRéponse = réponse.body?.string()
                 réponse.body?.close()
+                if( corpsDeRéponse != null ) {
+                    val utilisateur = GsonInstance.obtenirInstance()
+                        .fromJson(corpsDeRéponse, Utilisateur::class.java)
+                    return utilisateur
+                } else {
+                    throw SourceDeDonnéesException( "Corps de réponse vide" )
+                }
             } else if( réponse.code == 403 || réponse.code == 401 ) {
                 throw AuthentificationException("Code : ${réponse.code}")
             } else {
@@ -128,5 +153,10 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
         } catch( ex : IOException ) {
             throw SourceDeDonnéesException("Erreur inconnue : ${ex.message}")
         }
+    }
+
+    private fun getMimeTypeFromFile( file: File ): String? {
+        val extension = file.extension
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension( extension.lowercase() )
     }
 }

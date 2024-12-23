@@ -6,6 +6,7 @@ import com.nicholson.nicmessenger.domaine.modele.Message
 import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 interface IModèle {
     var estConnecté : Boolean
@@ -47,5 +48,5 @@ interface IModèle {
     suspend fun obtenirDemandes() : List<Demande>
     suspend fun accepterDemande( position : Int )
     suspend fun refuserDemande( position : Int )
-    suspend fun mettreÀJourProfile()
+    suspend fun mettreÀJourProfile( avatarFile : File? )
 }
