@@ -27,6 +27,7 @@ class VueNavBar : Fragment(), IVueNavBar {
     private lateinit var navOptions : NavOptions
     var navHostFragment: NavHostFragment? = null
     var navController: NavController? = null
+    private var isAppInForeground = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +63,7 @@ class VueNavBar : Fragment(), IVueNavBar {
         floatingButtonHomeNav.setOnClickListener { présentateur.traiterRedirigerÀAccueil() }
         buttonNotification.setOnClickListener { présentateur.traiterRedirigerÀNotification() }
         buttonAbout.setOnClickListener { présentateur.traiterRedirigerÀAbout() }
+        isAppInForeground = true
     }
 
     override fun redirigerÀDemandes() {
@@ -114,10 +116,13 @@ class VueNavBar : Fragment(), IVueNavBar {
 
     override fun montrerNotification() {
         indicateurNotifView.visibility = View.VISIBLE
-        val mediaPlayer = MediaPlayer.create( requireContext(),R.raw.type )
-        mediaPlayer.setVolume( 0.8f,0.8f )
 
-        mediaPlayer.start()
+        if ( isAppInForeground ) {
+            val mediaPlayer = MediaPlayer.create( requireContext(),R.raw.type )
+            mediaPlayer.setVolume( 0.5f,0.5f )
+
+            mediaPlayer.start()
+        }
     }
 
     override fun cacherNotification() {
@@ -182,5 +187,15 @@ class VueNavBar : Fragment(), IVueNavBar {
         buttonAbout
             .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
         buttonAbout.isClickable = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isAppInForeground = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isAppInForeground = false
     }
 }

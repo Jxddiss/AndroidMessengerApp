@@ -1,5 +1,9 @@
 package com.nicholson.nicmessenger
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -61,5 +65,19 @@ class MainActivity : AppCompatActivity() {
         val sourceDeDonnéesDemandes = SourceDeDonnéesDemandesHttp( getString( R.string.url_api ) )
         ObtenirDemandes.sourceDeDonnées = sourceDeDonnéesDemandes
         ManipulerDemandes.sourceDeDonnées = sourceDeDonnéesDemandes
+        créerCannalNotifications()
+    }
+
+    private fun créerCannalNotifications() {
+        val name = "Mes notifications"
+        val descriptionText = "Cannal pour notifications de NicMessenger"
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val channel = NotificationChannel( "CANNAL_NOTIFICATION_NICMESSENGER", name, importance )
+            .apply {
+                description = descriptionText
+            }
+
+        val notificationManager = getSystemService( Context.NOTIFICATION_SERVICE ) as NotificationManager
+        notificationManager.createNotificationChannel( channel )
     }
 }

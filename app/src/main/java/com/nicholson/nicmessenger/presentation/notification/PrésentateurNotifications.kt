@@ -110,6 +110,7 @@ class PrésentateurNotifications(private val vue : IVueNotifications,
     private fun convertirNotificationÀNotificationOTD( notification : Notification )
         : NotificationOTD =
             NotificationOTD(
+                id = notification.id.toInt(),
                 titre = notification.titre,
                 message = notification.message,
                 image = notification.image
