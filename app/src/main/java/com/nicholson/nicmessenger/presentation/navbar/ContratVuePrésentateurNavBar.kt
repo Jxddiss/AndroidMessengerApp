@@ -12,6 +12,16 @@ interface ContratVuePrésentateurNavBar {
         fun cacherNav()
         fun montrerNotification()
         fun cacherNotification()
+        fun mettreBtnHomeGris()
+        fun mettreBtnDemandeGris()
+        fun mettreBtnProfileGris()
+        fun mettreBtnNotificationsGris()
+        fun mettreBtnAboutGris()
+        fun mettreBtnHomeBlanc()
+        fun mettreBtnDemandeBlanc()
+        fun mettreBtnProfileBlanc()
+        fun mettreBtnNotificationsBlanc()
+        fun mettreBtnAboutBlanc()
     }
 
     interface IPrésentateurNavBar {

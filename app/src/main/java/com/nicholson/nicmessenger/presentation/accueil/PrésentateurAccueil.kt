@@ -2,6 +2,7 @@ package com.nicholson.nicmessenger.presentation.accueil
 
 import android.util.Log
 import com.nicholson.nicmessenger.domaine.modele.Conversation
+import com.nicholson.nicmessenger.domaine.modele.Notification
 import com.nicholson.nicmessenger.donnees.exceptions.AuthentificationException
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import com.nicholson.nicmessenger.presentation.IModèle
@@ -50,6 +51,24 @@ class PrésentateurAccueil( private val vue : IVueAccueil,
                 }
                 val conversationsOTDS = conversations.map {
                     convertirConversationAConversationOTD( it )
+                }
+
+                val notifications : List<Notification> = try {
+                    modèle.obtenirNotificationsNonLu()
+                } catch ( ex : SourceDeDonnéesException ) {
+                    Log.d( "Exception", "message : ${ex.message}" )
+                    emptyList()
+                } catch ( ex : AuthentificationException ) {
+                    CoroutineScope( Dispatchers.Main ).launch {
+                        vue.redirigerÀLogin()
+                    }
+                    emptyList()
+                }
+
+                if ( notifications.isNotEmpty() ) {
+                    CoroutineScope( Dispatchers.Main ).launch {
+                        modèle.montrerIndicateurNotif?.let { it() }
+                    }
                 }
 
                 CoroutineScope( Dispatchers.Main ).launch {

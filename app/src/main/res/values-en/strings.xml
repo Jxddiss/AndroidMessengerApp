@@ -34,4 +34,8 @@
     </string>
     <string name="about_text_2">All rights to the images belong to Microsoft.</string>
     <string name="about_text_3">Developper : Nicholson Rainville Jacques</string>
+    <string name="pas_de_conversations">Yon have no conversations</string>
+    <string name="pas_de_notifications">You have no new notifications</string>
+    <string name="pas_de_demandes">You have no new friend requests</string>
+    <string name="home_button">Home button</string>
 </resources>

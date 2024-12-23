@@ -35,16 +35,20 @@ class PrésentateurNotifications(private val vue : IVueNotifications,
             vue.redirigerÀLogin()
         } else {
             job = CoroutineScope( iocontext ).launch {
-                val notifications : List<Notification> = try {
-                    modèle.obtenirNotificationsNonLu()
-                } catch ( ex : SourceDeDonnéesException ) {
-                    Log.d( "Exception", "message : ${ex.message}" )
-                    emptyList()
-                } catch ( ex : AuthentificationException ) {
-                    CoroutineScope( Dispatchers.Main ).launch {
-                        vue.redirigerÀLogin()
+                var notifications : List<Notification> = modèle.listeNotifications
+
+                if ( notifications.isEmpty() ) {
+                    notifications = try {
+                        modèle.obtenirNotificationsNonLu()
+                    } catch ( ex : SourceDeDonnéesException ) {
+                        Log.d( "Exception", "message : ${ex.message}" )
+                        emptyList()
+                    } catch ( ex : AuthentificationException ) {
+                        CoroutineScope( Dispatchers.Main ).launch {
+                            vue.redirigerÀLogin()
+                        }
+                        emptyList()
                     }
-                    emptyList()
                 }
 
                 val notifificationsOTD = notifications.map {

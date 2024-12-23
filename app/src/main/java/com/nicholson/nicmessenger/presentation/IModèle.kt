@@ -15,6 +15,7 @@ interface IModèle {
     var seDéconnecter : (() -> Unit)?
     var attendreNotificationNav : (() -> Unit)?
     var cacheIndicateurNotification : (() -> Unit)?
+    var montrerIndicateurNotif : (() -> Unit)?
     var conversations : List<Conversation>
     var indiceConversationCourrante : Int
     var conversationCourrante : Conversation?
@@ -23,6 +24,7 @@ interface IModèle {
     var estSurVueNotifications : Boolean
     var attendNotif : Boolean
     var listeDemandes : List<Demande>
+    var listeNotifications : List<Notification>
     fun cacherNav()
     fun seDéconnecter()
     fun mettreÀJourStatusAmi(status : String, position : Int )

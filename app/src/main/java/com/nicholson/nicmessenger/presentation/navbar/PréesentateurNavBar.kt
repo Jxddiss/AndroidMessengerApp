@@ -24,29 +24,56 @@ class PréesentateurNavBar( val vue : IVueNavBar ,
         modèle.montrerNavUnit = { vue.montrerNav() }
         modèle.attendreNotificationNav = { attendreNotifications() }
         modèle.cacheIndicateurNotification = { vue.cacherNotification() }
+        modèle.montrerIndicateurNotif = { vue.montrerNotification() }
         if ( !modèle.estConnecté ){
             modèle.cacherNav()
         }
         vue.miseEnPlace()
+        vue.mettreBtnHomeGris()
     }
 
     override fun traiterRedirigerÀDemandes() {
+        vue.mettreBtnDemandeGris()
+        vue.mettreBtnHomeBlanc()
+        vue.mettreBtnAboutBlanc()
+        vue.mettreBtnNotificationsBlanc()
+        vue.mettreBtnProfileBlanc()
         vue.redirigerÀDemandes()
     }
 
     override fun traiterRedirigerÀProfile() {
+        vue.mettreBtnDemandeBlanc()
+        vue.mettreBtnHomeBlanc()
+        vue.mettreBtnAboutBlanc()
+        vue.mettreBtnNotificationsBlanc()
+        vue.mettreBtnProfileGris()
         vue.redirigerÀProfile()
     }
 
     override fun traiterRedirigerÀAccueil() {
+        vue.mettreBtnDemandeBlanc()
+        vue.mettreBtnHomeGris()
+        vue.mettreBtnAboutBlanc()
+        vue.mettreBtnNotificationsBlanc()
+        vue.mettreBtnProfileBlanc()
         vue.redirigerÀAccueil()
     }
 
     override fun traiterRedirigerÀNotification() {
+        vue.mettreBtnDemandeBlanc()
+        vue.mettreBtnHomeBlanc()
+        vue.mettreBtnAboutBlanc()
+        vue.mettreBtnNotificationsGris()
+        vue.mettreBtnProfileBlanc()
         vue.redirigerÀNotification()
     }
 
     override fun traiterRedirigerÀAbout() {
+        vue.mettreBtnDemandeBlanc()
+        vue.mettreBtnHomeBlanc()
+        vue.mettreBtnAboutGris()
+        vue.mettreBtnNotificationsBlanc()
+        vue.mettreBtnProfileBlanc()
         vue.redirigerÀAbout()
     }
 

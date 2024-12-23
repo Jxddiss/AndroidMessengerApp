@@ -1,5 +1,6 @@
 package com.nicholson.nicmessenger.presentation.navbar
 
+import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
@@ -120,5 +122,65 @@ class VueNavBar : Fragment(), IVueNavBar {
 
     override fun cacherNotification() {
         indicateurNotifView.visibility = View.GONE
+    }
+
+    override fun mettreBtnHomeGris() {
+        floatingButtonHomeNav
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+        floatingButtonHomeNav.isClickable = false
+    }
+
+    override fun mettreBtnDemandeGris() {
+        buttonMesDemandes
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+        buttonMesDemandes.isClickable = false
+    }
+
+    override fun mettreBtnProfileGris() {
+        buttonModifier
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+        buttonModifier.isClickable = false
+    }
+
+    override fun mettreBtnNotificationsGris() {
+        buttonNotification
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+        buttonNotification.isClickable = false
+    }
+
+    override fun mettreBtnAboutGris() {
+        buttonAbout
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+        buttonAbout.isClickable = false
+    }
+
+    override fun mettreBtnHomeBlanc() {
+        floatingButtonHomeNav
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+        floatingButtonHomeNav.isClickable = true
+    }
+
+    override fun mettreBtnDemandeBlanc() {
+        buttonMesDemandes
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+        buttonMesDemandes.isClickable = true
+    }
+
+    override fun mettreBtnProfileBlanc() {
+        buttonModifier
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+        buttonModifier.isClickable = true
+    }
+
+    override fun mettreBtnNotificationsBlanc() {
+        buttonNotification
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+        buttonNotification.isClickable = true
+    }
+
+    override fun mettreBtnAboutBlanc() {
+        buttonAbout
+            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+        buttonAbout.isClickable = true
     }
 }

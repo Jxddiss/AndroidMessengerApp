@@ -44,8 +44,10 @@ class Modèle private constructor() : IModèle {
     override var estSurVueNotifications: Boolean = false
     override var attendreNotificationNav: (() -> Unit)? = null
     override var cacheIndicateurNotification: (() -> Unit)? = null
+    override var montrerIndicateurNotif: (() -> Unit)? = null
     override var attendNotif: Boolean = false
     override var listeDemandes: List<Demande> = emptyList()
+    override var listeNotifications: List<Notification> = emptyList()
 
     override suspend fun seConnecter( email: String, motDePasse: String ){
         val (tokenObtenue, utilisateur) = Authentification.seConnecter( email, motDePasse )
@@ -119,9 +121,9 @@ class Modèle private constructor() : IModèle {
 
     override suspend fun obtenirNotificationsNonLu(): List<Notification> {
         utilisateurConnecté?.let {
-            return ObtenirNotificationsNonLus.obtenirNotificationNonLus( it.id )
+            listeNotifications = ObtenirNotificationsNonLus.obtenirNotificationNonLus( it.id )
         }
-        return emptyList()
+        return listeNotifications
     }
 
     override suspend fun subscribeNotifications(): Flow<Notification> {

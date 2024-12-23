@@ -99,6 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/home_button"
         app:backgroundTint="@color/couleur_principale"
         app:fabCustomSize="75dp"
         app:fabSize="normal"
@@ -107,8 +108,8 @@
         app:layout_constraintTop_toTopOf="@id/guideline_horizontale_top_fab"
         app:shapeAppearance="@style/Widget.Material3.FloatingActionButton.Large.Secondary"
         app:srcCompat="@drawable/house"
-        app:tint="@android:color/white"
-        app:rippleColor="#19FFFFFF"/>
+        app:tint="@color/white"
+        app:rippleColor="#19FFFFFF" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
