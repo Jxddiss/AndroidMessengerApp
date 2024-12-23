@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.login.VueLogin">
+    tools:context=".presentation.inscription.VueInscription">
 
     <ImageView
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="15dp"
-                android:text="@string/se_connecter"
+                android:text="@string/s_inscrire"
                 android:textAlignment="center"
                 android:textSize="32sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,13 +52,31 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNomTextInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/nom_complet"
+                app:layout_constraintTop_toBottomOf="@id/loginTitreTextView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nomEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:inputType="text"
+                    android:autofillHints="name"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutEmailTextInput"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:hint="@string/email"
-                app:layout_constraintTop_toBottomOf="@id/loginTitreTextView">
+                app:layout_constraintTop_toBottomOf="@id/layoutNomTextInput">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/emailEditText"
@@ -68,12 +86,13 @@
                     android:autofillHints="emailAddress"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutPasswordTextInput"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:hint="@string/password"
                 app:layout_constraintTop_toBottomOf="@id/layoutEmailTextInput">
 
@@ -85,41 +104,37 @@
                     android:autofillHints="password"/>
 
             </com.google.android.material.textfield.TextInputLayout>
-            <Button
-                android:id="@+id/btnLogin"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutConfirmPasswordTextInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/confirmer_le_mot_de_passe"
+                app:layout_constraintTop_toBottomOf="@id/layoutPasswordTextInput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirmPasswordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:inputType="textPassword"
+                    android:autofillHints="password"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:backgroundTint="@color/couleur_principale"
-                android:text="@string/se_connecter"
+                android:text="@string/s_inscrire"
                 app:cornerRadius="6dp"
                 app:strokeColor="#CECECE"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutPasswordTextInput" />
-            <Button
-                android:id="@+id/btnForgotPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/grey"
-                android:text="@string/mot_de_passe_oubli"
-                app:cornerRadius="6dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnLogin" />
-
-            <Button
-                android:id="@+id/btnRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/accepter"
-                android:text="@string/pas_de_compte_inscrivez_vous"
-                android:layout_marginBottom="30dp"
-                app:cornerRadius="6dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/layoutConfirmPasswordTextInput" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

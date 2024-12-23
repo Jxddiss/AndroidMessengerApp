@@ -39,4 +39,8 @@
     <string name="pas_de_demandes">You have no new friend requests</string>
     <string name="home_button">Home button</string>
     <string name="changer_votre_banni_re">Change your banner</string>
+    <string name="s_inscrire">Register</string>
+    <string name="confirmer_le_mot_de_passe">Confirm Your Password</string>
+    <string name="nom_complet">Complete Name</string>
+    <string name="pas_de_compte_inscrivez_vous">No account? register now</string>
 </resources>

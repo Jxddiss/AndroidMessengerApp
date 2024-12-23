@@ -95,4 +95,13 @@
             android:id="@+id/action_vueAbout_vers_vueLogin"
             app:destination="@id/vueLogin" />
     </fragment>
+    <fragment
+        android:id="@+id/vueInscription"
+        android:name="com.nicholson.nicmessenger.presentation.inscription.VueInscription"
+        android:label="fragment_vue_inscription"
+        tools:layout="@layout/fragment_vue_inscription" >
+        <action
+            android:id="@+id/action_vueInscription_vers_vueLogin"
+            app:destination="@id/vueLogin" />
+    </fragment>
 </navigation>
