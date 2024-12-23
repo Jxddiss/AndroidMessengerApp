@@ -35,11 +35,6 @@ import java.net.URI
 
 
 class VueProfile : Fragment(), IVueProfile {
-
-    companion object{
-        private const val REQUEST_CODE_PICK_AVATAR = 0
-    }
-
     private lateinit var layoutBarChargement : ConstraintLayout
     private lateinit var nomTextView : TextView
     private lateinit var descriptionTextView : TextView
