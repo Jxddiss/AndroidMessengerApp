@@ -14,6 +14,9 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +31,7 @@ import com.nicholson.nicmessenger.R
 import com.nicholson.nicmessenger.presentation.otd.UtilisateurOTD
 import com.nicholson.nicmessenger.presentation.profile.ContratVuePrésentateurProfile.*
 import java.io.File
+import java.net.URI
 
 
 class VueProfile : Fragment(), IVueProfile {
@@ -51,12 +55,18 @@ class VueProfile : Fragment(), IVueProfile {
     private lateinit var statusCourrant : String
     private lateinit var statusMap : Map<String, String>
     private lateinit var displayStatus : List<String>
+    private lateinit var intentLauncherAvatar : ActivityResultLauncher<Intent>
     private var avatarFile : File? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        intentLauncherAvatar = registerForActivityResult(ActivityResultContracts
+            .StartActivityForResult() ) {
+                onRésultatAvatar( it )
+            }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_vue_profile, container, false)
     }
@@ -182,16 +192,17 @@ class VueProfile : Fragment(), IVueProfile {
     }
 
     override fun ouvrirGalleriePhoto() {
+
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
         }
-        startActivityForResult(intent, REQUEST_CODE_PICK_AVATAR)
+
+        intentLauncherAvatar.launch( intent )
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_PICK_AVATAR && resultCode == Activity.RESULT_OK) {
-            data?.let {
+    private fun onRésultatAvatar( result: ActivityResult ) {
+        if ( result.resultCode == Activity.RESULT_OK ) {
+            result.data?.let {
                 it.data?.let { uri ->
                     val inputStream = requireContext().contentResolver.openInputStream( uri )
                     val file = File(requireContext().cacheDir, "upload_image.jpg")
