@@ -8,6 +8,7 @@ interface ContratVuePrésentateurLogin {
         fun montrerMotDePasseInvalide()
         fun montrerEmailInvalide()
         fun redirigerÀAccueil()
+        fun redirigerÀInscription()
         fun montrerErreurIdentifiants()
         fun montrerErreurRéseau()
         fun obtenirEmailEnregistré() : String?
@@ -30,5 +31,6 @@ interface ContratVuePrésentateurLogin {
         fun traiterMotDePasseOublié()
         fun traiterConfirmerMotDePasseOublié()
         fun traiterAnnulerMotDePasseOublié()
+        fun traiterRedirigerÀInscription()
     }
 }

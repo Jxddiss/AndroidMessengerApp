@@ -45,4 +45,11 @@
     <string name="confirmer_le_mot_de_passe">Confirmer le mot de passe</string>
     <string name="nom_complet">Nom Complet</string>
     <string name="pas_de_compte_inscrivez_vous">Pas de compte? inscrivez-vous</string>
+    <string name="short_mot_de_passe_invalide">Mot de passe invalide</string>
+    <string name="email_invalide">Email invalide</string>
+    <string name="mot_de_passe_invalide">Mot de passe invalide : 8 caractères, une majuscule, un chiffre et un caractère special sont requis</string>
+    <string name="confirm_pas_egal">Les mots de passe ne sont pas identiques</string>
+    <string name="nom_vide">Le nom ne peut pas être vide</string>
+    <string name="inscription_reussi">Votre inscription est réussi, vous pouvez maintenant vous connecter</string>
+    <string name="email_exist">Cette adresse courriel est déjà utilisé par un autre utilisateur</string>
 </resources>

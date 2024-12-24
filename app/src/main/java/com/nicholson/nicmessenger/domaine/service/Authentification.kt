@@ -35,12 +35,14 @@ class Authentification {
         }
 
         suspend fun demandeMotDePasseOublié( email : String ) {
-            if( !EMAIL_REGEX.matches( email ) ) throw EmailInvalideException( "Email Invalide" )
+            val emailNormalisé = email.lowercase()
+            if( !EMAIL_REGEX.matches( emailNormalisé ) ) throw EmailInvalideException( "Email Invalide" )
             sourceDeDonnées.demandeMotDePasseOublié( email )
         }
 
         suspend fun inscription( email: String, motDePasse: String, nomComplet: String ) {
-            if( !EMAIL_REGEX.matches( email ) ) throw EmailInvalideException( "Email Invalide" )
+            val emailNormalisé = email.lowercase()
+            if( !EMAIL_REGEX.matches( emailNormalisé ) ) throw EmailInvalideException( "Email Invalide" )
             if( !PASSWORD_REGEX.matches( motDePasse ) ) throw MotDePasseInvalideException( "Mot de passe invalide" )
             sourceDeDonnées.inscription( email, motDePasse, nomComplet )
         }

@@ -28,6 +28,7 @@ class VueLogin : Fragment(), IVueLogin {
     private lateinit var textInputLayoutPassword : TextInputLayout
     private lateinit var btnLogin : Button
     private lateinit var btnForgotPassword : Button
+    private lateinit var btnRegister : Button
     private lateinit var présentateur : IPrésentateurLogin
     private lateinit var préférences : SharedPreferences
     private lateinit var navController: NavController
@@ -64,6 +65,7 @@ class VueLogin : Fragment(), IVueLogin {
         passwordEditText = vue.findViewById( R.id.passwordEditText )
         btnLogin = vue.findViewById( R.id.btnLogin )
         btnForgotPassword = vue.findViewById( R.id.btnForgotPassword )
+        btnRegister = vue.findViewById( R.id.btnRegister )
         navController = Navigation.findNavController( vue )
         présentateur.traiterDémarage()
     }
@@ -71,6 +73,7 @@ class VueLogin : Fragment(), IVueLogin {
     override fun miseEnPlace() {
         btnLogin.setOnClickListener{ présentateur.traiterSeConnecter() }
         btnForgotPassword.setOnClickListener { présentateur.traiterMotDePasseOublié() }
+        btnRegister.setOnClickListener { présentateur.traiterRedirigerÀInscription() }
         emailEditText.addTextChangedListener {
             textInputLayoutEmail.error = null
         }
@@ -88,15 +91,19 @@ class VueLogin : Fragment(), IVueLogin {
 
 
     override fun montrerMotDePasseInvalide() {
-        textInputLayoutPassword.error = "Mot de passe invalide"
+        textInputLayoutPassword.error = getString( R.string.short_mot_de_passe_invalide )
     }
 
     override fun montrerEmailInvalide() {
-        textInputLayoutEmail.error = "Email invalide"
+        textInputLayoutEmail.error = getString( R.string.email_invalide )
     }
 
     override fun redirigerÀAccueil() =
         navController.navigate( R.id.action_vueLogin_vers_vueAccueil )
+
+    override fun redirigerÀInscription() {
+        navController.navigate( R.id.action_vueLogin_vers_vueInscription )
+    }
 
 
     override fun montrerErreurIdentifiants() {

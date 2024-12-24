@@ -6,6 +6,7 @@ import com.google.gson.JsonSyntaxException
 import com.nicholson.nicmessenger.domaine.modele.Utilisateur
 import com.nicholson.nicmessenger.donnees.ISourceDeDonéesUtilisateur
 import com.nicholson.nicmessenger.donnees.exceptions.AuthentificationException
+import com.nicholson.nicmessenger.donnees.exceptions.EmailExistantException
 import com.nicholson.nicmessenger.donnees.exceptions.IdentifiantsException
 import com.nicholson.nicmessenger.donnees.exceptions.SourceDeDonnéesException
 import com.nicholson.nicmessenger.donnees.jsonutils.GsonInstance
@@ -71,7 +72,7 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
     }
 
     override suspend fun inscription( email: String, motDePasse: String, nomComplet: String ) {
-        val urlRequête = "$urlApi/login"
+        val urlRequête = "$urlApi/inscription"
 
         val clientHttp = ClientHttp.obtenirInstance()
 
@@ -93,8 +94,12 @@ class SourceDeDonnéesUtilisateurHttp( val urlApi : String ) : ISourceDeDonéesU
             if ( réponse.code == 200 ) {
                 réponse.body?.close()
             } else if( réponse.code == 400 || réponse.code == 401 || réponse.code == 403 ) {
-                réponse.body?.string()?.let { Log.d("Corps de réponse", it) }
-                throw IdentifiantsException("Code : ${réponse.code}")
+                val corpsDeRéponse = réponse.body?.string()
+                if ( corpsDeRéponse?.contains( "courriel" ) ?: false ){
+                    throw EmailExistantException("Code : ${réponse.code}")
+                }else{
+                    throw SourceDeDonnéesException("Code : ${réponse.code}")
+                }
             } else {
                 throw SourceDeDonnéesException("Code : ${réponse.code}")
             }

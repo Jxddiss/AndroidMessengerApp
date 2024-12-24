@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_vueLogin_vers_vueDemandes"
             app:destination="@id/vueDemandes" />
+        <action
+            android:id="@+id/action_vueLogin_vers_vueInscription"
+            app:destination="@id/vueInscription" />
     </fragment>
     <fragment
         android:id="@+id/vueAccueil"
@@ -103,5 +106,8 @@
         <action
             android:id="@+id/action_vueInscription_vers_vueLogin"
             app:destination="@id/vueLogin" />
+        <action
+            android:id="@+id/action_vueInscription_vers_vueAccueil"
+            app:destination="@id/vueAccueil" />
     </fragment>
 </navigation>

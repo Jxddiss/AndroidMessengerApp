@@ -77,6 +77,10 @@ class PrésentateurLogin(
         vue.renitialiserListenerMotDePasseOublié()
     }
 
+    override fun traiterRedirigerÀInscription() {
+        vue.redirigerÀInscription()
+    }
+
     private fun connexion( email : String, motDePasse : String ){
         vue.desactiverBouttons()
         job = CoroutineScope( iocontext ).launch {
