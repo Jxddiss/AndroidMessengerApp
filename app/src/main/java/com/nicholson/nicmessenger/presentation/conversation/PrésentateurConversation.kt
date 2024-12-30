@@ -53,7 +53,7 @@ class PrésentateurConversation(
 
             conversation?.let { it ->
                 val listMessageOTD = messages.filter { message ->
-                    message.type == "text"
+                    message.type == "text" || message.type == "image"
                 }.map { message -> convertirMessageÀMessageOTD( message ) }.takeLast( 25 )
 
                 val conversationOTD = convertirConversationÀConversationOTD( it )
@@ -69,7 +69,7 @@ class PrésentateurConversation(
                         Log.d("Exception : ", it.message.toString())
                     }.collect {
                         Log.d("Message received", "In presenter")
-                        if( it.type == "text" ) {
+                        if( it.type == "text" || it.type == "image" ) {
                             CoroutineScope( Dispatchers.Main ).launch {
                                 vue.ajouterMessage( convertirMessageÀMessageOTD( it ) )
                             }
@@ -156,6 +156,7 @@ class PrésentateurConversation(
             contenu = message.contenu,
             date = date,
             nomSender = message.nomSender,
+            type = message.type,
             avatar = autreAvatar,
             color = color,
             fontSize = fontSize

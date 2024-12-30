@@ -20,26 +20,43 @@ class RecyclerAdapterMessage(
 
     class MyViewHolder( itemView : View ) : RecyclerView.ViewHolder( itemView ) {
         val nomTextView : TextView = itemView.findViewById( R.id.nomTextView )
-        val messageTextView : TextView = itemView.findViewById( R.id.messageTextView )
+        val messageTextView : TextView? = itemView.findViewById( R.id.messageTextView )
         val avatarImageView : ImageView = itemView.findViewById( R.id.avatarImageView )
         val dateTextView : TextView = itemView.findViewById( R.id.dateTextView )
+        val imageImageView : ImageView? = itemView.findViewById( R.id.imageImageView )
     }
 
     override fun onCreateViewHolder( parent: ViewGroup, viewType: Int ): MyViewHolder {
-        val itemView : View = LayoutInflater.from( parent.context )
-            .inflate( R.layout.message_item, parent, false )
+        val itemView : View = when( viewType ) {
+            TYPE_TEXT -> {
+                LayoutInflater.from( parent.context )
+                    .inflate( R.layout.message_item, parent, false )
+            }
+            TYPE_IMAGE -> {
+                LayoutInflater.from( parent.context )
+                    .inflate( R.layout.image_message_item, parent, false )
+            }
+            else -> throw IllegalArgumentException("Type invalide")
+        }
 
         return MyViewHolder( itemView )
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when( messagesOTD[position].type ) {
+            "image"-> TYPE_IMAGE
+            else -> TYPE_TEXT
+        }
     }
 
     override fun getItemCount(): Int = messagesOTD.size
 
     override fun onBindViewHolder( holder: MyViewHolder, position: Int ) {
-        holder.messageTextView.setTextColor(Color.BLACK)
-        holder.messageTextView.textSize = 16f
+        holder.messageTextView?.setTextColor(Color.BLACK)
+        holder.messageTextView?.textSize = 16f
 
         holder.nomTextView.text = messagesOTD[position].nomSender
-        holder.messageTextView.text = messagesOTD[position].contenu
+        holder.messageTextView?.text = messagesOTD[position].contenu
         holder.dateTextView.text = messagesOTD[position].date
 
         val avatar = messagesOTD[position].avatar
@@ -54,18 +71,28 @@ class RecyclerAdapterMessage(
         }
         messagesOTD[position].color?.let {
             try {
-                holder.messageTextView.setTextColor( Color.parseColor( it ) )
+                holder.messageTextView?.setTextColor( Color.parseColor( it ) )
             } catch ( ex : IllegalArgumentException ) {
                 Log.d( "Color parse", "Cant parse color" )
             }
         }
 
         messagesOTD[position].fontSize?.let {
-            holder.messageTextView.textSize =  TypedValue.applyDimension(
+            holder.messageTextView?.textSize =  TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP,
                 it,
                 Resources.getSystem().displayMetrics)
         }
+
+        holder.imageImageView?.let {
+            Glide.with( it.context )
+                .load( messagesOTD[position].contenu )
+                .into( it )
+        }
     }
 
+    companion object {
+        private const val TYPE_TEXT = 0
+        private const val TYPE_IMAGE = 1
+    }
 }
