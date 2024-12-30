@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
@@ -53,7 +52,7 @@ class VueNavBar : Fragment(), IVueNavBar {
         navHostFragment = activity?.supportFragmentManager
             ?.findFragmentById( R.id.fragmentContainerView ) as NavHostFragment?
         navController = navHostFragment?.navController
-        présentateur = PréesentateurNavBar(this)
+        présentateur = PrésentateurNavBar(this)
         présentateur.traiterDémarage()
     }
 
@@ -140,63 +139,53 @@ class VueNavBar : Fragment(), IVueNavBar {
         indicateurNotifView.visibility = View.GONE
     }
 
-    override fun mettreBtnHomeGris() {
-        floatingButtonHomeNav
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+    override fun mettreBtnHomeSelectionné() {
+        floatingButtonHomeNav.setImageResource( R.drawable.house_large_stroke )
         floatingButtonHomeNav.isClickable = false
     }
 
-    override fun mettreBtnDemandeGris() {
-        buttonMesDemandes
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+    override fun mettreBtnDemandeSelectionné() {
+        buttonMesDemandes.setImageResource( R.drawable.user_plus_large_stroke )
         buttonMesDemandes.isClickable = false
     }
 
-    override fun mettreBtnProfileGris() {
-        buttonModifier
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+    override fun mettreBtnProfileSelectionné() {
+        buttonModifier.setImageResource( R.drawable.user_pen_large_stroke )
         buttonModifier.isClickable = false
     }
 
-    override fun mettreBtnNotificationsGris() {
-        buttonNotification
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+    override fun mettreBtnNotificationsSelectionné() {
+        buttonNotification.setImageResource( R.drawable.bell_large_stroke )
         buttonNotification.isClickable = false
     }
 
-    override fun mettreBtnAboutGris() {
-        buttonAbout
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.grey ) )
+    override fun mettreBtnAboutSelectionné() {
+        buttonAbout.setImageResource( R.drawable.badge_info_large_stroke )
         buttonAbout.isClickable = false
     }
 
-    override fun mettreBtnHomeBlanc() {
-        floatingButtonHomeNav
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+    override fun mettreBtnHomeDéselectionné() {
+        floatingButtonHomeNav.setImageResource( R.drawable.house )
         floatingButtonHomeNav.isClickable = true
     }
 
-    override fun mettreBtnDemandeBlanc() {
-        buttonMesDemandes
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+    override fun mettreBtnDemandeDéselectionné() {
+        buttonMesDemandes.setImageResource( R.drawable.user_plus )
         buttonMesDemandes.isClickable = true
     }
 
-    override fun mettreBtnProfileBlanc() {
-        buttonModifier
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+    override fun mettreBtnProfileDéselectionné() {
+        buttonModifier.setImageResource( R.drawable.user_pen )
         buttonModifier.isClickable = true
     }
 
-    override fun mettreBtnNotificationsBlanc() {
-        buttonNotification
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+    override fun mettreBtnNotificationsDéselectionné() {
+        buttonNotification.setImageResource( R.drawable.bell )
         buttonNotification.isClickable = true
     }
 
-    override fun mettreBtnAboutBlanc() {
-        buttonAbout
-            .setColorFilter( ContextCompat.getColor( requireContext(), R.color.white ) )
+    override fun mettreBtnAboutDéselectionné() {
+        buttonAbout.setImageResource( R.drawable.badge_info )
         buttonAbout.isClickable = true
     }
 

@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class PréesentateurNavBar( val vue : IVueNavBar ,
-                           private val iocontext : CoroutineContext = Dispatchers.IO )
+class PrésentateurNavBar(val vue : IVueNavBar,
+                         private val iocontext : CoroutineContext = Dispatchers.IO )
     :  IPrésentateurNavBar {
 
     private lateinit var modèle : IModèle
@@ -38,51 +38,51 @@ class PréesentateurNavBar( val vue : IVueNavBar ,
             modèle.cacherNav()
         }
         vue.miseEnPlace()
-        vue.mettreBtnHomeGris()
+        vue.mettreBtnHomeSelectionné()
     }
 
     override fun traiterRedirigerÀDemandes() {
-        vue.mettreBtnDemandeGris()
-        vue.mettreBtnHomeBlanc()
-        vue.mettreBtnAboutBlanc()
-        vue.mettreBtnNotificationsBlanc()
-        vue.mettreBtnProfileBlanc()
+        vue.mettreBtnDemandeSelectionné()
+        vue.mettreBtnHomeDéselectionné()
+        vue.mettreBtnAboutDéselectionné()
+        vue.mettreBtnNotificationsDéselectionné()
+        vue.mettreBtnProfileDéselectionné()
         vue.redirigerÀDemandes()
     }
 
     override fun traiterRedirigerÀProfile() {
-        vue.mettreBtnDemandeBlanc()
-        vue.mettreBtnHomeBlanc()
-        vue.mettreBtnAboutBlanc()
-        vue.mettreBtnNotificationsBlanc()
-        vue.mettreBtnProfileGris()
+        vue.mettreBtnDemandeDéselectionné()
+        vue.mettreBtnHomeDéselectionné()
+        vue.mettreBtnAboutDéselectionné()
+        vue.mettreBtnNotificationsDéselectionné()
+        vue.mettreBtnProfileSelectionné()
         vue.redirigerÀProfile()
     }
 
     override fun traiterRedirigerÀAccueil() {
-        vue.mettreBtnDemandeBlanc()
-        vue.mettreBtnHomeGris()
-        vue.mettreBtnAboutBlanc()
-        vue.mettreBtnNotificationsBlanc()
-        vue.mettreBtnProfileBlanc()
+        vue.mettreBtnDemandeDéselectionné()
+        vue.mettreBtnHomeSelectionné()
+        vue.mettreBtnAboutDéselectionné()
+        vue.mettreBtnNotificationsDéselectionné()
+        vue.mettreBtnProfileDéselectionné()
         vue.redirigerÀAccueil()
     }
 
     override fun traiterRedirigerÀNotification() {
-        vue.mettreBtnDemandeBlanc()
-        vue.mettreBtnHomeBlanc()
-        vue.mettreBtnAboutBlanc()
-        vue.mettreBtnNotificationsGris()
-        vue.mettreBtnProfileBlanc()
+        vue.mettreBtnDemandeDéselectionné()
+        vue.mettreBtnHomeDéselectionné()
+        vue.mettreBtnAboutDéselectionné()
+        vue.mettreBtnNotificationsSelectionné()
+        vue.mettreBtnProfileDéselectionné()
         vue.redirigerÀNotification()
     }
 
     override fun traiterRedirigerÀAbout() {
-        vue.mettreBtnDemandeBlanc()
-        vue.mettreBtnHomeBlanc()
-        vue.mettreBtnAboutGris()
-        vue.mettreBtnNotificationsBlanc()
-        vue.mettreBtnProfileBlanc()
+        vue.mettreBtnDemandeDéselectionné()
+        vue.mettreBtnHomeDéselectionné()
+        vue.mettreBtnAboutSelectionné()
+        vue.mettreBtnNotificationsDéselectionné()
+        vue.mettreBtnProfileDéselectionné()
         vue.redirigerÀAbout()
     }
 
